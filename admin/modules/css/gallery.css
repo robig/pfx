@@ -1,0 +1,16 @@
+div#gallery-table{padding-top:0.5em;padding-bottom:0.5em}
+div#gallery-table-pages,div.pfx_module_gallery{border:1px solid #fff}
+div.pfx_module_gallery{margin-top:1em;margin-bottom:1em}
+div.tcloud,div.pfx_module_gallery .tbody .tr .td{padding:1em}
+div.pfx_module_gallery .tbody .odd{background:#fff}
+div.pfx_module_gallery .tbody .even{background:#fff}
+div.pfx_module_gallery .tbody .even .td{border-top:1px solid #fff}
+div.pfx_module_gallery .tbody .tr .desc{width:100%}
+div#gallery-table-pages p{margin:0.4em}
+div#gallery-table-pages p a{padding:0.4em}
+div#image-viewer img{max-width:600px}
+div#image-viewer{text-align:center;margin:1em}
+img.image-thumb{width:64px;height:64px}
+.title,.description{padding:0.5em;margin:0.5em;background:#fff;border:1px solid #fff}
+.title{height:100%}
+.description{width:93%}

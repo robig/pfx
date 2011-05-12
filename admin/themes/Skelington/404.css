@@ -1,0 +1,94 @@
+/******************************************************* // Theme Name 404 page // *****************************************************/
+
+/*
+
+	this is an example of a 404 page, feel free to clear this CSS
+	and create your own
+	
+*/
+
+/* Custom 404 */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+html, #wrap, #placeholder
+	{
+	background: none;
+	}
+
+#tools, #navigation, #up, #copyRight, #headerWrap, #footerWrap, #externalLinksMarker
+	{
+	display: none;
+	}
+
+#content p {
+text-indent:0;
+margin-left: 6em;
+margin-right: 6em;
+margin-top: 2em;
+margin-bottom: 12em;
+font-weight: bold;
+text-align: center;
+}
+
+#returnLink
+{
+text-align: center;
+	display: block;
+}
+
+#return
+{
+	display: inline;
+}
+
+#site_strapline
+	{
+	float: right;
+	font-size: 1em;
+	font-weight: bold;
+	color: #000;
+	position: relative;
+	top: -33px;
+	}
+
+html, body, #wrap
+	{
+	height: auto;
+	}
+
+#header {
+	margin-top: 0px;
+	padding-top: 0px;
+height: 8em;
+	}
+
+#footer {
+height: 21%;
+padding-top:0px;
+	}
+
+#dojo {
+padding-top:121%;
+	}
+
+#content
+	{
+	margin-bottom: 20px;
+background-position:bottom center;
+background-repeat:no-repeat;
+	}
+
+fieldset
+	{
+	border: none;
+	padding: 0;
+	}
+
+
+#mainContent {
+padding-bottom:7em;
+top:6em;
+}
+
+/********************************************************** // End // ********************************************************/

@@ -1,0 +1,22 @@
+#quotes-view{margin-top:1em;padding-bottom:1em}
+blockquote{line-height:1em;font-size:2.3em;font-style:italic;margin:1.2%;display:inline-block}
+.quote{background:#fff;display:inline-block;vertical-align:middle}
+.quote-wrapper{text-align:center}
+.quote-block{margin-left:30px;padding-top:30px}
+.quote p{margin-top:1em;background:none;display:block}
+.quote-ratings{display:block}
+.arrow{text-decoration:none;font-weight:bold}
+.q1,.q2,.q3,.q4,.q5,.q6,.q7,.q8,.quote{min-width:16em;max-width:24em}
+.q1{background: url(../images/quotes/sb-bm.png) repeat-x bottom center}
+.q2{background: url(../images/quotes/sb-mr.png) repeat-y right center}
+.q3{background: url(../images/quotes/sb-tm.png) repeat-x top center}
+.q4{background: url(../images/quotes/sb-lm.png) repeat-y left center}
+.q5{background: url(../images/quotes/sb-tr.png) no-repeat top right}
+.q6{padding-right:60px;background: url(../images/quotes/sb-br.png) no-repeat bottom right}
+.q7{background: url(../images/quotes/sb-lb.png) no-repeat bottom left}
+.q8{padding-bottom:60px;background: url(../images/quotes/sb-tl.png) no-repeat top left}
+.l-quote,.r-quote{width:32px;height:32px;display:inline-block}
+.l-quote{background: url(../images/quotes/l-quote.png) no-repeat center top;padding-right:0.4em}
+.r-quote{background: url(../images/quotes/r-quote.png) no-repeat center top;padding-left:0.4em}
+blockquote,.citation{font-family:"DejaVu Serif",sans-serif}
+.citation a{font-weight:normal}

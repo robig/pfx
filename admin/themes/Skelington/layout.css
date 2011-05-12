@@ -1,0 +1,18 @@
+/* Place your template styles here */
+#header{padding:2em 4em 0 4em}
+#footer{font-size:.8em;margin: 1.8em .8em .8em .8em;clear:both;padding:2em 4em 2em 4em}
+#footer a{font-size:1.1em}
+.col1wrap{display:table-footer-group}
+.col2{display:table-header-group}
+#credits_list li{display:inline;padding:.4em 1.8em 1em 3em}
+#tools_list{display:none}
+#cred_rss{background: url(../../../files/images/feed.png) no-repeat left top}
+#mainContent{padding-left:4em;padding-right:4em}
+#content img{max-width:600px}
+.flickr_badge_image{width:auto;display:inline;padding:1em}
+#block_tagcloud,.block,.post_links{padding-top:1em}
+.comment_message .message .img{width:64px;height:64px}
+.comment_message .entry-content{margin-left:68px;margin-top:6px}
+.comment_message .fn{font-size:1.3em;line-height:1.3em;margin-bottom:.769em;margin-top:.769em;font-weight:bold;margin-left:6px;margin-right:6px}
+.comment_message abbr.published{font-style:italic}
+#comments_title{margin-top:1em;margin-bottom:1em}

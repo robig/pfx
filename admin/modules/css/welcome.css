@@ -1,0 +1,19 @@
+.slide,#main,.welcome-slider,#main div.welcome-slider div.slides div.slide img{width:587px;max-width:632px /* The width of the slider */}
+#main div.welcome-slider div.slides div.slide img{height:270px}
+#main{text-align:center;position:relative}
+.welcome-slider{border:1px solid #fff;background:url(../images/welcome/panel.png) repeat-x bottom center #fff;overflow:hidden;/* CSS3 Rounded Corners */border-bottom-left-radius:4px;border-bottom-right-radius:4px}
+.welcome-slider,li.thumb-item a img{/* CSS3 Box Shadow */box-shadow:0 0 3px #AAAAAA}
+li.thumb-item a img{width:48px;height:23px;border:1px solid transparent;padding:3px;margin:3px;background-color:#fff}
+.slides{/* jQuery changes the width later on to the sum of the widths of all the slides. */overflow:hidden}
+.slide{float:left}
+div#main div.welcome-slider div.thumbs ul{margin:0px;padding:0;height:48px}
+.thumbs ul li{/* Every thumbnail is a li element */width:117px;display:inline-block;list-style:none;height:47px;overflow:hidden}
+.thumbs ul li.act a img{border-color:#fff;background-color:#fff}
+.thumbs ul li.act,.thumbs ul li.act:hover{/* The active state of the thumb */background:url(../images/welcome/active_bg.png) no-repeat left bottom}
+.thumbs ul li.act a{cursor:default}
+.thumbs ul li a{display:block;height:38px;padding-top:5px}
+div.thumbs ul li.fbar{/* The left-most vertical bar, next to the first thumbnail */width:2px}
+.thumbs ul li a{background:url(../images/welcome/divider.png) no-repeat bottom right;padding-bottom:7px}
+div.thumbs ul li.fbar{background:url(../images/welcome/left-bord.png) no-repeat bottom right}
+.slide a img{border:none}
+.wel-desc{padding:4px;max-height:35px;overflow:hidden;margin-top:2px;text-align:center}

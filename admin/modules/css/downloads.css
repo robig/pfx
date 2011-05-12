@@ -1,0 +1,9 @@
+div.download_item{padding-bottom:2em}
+img.downloads-image{width:96px;height:96px;float:left;margin-right:1em;margin-bottom:1em;padding-left:1em;padding-right:1em}
+div.download-block{word-wrap:break-word;margin-top:1em}
+div.link-holder{padding-left:1.8em;clear:left;padding-top:1em;text-align:left}
+div.download_item h4{padding-bottom:1em}
+div.download_item h4,div.download_item p{display:block;margin-left:2em}
+button.download-link{display:inline;vertical-align:bottom;width:100px;height:30px;color:#fff;font-weight:bold;background-color:transparent;background-image:url(../images/downloads/downloads.png);background-position:center left;background-repeat:no-repeat;border:0}
+button.download-link:hover{text-decoration:none;background-position:center right}
+div.download_list{padding-top:1em}

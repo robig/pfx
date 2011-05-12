@@ -1,0 +1,200 @@
+/******************************************************* // Print style // *****************************************************/
+
+/*
+	the print styles here set pixie to do a very basic
+	print. you may wish to change colours, hide less
+	elements and generally tweak this file to match 
+	your theme
+	
+*/
+
+/* Hide elements that do not need printing */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#tools
+	{
+	display: none;
+	}
+
+#navigation
+	{
+	display: none;
+	}
+
+#content_blocks
+	{
+	display: none;
+	}
+
+#footer
+	{
+	display: none;
+	}
+
+.form, form
+	{
+	display: none;
+	}
+
+#admin_header
+	{
+	display: none;
+	}
+	
+.post_edit
+	{
+	display: none;
+	}
+
+.toTop
+	{
+	display: none;
+	}
+#returnLink
+	{
+	display: none;
+	}
+#return
+	{
+	display: none;
+	}
+
+/* Set the typography and styles for print */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+body
+	{
+  	font-family:"Myriad Pro",Arial,Helvetica,sans-serif;
+  	color:#444444;
+  	background: none;
+	font-size: 12px; /* Use a 12px base font size */
+	line-height:1.5em;
+	}
+
+h1, h2, h3, h4, h5, h6
+	{
+ 	font-family:"Myriad Pro",Arial,Helvetica,sans-serif;
+	font-weight: bold;
+	}
+
+p
+	{
+	margin: 0 0 0.8em 0;
+	}
+
+/* Links */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+a:link, a:visited 
+	{
+	background: transparent;
+	font-weight:700;
+	text-decoration: none;
+	}
+
+/* Expand every link */
+
+#content a:link:after, #content a:visited:after 
+	{
+   	content: " (" attr(href) ") ";
+   	font-size: 90%;
+   	}
+   
+/* Tables */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+table
+	{
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #AAAAAA;
+	}
+
+th, tr, td
+	{
+	border: 1px solid #AAAAAA;
+	}
+
+ul
+{
+	list-style-type:none;
+}
+
+/* Custom / RTE classes */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+.dotrule
+	{
+	height:1px; 
+	font-size:1px;
+	border-bottom: 1px dashed #AAAAAA;
+	clear:both;
+	margin: 5px 0;
+	}
+
+.hrule
+	{
+	height:1px; 
+	font-size:1px;
+	height: 1px;
+	background: #444444;
+	clear: both;
+	margin: 5px 0;
+	}
+	
+.right
+	{
+	float:right;
+	}
+
+.left
+	{
+	float:left;
+	}
+
+.clear
+	{
+	clear: both;
+	}
+
+.small  
+	{ 
+	font-size: .8em; 
+	margin-bottom: 1.875em; 
+	line-height: 1.875em;
+	}
+	
+.large  
+	{ 
+	font-size: 1.2em; 
+	line-height: 2.5em; 
+	margin-bottom: 1.25em; 
+	}
+		
+.quiet  
+	{ 
+	color: #666; 
+	}
+		
+.hide   
+	{ 
+	display:none; 
+	}
+
+.highlight
+	{
+	background: #ff0;
+	}
+
+#copyRight
+	{
+	text-align: center;
+	margin: 2em;
+	}
+
+/********************************************************** // End // ********************************************************/

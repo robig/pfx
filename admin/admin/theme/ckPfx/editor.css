@@ -1,0 +1,203 @@
+.cke_skin_ckPfx *,.cke_skin_ckPfx a:hover,.cke_skin_ckPfx a:link,.cke_skin_ckPfx a:visited,.cke_skin_ckPfx a:active{border:0;background:transparent;text-decoration:none;font-weight:normal;font-size:100%;width:auto;height:auto;border-collapse:collapse;text-align:left;vertical-align:baseline;white-space:nowrap;cursor:auto;color:#2E3436;font-size:12px;font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;margin:0;padding:0}
+.cke_skin_ckPfx a{color:#EF2929}
+.cke_skin_ckPfx .cke_rtl *,.cke_skin_ckPfx .cke_rtl a:hover,.cke_skin_ckPfx .cke_rtl a:link,.cke_skin_ckPfx .cke_rtl a:visited,.cke_skin_ckPfx .cke_rtl a:active,.cke_rtl .cke_skin_ckPfx *,.cke_rtl .cke_skin_ckPfx a:hover,.cke_rtl .cke_skin_ckPfx a:link,.cke_rtl .cke_skin_ckPfx a:visited,.cke_rtl .cke_skin_ckPfx a:active{text-align:right}
+.cke_skin_ckPfx iframe{vertical-align:inherit}
+.cke_skin_ckPfx textarea{white-space:pre}
+.cke_skin_ckPfx fieldset{border:2px groove #E0DFE3;padding:10px}
+.cke_skin_ckPfx .cke_browser_gecko textarea,.cke_skin_ckPfx input[type="text"],.cke_skin_ckPfx input[type="password"]{cursor:text}
+.cke_skin_ckPfx .cke_wrapper{display:block;background-color:#fff}
+.cke_skin_ckPfx .cke_browser_ie6 .cke_wrapper,.cke_skin_ckPfx .cke_browser_iequirks .cke_wrapper{background-image:none}
+.cke_skin_ckPfx .cke_editor{display:inline-table;width:100%}
+.cke_skin_ckPfx .ltr .cke_browser_ie iframe{margin-right:-10px}
+.cke_skin_ckPfx .rtl .cke_browser_ie iframe{margin-left:-10px}
+.cke_skin_ckPfx .cke_browser_opera .cke_editor.cke_skin_ckPfx .cke_resizer{display:table}
+.cke_skin_ckPfx .cke_contents{border:1px solid #EEEEEC;margin:5px}
+.cke_skin_ckPfx .cke_hc .cke_contents{border:1px solid #2E3436}
+.cke_skin_ckPfx .cke_contents iframe{background-color:#fff}
+.cke_skin_ckPfx textarea.cke_source{font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;font-size:small;background-color:#fff;white-space:pre}
+.cke_skin_ckPfx .cke_resizer{width:12px;height:12px;margin-top:9px;display:block;float:right;background-image:url(images/sprites.png);background-position:0 -1428px;background-repeat:no-repeat;cursor:se-resize}
+.cke_skin_ckPfx .cke_rtl .cke_resizer{cursor:sw-resize;background-position:0 -1455px;float:left}
+.cke_skin_ckPfx .cke_resizer_horizontal,.cke_skin_ckPfx .cke_rtl .cke_resizer_horizontal{cursor:e-resize}
+.cke_skin_ckPfx .cke_resizer_vertical,.cke_skin_ckPfx .cke_rtl .cke_resizer_vertical{cursor:n-resize}
+.cke_skin_ckPfx .cke_panel{border:1px solid #8f8f73;background-color:#fff;width:120px;height:100px;overflow:hidden}
+.cke_skin_ckPfx .cke_panel iframe{width:100%;height:100%}
+html.cke_skin_ckPfx_container{overflow:auto;overflow-x:hidden;visibility:visible}
+body.cke_panel_frame{overflow:auto}
+ul.cke_panel_list{list-style-type:none;white-space:nowrap;margin:3px;padding:0}
+.cke_panel_listItem a{display:block;border:1px solid #fff;color:inherit!important;text-decoration:none;overflow:hidden;text-overflow:ellipsis;padding:2px}
+* html .cke_panel_listItem a{width:100%;color:#2E3436}
+:first-child+html .cke_panel_listItem a{color:#2E3436}
+.cke_panel_listItem.cke_selected a{border:1px solid #ccc;background-color:#e9f5ff}
+.cke_hc .cke_panel_listItem.cke_selected a,.cke_hc .cke_panel_listItem a:hover,.cke_hc .cke_panel_listItem a:focus,.cke_hc .cke_panel_listItem a:active{border-width:3px;padding:0}
+.cke_panel_grouptitle{font-size:11px;font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;font-weight:700;white-space:nowrap;background-color:#dcdcdc;color:#2E3436;margin:0;padding:3px}
+.cke_panel_listItem p,.cke_panel_listItem h1,.cke_panel_listItem h2,.cke_panel_listItem h3,.cke_panel_listItem h4,.cke_panel_listItem h5,.cke_panel_listItem h6,.cke_panel_listItem pre{margin-top:3px;margin-bottom:3px}
+.cke_skin_ckPfx .cke_button_textcolor_panel,.cke_skin_ckPfx .cke_button_bgcolor_panel{width:150px;height:135px}
+.cke_colorblock{font-size:11px;font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;padding:3px}
+.cke_colorblock,.cke_colorblock a{text-decoration:none;color:#2E3436}
+span.cke_colorbox{width:10px;height:10px;border:gray 1px solid;float:left}
+a.cke_colorbox{border:#fff 1px solid;float:left;padding:2px}
+a.cke_colorauto,a.cke_colormore{border:#fff 1px solid;display:block;cursor:pointer;padding:2px}
+.cke_skin_ckPfx .cke_contextmenu,li.cke_panel_listItem{margin:0}
+a:hover.cke_colorbox,a:focus.cke_colorbox,a:active.cke_colorbox,a:hover.cke_colorauto,a:hover.cke_colormore,a:focus.cke_colorauto,a:focus.cke_colormore,a:active.cke_colorauto,a:active.cke_colormore{border:#316ac5 1px solid;background-color:#dff1ff}
+.cke_skin_ckPfx .cke_browser_webkit .cke_toolbox,.cke_skin_ckPfx .cke_browser_webkit .cke_toolbox > span{white-space:normal}
+.cke_skin_ckPfx .cke_toolbox{clear:both;padding-bottom:1px}
+.cke_skin_ckPfx a.cke_toolbox_collapser,.cke_skin_ckPfx a:hover.cke_toolbox_collapser{background-image:url(images/sprites.png);background-position:3px -1366px;background-repeat:no-repeat;width:11px;height:11px;float:right;border:1px outset #D3D3D3;cursor:pointer;margin:11px 0 2px}
+.cke_skin_ckPfx .cke_hc a.cke_toolbox_collapser span{font-size:10px;font-weight:700;font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;display:inline}
+.cke_skin_ckPfx a.cke_toolbox_collapser_min,.cke_skin_ckPfx a:hover.cke_toolbox_collapser_min{background-image:url(images/sprites.png);background-position:4px -1387px;background-repeat:no-repeat;margin:2px 4px}
+.cke_skin_ckPfx .cke_rtl a.cke_toolbox_collapser_min,.cke_skin_ckPfx .cke_rtl a:hover.cke_toolbox_collapser_min{background-position:4px -1408px}
+.cke_skin_ckPfx .cke_break{font-size:0;clear:left}
+.cke_skin_ckPfx .cke_rtl .cke_break{clear:right}
+.cke_skin_ckPfx .cke_button a{;padding:2px 4px;border:1px solid #fff}
+.cke_skin_ckPfx .cke_button a:hover{border:1px solid #EEEEEC}
+.cke_skin_ckPfx .cke_toolgroup{background-image:url(images/sprites.png);background-repeat:repeat-x;background-position:0 -500px;float:left;margin-right:6px;margin-bottom:5px;display:block;height:22px;padding:2px}
+.cke_skin_ckPfx .cke_button a,.cke_skin_ckPfx .cke_button a:hover,.cke_skin_ckPfx .cke_button a:focus,.cke_skin_ckPfx .cke_button a:active,.cke_skin_ckPfx .cke_button a.cke_off{outline:none;height:18px;display:inline-block;cursor:default;padding:2px 4px}
+.cke_skin_ckPfx .cke_hc .cke_button a,.cke_skin_ckPfx .cke_hc .cke_button a.cke_off{opacity:1.0;border:1px solid #FFF}
+.cke_skin_ckPfx .cke_button a.cke_on{background-color:#fff;opacity:1;padding:2px 4px;border:1px solid #EEEEEC}
+.cke_skin_ckPfx .cke_button a.cke_disabled *,.cke_skin_ckPfx .cke_browser_ie a:hover.cke_button .cke_disabled *{opacity:0.3}
+.cke_skin_ckPfx .cke_hc .cke_button a.cke_disabled *,.cke_skin_ckPfx .cke_browser_ie.cke_hc a:hover.cke_button .cke_disabled *{opacity:0.6}
+.cke_skin_ckPfx .cke_button a:hover.cke_on,.cke_skin_ckPfx .cke_button a:focus.cke_on,.cke_skin_ckPfx .cke_button a:active.cke_on,/* IE */
+.cke_skin_ckPfx .cke_button a:hover.cke_off,.cke_skin_ckPfx .cke_button a:focus.cke_off,.cke_skin_ckPfx .cke_button a:active.cke_off	/* IE */{opacity:1;padding:2px 4px}
+.cke_skin_ckPfx .cke_button .cke_icon{background-image:url(icons.png);background-position:100px;background-repeat:no-repeat;margin-top:1px;width:16px;height:16px;display:inline-block;float:left;cursor:default}
+.cke_skin_ckPfx .cke_rtl .cke_button .cke_icon{background-image:url(icons_rtl.png);float:right}
+.cke_skin_ckPfx .cke_button .cke_label{cursor:default;display:none;padding-left:3px;line-height:18px;vertical-align:middle;float:left}
+.cke_skin_ckPfx .cke_rtl .cke_button .cke_label{padding-left:0;padding-right:3px;float:right}
+.cke_skin_ckPfx .cke_hc .cke_button .cke_label{display:inline-block;padding:0}
+.cke_skin_ckPfx .cke_accessibility{position:absolute;display:block;width:0;height:0;overflow:hidden}
+.cke_skin_ckPfx .cke_button .cke_buttonarrow{display:inline-block;height:17px;width:8px;background-position:2px -1469px;background-image:url(images/sprites.png);background-repeat:no-repeat;float:left;cursor:default}
+.cke_skin_ckPfx .cke_rtl .cke_button .cke_buttonarrow{background-position:0 -1469px;float:right}
+.cke_skin_ckPfx .cke_browser_ie8 .cke_button .cke_label,.cke_skin_ckPfx .cke_browser_opera .cke_button .cke_label,.cke_skin_ckPfx .cke_browser_webkit .cke_button .cke_label{line-height:20px}
+.cke_skin_ckPfx .cke_browser_opera.cke_browser_quirks .cke_button .cke_label,.cke_skin_ckPfx .cke_browser_iequirks .cke_button .cke_label{line-height:17px}
+.cke_skin_ckPfx .cke_browser_ie .cke_toolbox{padding-bottom:5px}
+.cke_skin_ckPfx .cke_hc .cke_button a.cke_on,.cke_skin_ckPfx .cke_hc .cke_button a:hover,.cke_skin_ckPfx .cke_hc .cke_button a:focus,.cke_skin_ckPfx .cke_hc .cke_button a:active	/* IE */{border-width:3px;padding:0 2px!important}
+.cke_skin_ckPfx .cke_contextmenu{padding:2px}
+.cke_skin_ckPfx .cke_menuitem a:hover,.cke_skin_ckPfx .cke_menuitem a:focus,.cke_skin_ckPfx .cke_menuitem a:active{background-color:#D3D3D3;display:block}
+.cke_hc .cke_menuitem a:hover,.cke_hc .cke_menuitem a:focus,.cke_hc .cke_menuitem a:active{border:2px solid}
+.cke_skin_ckPfx .cke_menuitem .cke_icon{background-image:url(icons.png);background-position:100px;background-repeat:no-repeat;background-color:transparent;width:16px;height:16px;float:left}
+.cke_rtl .cke_skin_ckPfx .cke_menuitem .cke_icon{background-image:url(icons_rtl.png)}
+.cke_skin_ckPfx .cke_menuitem .cke_icon_wrapper{background-color:#D3D3D3;border:solid 4px #D3D3D3;width:16px;height:16px;float:left;opacity:0.70;clear:both}
+.cke_browser_ie9 .cke_skin_ckPfx .cke_menuitem .cke_icon_wrapper{width:24px;height:24px}
+.cke_skin_ckPfx .cke_menuitem a:hover .cke_icon_wrapper,.cke_skin_ckPfx .cke_menuitem a:focus .cke_icon_wrapper,.cke_skin_ckPfx .cke_menuitem a:active .cke_icon_wrapper{background-color:#9d9d9d;border:solid 4px #9d9d9d;opacity:0.70}
+.cke_skin_ckPfx .cke_menuitem a:hover.cke_disabled .cke_icon_wrapper,.cke_skin_ckPfx .cke_menuitem a:focus.cke_disabled .cke_icon_wrapper,.cke_skin_ckPfx .cke_menuitem a:active.cke_disabled .cke_icon_wrapper{background-color:#D3D3D3;border:solid 4px #D3D3D3}
+.cke_skin_ckPfx .cke_menuitem .cke_label{display:block;padding-right:3px;padding-top:5px;padding-left:4px;height:19px;margin-left:24px;background-color:#fff}
+.cke_browser_ie9 .cke_skin_ckPfx .cke_menuitem .cke_label{height:24px}
+.cke_rtl .cke_skin_ckPfx .cke_menuitem .cke_label{padding-right:0;margin-left:0;padding-left:3px;margin-right:28px}
+.cke_skin_ckPfx .cke_menuitem a.cke_disabled .cke_label{opacity:0.30}
+.cke_skin_ckPfx .cke_menuitem a:hover .cke_label,.cke_skin_ckPfx .cke_menuitem a:focus .cke_label,.cke_skin_ckPfx .cke_menuitem a:active .cke_label{background-color:#D3D3D3}
+.cke_skin_ckPfx .cke_menuitem a.cke_disabled:hover .cke_label,.cke_skin_ckPfx .cke_menuitem a.cke_disabled:focus .cke_label,.cke_skin_ckPfx .cke_menuitem a.cke_disabled:active .cke_label{background-color:transparent}
+.cke_skin_ckPfx .cke_menuseparator{background-color:#D3D3D3;height:2px;opacity:0.70}
+.cke_skin_ckPfx .cke_menuarrow{background-image:url(images/sprites.png);background-position:0 -1411px;background-repeat:no-repeat;height:5px;width:3px;float:right;margin-right:2px;margin-top:3px}
+.cke_rtl .cke_skin_ckPfx .cke_menuarrow{float:left;margin-right:0;margin-left:2px;background-image:url(images/sprites.png);background-position:0 -1390px;background-repeat:no-repeat}
+.cke_hc .cke_skin_ckPfx .cke_menuarrow{width:auto;margin-top:0}
+.cke_browser_ie.cke_ltr .cke_skin_ckPfx .cke_menuarrow{position:absolute;right:2px}
+.cke_browser_ie.cke_rtl .cke_skin_ckPfx .cke_menuarrow{position:absolute;left:2px}
+.cke_skin_ckPfx .cke_rcombopanel{border:1px solid #8F8F73;height:auto}
+.cke_skin_ckPfx .cke_rcombo a,.cke_skin_ckPfx .cke_rcombo a:active,.cke_skin_ckPfx .cke_rcombo a:hover{border:1px solid #DAD9D9;float:left;height:21px;margin-right:6px;padding:2px}
+.cke_skin_ckPfx .cke_rcombo .cke_label{display:none;line-height:26px;vertical-align:top;margin-right:5px;opacity:0.70}
+.cke_skin_ckPfx .cke_rtl .cke_rcombo .cke_label{margin-right:0;margin-left:5px}
+.cke_skin_ckPfx .cke_rcombo .cke_inline_label{line-height:21px;font-style:italic;color:#666}
+.cke_skin_ckPfx .cke_hc .cke_rcombo .cke_openbutton{vertical-align:top}
+.cke_skin_ckPfx .cke_rcombo .cke_text{opacity:0.70;height:21px;line-height:21px;width:56px;text-overflow:ellipsis;overflow:hidden;display:inline-block;cursor:default;margin:0 2px 0 4px}
+.cke_skin_ckPfx .cke_rtl .cke_rcombo .cke_text{margin:0 4px 0 2px}
+.cke_skin_ckPfx .cke_rcombo .cke_openbutton{display:inline-block;height:19px;margin:1px 2px}
+.cke_skin_ckPfx .cke_browser_iequirks .cke_rcombo .cke_openbutton{margin-bottom:0}
+.cke_skin_ckPfx .cke_rcombo .cke_off a:hover .cke_text,.cke_skin_ckPfx .cke_rcombo .cke_off a:focus .cke_text,.cke_skin_ckPfx .cke_rcombo .cke_off a:active .cke_text,.cke_skin_ckPfx .cke_rcombo .cke_on .cke_text{opacity:1;border-color:#316ac5}
+.cke_skin_ckPfx .cke_rcombo .cke_disabled .cke_label{opacity:0.3}
+.cke_skin_ckPfx .cke_hc .cke_rcombo .cke_disabled .cke_label{opacity:0.7}
+.cke_skin_ckPfx .cke_rcombo .cke_disabled .cke_text,.cke_skin_ckPfx .cke_rcombo .cke_disabled .cke_openbutton{opacity:0.5}
+.cke_skin_ckPfx .cke_hc .cke_rcombo .cke_disabled .cke_text,.cke_skin_ckPfx .cke_hc .cke_rcombo .cke_disabled .cke_openbutton{opacity:0.8}
+.cke_skin_ckPfx .cke_rcombo .cke_disabled .cke_text{color:#fff}
+.cke_skin_ckPfx .cke_browser_ie7 .cke_rcombo .cke_text{line-height:18px}
+.cke_skin_ckPfx .cke_browser_ie6 .cke_rcombo .cke_text,.cke_skin_ckPfx .cke_browser_iequirks .cke_rcombo .cke_text{height:auto;line-height:17px}
+.cke_skin_ckPfx .cke_rtl .cke_rcombo .cke_font .cke_text,.cke_skin_ckPfx .cke_rtl .cke_rcombo .cke_fontSize .cke_text{direction:ltr}
+.cke_skin_ckPfx .cke_hc .cke_rcombo a,.cke_skin_ckPfx .cke_hc .cke_rcombo .cke_label{opacity:1.0}
+.cke_skin_ckPfx .cke_path{display:inline-block;float:left;margin-top:5px}
+.cke_shared .cke_skin_ckPfx .cke_path{margin:0 0 5px}
+.cke_skin_ckPfx .cke_path a,.cke_skin_ckPfx .cke_path .cke_empty{display:inline-block;float:left;color:#60676a;cursor:default;padding:1px 4px 0}
+.cke_skin_ckPfx .cke_path .cke_empty{visibility:hidden}
+.cke_skin_ckPfx .cke_path a:hover,.cke_skin_ckPfx .cke_path a:focus,.cke_skin_ckPfx .cke_path a:active	/* IE */{background-color:#dff1ff;outline:none;color:#2E3436;padding:1px 4px 0}
+.cke_skin_ckPfx .cke_button_newpage .cke_icon{background-position:0 -48px}
+.cke_skin_ckPfx .cke_button_preview .cke_icon{background-position:0 -64px}
+.cke_skin_ckPfx .cke_button_cut .cke_icon{background-position:0 -96px}
+.cke_skin_ckPfx .cke_button_copy .cke_icon{background-position:0 -112px}
+.cke_skin_ckPfx .cke_button_paste .cke_icon{background-position:0 -128px}
+.cke_skin_ckPfx .cke_button_pastetext .cke_icon{background-position:0 -144px}
+.cke_skin_ckPfx .cke_button_selectAll .cke_icon{background-position:0 -272px}
+.cke_skin_ckPfx .cke_button_removeFormat .cke_icon{background-position:0 -288px}
+.cke_skin_ckPfx .cke_button_bold .cke_icon{background-position:0 -304px}
+.cke_skin_ckPfx .cke_button_italic .cke_icon{background-position:0 -320px}
+.cke_skin_ckPfx .cke_button_underline .cke_icon{background-position:0 -336px}
+.cke_skin_ckPfx .cke_button_strike .cke_icon{background-position:0 -352px}
+.cke_skin_ckPfx .cke_button_subscript .cke_icon{background-position:0 -368px}
+.cke_skin_ckPfx .cke_button_superscript .cke_icon{background-position:0 -384px}
+.cke_skin_ckPfx .cke_button_table .cke_icon{background-position:0 -608px}
+.cke_skin_ckPfx .cke_button_horizontalrule .cke_icon{background-position:0 -624px}
+.cke_skin_ckPfx .cke_button_smiley .cke_icon{background-position:0 -640px}
+.cke_skin_ckPfx .cke_button_unlink .cke_icon{background-position:0 -544px}
+.cke_skin_ckPfx .cke_button_anchor .cke_icon{background-position:0 -560px}
+.cke_skin_ckPfx .cke_button_flash .cke_icon{background-position:0 -592px}
+.cke_skin_ckPfx .cke_button_specialchar .cke_icon{background-position:0 -656px}
+.cke_skin_ckPfx .cke_button_print .cke_icon{background-position:0 -176px}
+.cke_skin_ckPfx .cke_button_checkspell .cke_icon,.cke_skin_ckPfx .cke_button_scayt .cke_icon{background-position:0 -192px}
+.cke_skin_ckPfx .cke_button_textcolor .cke_icon{background-position:0 -704px}
+.cke_skin_ckPfx .cke_button_bgcolor .cke_icon{background-position:0 -720px}
+.cke_skin_ckPfx .cke_button_form .cke_icon{background-position:0 -752px}
+.cke_skin_ckPfx .cke_button_checkbox .cke_icon{background-position:0 -768px}
+.cke_skin_ckPfx .cke_button_radio .cke_icon{background-position:0 -784px}
+.cke_skin_ckPfx .cke_button_textfield .cke_icon{background-position:0 -800px}
+.cke_skin_ckPfx .cke_button_textarea .cke_icon{background-position:0 -816px}
+.cke_skin_ckPfx .cke_button_showblocks .cke_icon{background-position:0 -1136px}
+.cke_skin_ckPfx .cke_button_select .cke_icon{background-position:0 -832px}
+.cke_skin_ckPfx .cke_button_button .cke_icon{background-position:0 -848px}
+.cke_skin_ckPfx .cke_button_imagebutton .cke_icon{background-position:0 -864px}
+.cke_skin_ckPfx .cke_button_hiddenfield .cke_icon{background-position:0 -880px}
+.cke_skin_ckPfx .cke_button_templates .cke_icon{background-position:0 -80px}
+.cke_skin_ckPfx .cke_button_numberedlist .cke_icon{background-position:0 -400px}
+.cke_skin_ckPfx .cke_button_bulletedlist .cke_icon{background-position:0 -416px}
+.cke_skin_ckPfx .cke_mixed_dir_content .cke_button_numberedlist .cke_icon{background-position:0 -1217px}
+.cke_skin_ckPfx .cke_mixed_dir_content .cke_button_bulletedlist .cke_icon{background-position:0 -1233px}
+.cke_skin_ckPfx .cke_button_outdent .cke_icon{background-position:0 -432px}
+.cke_skin_ckPfx .cke_button_indent .cke_icon{background-position:0 -448px}
+.cke_skin_ckPfx .cke_mixed_dir_content .cke_button_indent .cke_icon{background-position:0 -1265px}
+.cke_skin_ckPfx .cke_mixed_dir_content .cke_button_outdent .cke_icon{background-position:0 -1249px}
+.cke_skin_ckPfx .cke_button_justifyleft .cke_icon{background-position:0 -464px}
+.cke_skin_ckPfx .cke_button_justifycenter .cke_icon{background-position:0 -480px}
+.cke_skin_ckPfx .cke_button_justifyright .cke_icon{background-position:0 -496px}
+.cke_skin_ckPfx .cke_button_justifyblock .cke_icon{background-position:0 -512px}
+.cke_skin_ckPfx .cke_button_blockquote .cke_icon{background-position:0 -1152px}
+.cke_skin_ckPfx .cke_button_creatediv .cke_icon{background-position:0 -1168px}
+.cke_skin_ckPfx .cke_button_editdiv .cke_icon{background-position:0 -1184px}
+.cke_skin_ckPfx .cke_button_removediv .cke_icon{background-position:0 -1200px}
+.cke_skin_ckPfx .cke_button_pastefromword .cke_icon{background-position:0 -160px}
+.cke_skin_ckPfx .cke_button_save .cke_icon{background-position:0 -32px}
+.cke_skin_ckPfx .cke_button_about .cke_icon{background-position:0 -736px}
+.cke_skin_ckPfx .cke_button_maximize .cke_icon{background-position:0 -1040px}
+.cke_skin_ckPfx .cke_button_bidirtl .cke_icon{background-position:0 -1072px}
+.cke_skin_ckPfx .cke_button_bidiltr .cke_icon{background-position:0 -1056px}
+.cke_skin_ckPfx .cke_button_pfxGeSHi .cke_icon{background-position:0 -16px}
+.cke_skin_ckPfx .cke_button_find .cke_icon,.cke_skin_ckPfx .cke_button_pfxFind .cke_icon{background-position:0 -240px}
+.cke_skin_ckPfx .cke_button_replace .cke_icon,.cke_skin_ckPfx .cke_button_pfxReplace .cke_icon{background-position:0 -256px}
+.cke_skin_ckPfx .cke_button_link .cke_icon,.cke_skin_ckPfx .cke_button_pfxLink .cke_icon{background-position:0 -528px}
+.cke_skin_ckPfx .cke_button_image .cke_icon,.cke_skin_ckPfx .cke_button_pfxImage .cke_icon{background-position:0 -576px}
+.cke_skin_ckPfx .cke_button_pagebreak .cke_icon,.cke_skin_ckPfx .cke_button_pfxPageBreak .cke_icon{background-position:0 -672px}
+.cke_skin_ckPfx .cke_button_undo .cke_icon,.cke_skin_ckPfx .cke_rtl .cke_button_redo .cke_icon{background-position:0 -208px}
+.cke_skin_ckPfx .cke_rtl .cke_button_undo .cke_icon,.cke_skin_ckPfx .cke_button_redo .cke_icon{background-position:0 -224px}
+.cke_skin_ckPfx .cke_fontSize_panel{height:170px}
+.cke_skin_ckPfx .cke_fontSize .cke_text{width:50px}
+.cke_skin_ckPfx .cke_styles_panel,.cke_skin_ckPfx .cke_format_panel,.cke_skin_ckPfx .cke_font_panel{width:150px;height:170px}
+html .cke_skin_ckPfx{visibility:inherit}
+.cke_skin_ckPfx .cke_browser_gecko textarea[disabled],.cke_skin_ckPfx input[type="text"][disabled],.cke_skin_ckPfx input[type="password"][disabled],.cke_skin_ckPfx .cke_browser_ie .cke_rcombo,.cke_skin_ckPfx .cke_browser_ie .cke_rcombo *,.cke_skin_ckPfx .cke_menuitem span{cursor:default}
+.cke_shared .cke_skin_ckPfx .cke_wrapper,.cke_shared .cke_skin_ckPfx .cke_browser_ie .cke_toolbox{padding-bottom:0}
+.cke_skin_ckPfx,.cke_skin_ckPfx span.cke_browser_webkit,.cke_skin_ckPfx span.cke_browser_gecko18,.cke_skin_ckPfx .cke_menuitem a{display:block}
+.cke_skin_ckPfx .cke_maximized .cke_resizer,.cke_skin_ckPfx .cke_voice_label,.cke_skin_ckPfx legend.cke_voice_label,.cke_panel_frame .cke_label,.cke_skin_ckPfx a.cke_toolbox_collapser span,.cke_skin_ckPfx .cke_separator,.cke_skin_ckPfx .cke_toolbar_start,.cke_skin_ckPfx .cke_hc .cke_button .cke_icon,.cke_skin_ckPfx .cke_browser_gecko.cke_hc .cke_button .cke_icon,.cke_skin_ckPfx .cke_menuarrow span,.cke_skin_ckPfx .cke_rcombo .cke_openbutton span,.cke_skin_ckPfx .cke_path .cke_label{display:none}
+.cke_panel_listItem a:hover,.cke_panel_listItem a:focus,.cke_panel_listItem a:active,.cke_skin_ckPfx .cke_rcombo .cke_off a:hover .cke_openbutton,.cke_skin_ckPfx .cke_rcombo .cke_off a:focus .cke_openbutton,.cke_skin_ckPfx .cke_rcombo .cke_off a:active .cke_openbutton,.cke_skin_ckPfx .cke_rcombo .cke_on .cke_openbutton{background-color:#dff1ff;border-color:#316ac5}
+.cke_rtl span.cke_colorbox,.cke_rtl a.cke_colorbox,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_toolbar,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_button a,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl.cke_button a.cke_off,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_button .cke_icon,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_button .cke_buttonarrow,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_toolbar_start,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_button .cke_label,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_break,.cke_skin_ckPfx .cke_browser_webkit .cke_rtl .cke_toolbar,.cke_rtl .cke_skin_ckPfx .cke_menuitem .cke_icon_wrapper,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_rcombo .cke_label,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_rcombo .cke_text,.cke_skin_ckPfx .cke_browser_gecko .cke_rtl .cke_rcombo .cke_openbutton,.cke_skin_ckPfx .cke_browser_webkit .cke_rtl .cke_rcombo .cke_label,.cke_skin_ckPfx .cke_browser_webkit .cke_rtl .cke_rcombo .cke_text,.cke_skin_ckPfx .cke_browser_webkit .cke_rtl .cke_rcombo .cke_openbutton,.cke_skin_ckPfx .cke_rtl .cke_path,.cke_skin_ckPfx .cke_rtl .cke_path a,.cke_skin_ckPfx .cke_rtl .cke_path cke_empty{float:right}
+.cke_skin_ckPfx .cke_toolbar,.cke_hc .cke_skin_ckPfx .cke_menuarrow span,.cke_skin_ckPfx .cke_rcombo,.cke_skin_ckPfx .cke_hc .cke_rcombo .cke_openbutton span,.cke_skin_ckPfx .cke_button_source .cke_label{display:inline}
+.cke_skin_ckPfx .cke_rtl .cke_toolgroup,.cke_skin_ckPfx .cke_rtl .cke_rcombo a,.cke_skin_ckPfx .cke_rtl .cke_rcombo a:active,.cke_skin_ckPfx .cke_rtl .cke_rcombo a:hover{float:right;margin-right:0;margin-left:6px}
+.cke_skin_ckPfx .cke_button a,.cke_skin_ckPfx .cke_button a.cke_off,.cke_skin_ckPfx .cke_menuitem .cke_disabled .cke_icon,.cke_skin_ckPfx .cke_frameLoaded .cke_menuitem .cke_label{opacity:0.70}
+.cke_skin_ckPfx .cke_browser_gecko .cke_toolbar,.cke_skin_ckPfx .cke_browser_gecko .cke_button a,.cke_skin_ckPfx .cke_browser_gecko .cke_button a.cke_off,.cke_skin_ckPfx .cke_browser_gecko .cke_button .cke_icon,.cke_skin_ckPfx .cke_browser_gecko .cke_button .cke_buttonarrow,.cke_skin_ckPfx .cke_browser_gecko .cke_separator,.cke_skin_ckPfx .cke_browser_gecko .cke_toolbar_start,.cke_skin_ckPfx .cke_browser_gecko .cke_rcombo .cke_text,.cke_skin_ckPfx .cke_browser_gecko .cke_rcombo .cke_openbutton,.cke_skin_ckPfx .cke_browser_webkit .cke_rcombo .cke_text,.cke_skin_ckPfx .cke_browser_webkit .cke_rcombo .cke_openbutton{display:block;float:left;text-align:center}
+.cke_skin_ckPfx .cke_browser_ie .cke_rtl .cke_button .cke_icon,.cke_skin_ckPfx .cke_browser_ie .cke_rtl .cke_button .cke_label,.cke_skin_ckPfx .cke_browser_ie .cke_rtl .cke_button .cke_buttonarrow,.cke_skin_ckPfx .cke_browser_ie .cke_rtl .cke_path a,.cke_skin_ckPfx .cke_browser_ie .cke_rtl .cke_path .cke_empty{float:none}
+.cke_skin_ckPfx .cke_rtl a.cke_toolbox_collapser,.cke_skin_ckPfx .cke_rtl a:hover.cke_toolbox_collapser,.cke_skin_ckPfx .cke_browser_gecko .cke_button .cke_label,.cke_skin_ckPfx .cke_browser_gecko .cke_break,.cke_skin_ckPfx .cke_browser_webkit .cke_toolbar,.cke_skin_ckPfx .cke_browser_gecko .cke_rcombo .cke_label,.cke_skin_ckPfx .cke_browser_webkit .cke_rcombo .cke_label{float:left}
+.cke_skin_ckPfx a.cke_button_source span.cke_icon{display:none!important}
+@media print {
+.cke_skin_ckPfx .cke_toolbox,.cke_path{display:none}
+}

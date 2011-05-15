@@ -1,3 +1,99 @@
-﻿CKEDITOR.dialog.add("anchor",function(c){var e=function(a,b,d){this.editMode=true;this.editObj=d;(a=this.editObj.getAttribute("name"))?this.setValueOf("info","txtName",a):this.setValueOf("info","txtName","")};return{title:c.lang.anchor.title,minWidth:300,minHeight:60,onOk:function(){var a=this.getValueOf("info","txtName"),b=CKEDITOR.env.ie?c.document.createElement('<a name="'+CKEDITOR.tools.htmlEncode(a)+'">'):c.document.createElement("a");if(this.editMode){this.editObj.copyAttributes(b,{name:1});
-this.editObj.moveChildren(b)}b.removeAttribute("_cke_saved_name");b.setAttribute("name",a);a=c.createFakeElement(b,"cke_anchor","anchor");if(this.editMode){a.replace(this.fakeObj);c.getSelection().selectElement(a)}else c.insertElement(a);return true},onShow:function(){this.editMode=this.fakeObj=this.editObj=false;var a=c.getSelection(),b=a.getSelectedElement();if(b&&b.getAttribute("_cke_real_element_type")&&b.getAttribute("_cke_real_element_type")=="anchor"){this.fakeObj=b;b=c.restoreRealElement(this.fakeObj);
-e.apply(this,[c,a,b]);a.selectElement(this.fakeObj)}this.getContentElement("info","txtName").focus()},contents:[{id:"info",label:c.lang.anchor.title,accessKey:"I",elements:[{type:"text",id:"txtName",label:c.lang.anchor.name,required:true,validate:function(){if(!this.getValue()){alert(c.lang.anchor.errorName);return false}return true}}]}]}});
+﻿/*
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+CKEDITOR.dialog.add( 'anchor', function( editor )
+{
+	// Function called in onShow to load selected element.
+	var loadElements = function( editor, selection, element )
+	{
+		this.editMode = true;
+		this.editObj = element;
+
+		var attributeValue = this.editObj.getAttribute( 'name' );
+		if ( attributeValue )
+			this.setValueOf( 'info','txtName', attributeValue );
+		else
+			this.setValueOf( 'info','txtName', "" );
+	};
+
+	return {
+		title : editor.lang.anchor.title,
+		minWidth : 300,
+		minHeight : 60,
+		onOk : function()
+		{
+			// Always create a new anchor, because of IE BUG.
+			var name = this.getValueOf( 'info', 'txtName' ),
+				element = CKEDITOR.env.ie ?
+				editor.document.createElement( '<a name="' + CKEDITOR.tools.htmlEncode( name ) + '">' ) :
+				editor.document.createElement( 'a' );
+
+			// Move contents and attributes of old anchor to new anchor.
+			if ( this.editMode )
+			{
+				this.editObj.copyAttributes( element, { name : 1 } );
+				this.editObj.moveChildren( element );
+			}
+
+			// Set name.
+			element.removeAttribute( '_cke_saved_name' );
+			element.setAttribute( 'name', name );
+
+			// Insert a new anchor.
+			var fakeElement = editor.createFakeElement( element, 'cke_anchor', 'anchor' );
+			if ( !this.editMode )
+				editor.insertElement( fakeElement );
+			else
+			{
+				fakeElement.replace( this.fakeObj );
+				editor.getSelection().selectElement( fakeElement );
+			}
+
+			return true;
+		},
+		onShow : function()
+		{
+			this.editObj = false;
+			this.fakeObj = false;
+			this.editMode = false;
+
+			var selection = editor.getSelection();
+			var element = selection.getSelectedElement();
+			if ( element && element.getAttribute( '_cke_real_element_type' ) && element.getAttribute( '_cke_real_element_type' ) == 'anchor' )
+			{
+				this.fakeObj = element;
+				element = editor.restoreRealElement( this.fakeObj );
+				loadElements.apply( this, [ editor, selection, element ] );
+				selection.selectElement( this.fakeObj );
+			}
+			this.getContentElement( 'info', 'txtName' ).focus();
+		},
+		contents : [
+			{
+				id : 'info',
+				label : editor.lang.anchor.title,
+				accessKey : 'I',
+				elements :
+				[
+					{
+						type : 'text',
+						id : 'txtName',
+						label : editor.lang.anchor.name,
+						required: true,
+						validate : function()
+						{
+							if ( !this.getValue() )
+							{
+								alert( editor.lang.anchor.errorName );
+								return false;
+							}
+							return true;
+						}
+					}
+				]
+			}
+		]
+	};
+} );

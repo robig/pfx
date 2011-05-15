@@ -1,32 +1,749 @@
-/*
-   MIT - http://es.wikipedia.org/wiki/Licencia_MIT
- @example   http://www.coders.me/ejemplos/sexy-lightbox-2/
+/**
+ * Sexy LightBox - for jQuery 1.3.2
+ * @name      sexylightbox.v2.3.js
+ * @author    Eduardo D. Sada - http://www.coders.me/web-html-js-css/javascript/sexy-lightbox-2
+ * @version   2.3.4
+ * @date      10-Nov-2009
+ * @copyright (c) 2009 Eduardo D. Sada (www.coders.me)
+ * @license   MIT - http://es.wikipedia.org/wiki/Licencia_MIT
+ * @example   http://www.coders.me/ejemplos/sexy-lightbox-2/
 */
-jQuery.bind=function(c,b){var a=Array.prototype.slice.call(arguments,2);return function(){var d=[this].concat(a,$j.makeArray(arguments));return b.apply(c,d)}};
-(function(c){SexyLightbox={getOptions:function(){return{name:"SLB",zIndex:32E3,color:"black",find:"sexylightbox",dir:"sexyimages",emergefrom:"top",background:"bgSexy.png",backgroundIE:"bgSexy.gif",buttons:"buttons.png",displayed:0,showDuration:200,closeDuration:400,moveDuration:1E3,moveEffect:"easeInOutBack",resizeDuration:1E3,resizeEffect:"easeInOutBack",shake:{distance:10,duration:100,transition:"easeInOutBack",loops:2},BoxStyles:{width:486,height:320},Skin:{white:{hexcolor:"#FFFFFF",captionColor:"#000000",
-"background-color":"#000000",opacity:0.8},black:{hexcolor:"#000000",captionColor:"#FFFFFF","background-color":"#000000",opacity:0.8},blanco:{hexcolor:"#FFFFFF",captionColor:"#000000","background-color":"#000000",opacity:0.8},negro:{hexcolor:"#000000",captionColor:"#FFFFFF","background-color":"#000000",opacity:0.8}}}},overlay:{create:function(b){this.options=b;this.element=c('<div id="'+(new Date).getTime()+'"></div>');this.element.css(c.extend({},{position:"absolute",top:0,left:0,opacity:0,display:"none",
-"z-index":this.options.zIndex},this.options.style));this.element.bind("click",c.bind(this,function(a,d){if(this.options.hideOnClick)this.options.callback?this.options.callback():this.hide();d.preventDefault()}));this.hidden=true;this.inject()},inject:function(){this.target=c(document.body);this.target.append(this.element);if(c.browser.msie&&c.browser.version=="6.0"){var b=parseInt(this.element.css("zIndex"));if(!b){b=1;var a=this.element.css("position");if(a=="static"||!a)this.element.css({position:"relative"});
-this.element.css({zIndex:b})}b=(this.options.zIndex||this.options.zIndex===0)&&b>this.options.zIndex?this.options.zIndex:b-1;if(b<0)b=1;this.shim=c('<iframe id="IF_'+(new Date).getTime()+'" scrolling="no" frameborder=0 src=""></div>');this.shim.css({zIndex:b,position:"absolute",top:0,left:0,border:"none",opacity:0});this.shim.insertAfter(this.element)}},resize:function(b,a){this.element.css({height:0,width:0});this.shim&&this.shim.css({height:0,width:0});var d={x:c(document).width(),y:c(document).height()},
-e=c.browser.safari?d.x-25<document.body.clientWidth?document.body.clientWidth:d.x:d.x;this.element.css({width:b?b:e,height:a?a:d.y});if(this.shim){this.shim.css({height:0,width:0});this.shim.css({width:b?b:e,height:a?a:d.y})}return this},show:function(){if(!this.hidden)return this;this.transition&&this.transition.stop();this.target.bind("resize",c.bind(this,this.resize));this.resize();this.shim&&this.shim.css({display:"block"});this.hidden=false;this.transition=this.element.fadeIn(this.options.showDuration,
-c.bind(this,function(){this.element.trigger("show")}));return this},hide:function(){if(this.hidden)return this;this.transition&&this.transition.stop();this.target.unbind("resize");this.shim&&this.shim.css({display:"none"});this.hidden=true;this.transition=this.element.fadeOut(this.options.closeDuration,c.bind(this,function(){this.element.trigger("hide");this.element.css({height:0,width:0})}));return this}},backwardcompatibility:function(b){this.options.dir=b.imagesdir||b.path||b.folder||b.dir;this.options.OverlayStyles=
-c.extend(this.options.Skin[this.options.color],this.options.OverlayStyles||{})},preloadimage:function(b){img=new Image;img.src=b},initialize:function(b){this.options=c.extend(this.getOptions(),b);this.backwardcompatibility(this.options);b=this.options.dir+"/"+(window.XMLHttpRequest==undefined&&ActiveXObject!=undefined?this.options.backgroundIE:"png/"+this.options.background);var a=this.options.name;this.preloadimage(b);this.preloadimage(this.options.dir+"/png/"+this.options.buttons);this.overlay.create({style:this.options.Skin[this.options.color],
-hideOnClick:true,zIndex:this.options.zIndex-1,callback:c.bind(this,this.close),showDuration:this.options.showDuration,showEffect:this.options.showEffect,closeDuration:this.options.closeDuration,closeEffect:this.options.closeEffect});this.lightbox={};c("body").append('<div id="'+a+'-Wrapper"><div id="'+a+'-Background"></div><div id="'+a+'-Contenedor"><div id="'+a+'-Top" style="background-image: url('+b+')"><a id="'+a+'-CloseButton" href="#">&nbsp;</a><div id="'+a+'-TopLeft" style="background-image: url('+
-b+')"></div></div><div id="'+a+'-Contenido"></div><div id="'+a+'-Bottom" style="background-image: url('+b+')"><div id="'+a+'-BottomRight" style="background-image: url('+b+')"><div id="'+a+'-Navegador"><strong id="'+a+'-Caption"></strong></div></div></div></div></div>');this.Wrapper=c("#"+a+"-Wrapper");this.Background=c("#"+a+"-Background");this.Contenedor=c("#"+a+"-Contenedor");this.Top=c("#"+a+"-Top");this.CloseButton=c("#"+a+"-CloseButton");this.Contenido=c("#"+a+"-Contenido");this.bb=c("#"+a+"-Bottom");
-this.innerbb=c("#"+a+"-BottomRight");this.Nav=c("#"+a+"-Navegador");this.Descripcion=c("#"+a+"-Caption");this.Wrapper.css({"z-index":this.options.zIndex,display:"none"}).hide();this.Background.css({"z-index":this.options.zIndex+1});this.Contenedor.css({position:"absolute",width:this.options.BoxStyles.width,"z-index":this.options.zIndex+2});this.Contenido.css({height:this.options.BoxStyles.height,"border-left-color":this.options.Skin[this.options.color].hexcolor,"border-right-color":this.options.Skin[this.options.color].hexcolor});
-this.CloseButton.css({"background-image":"url("+this.options.dir+"/png/"+this.options.buttons+")"});this.Nav.css({color:this.options.Skin[this.options.color].captionColor});this.Descripcion.css({color:this.options.Skin[this.options.color].captionColor});this.CloseButton.bind("click",c.bind(this,function(){this.close();return false}));c(document).bind("keydown",c.bind(this,function(d,e){if(this.options.displayed==1){e.keyCode==27&&this.close();e.keyCode==37&&this.prev&&this.prev.trigger("click",e);
-e.keyCode==39&&this.next&&this.next.trigger("click",e)}}));c(window).bind("resize",c.bind(this,function(){if(this.options.displayed==1){this.replaceBox();this.overlay.resize()}}));c(window).bind("scroll",c.bind(this,function(){this.options.displayed==1&&this.replaceBox()}));this.refresh()},hook:function(b){b=c(b);b.blur();this.show(b.attr("title")||b.attr("name")||b.attr("alt")||"",b.attr("href"),b.attr("rel")||false)},close:function(){this.animate(0)},refresh:function(){var b=this;this.anchors=[];
-c("a, area").each(function(){if(c(this).attr("rel")&&RegExp("^"+b.options.find).test(c(this).attr("rel"))){c(this).click(function(a){a.preventDefault();b.hook(this)});c(this).attr("id")==b.options.name+"-Left"||c(this).attr("id")==b.options.name+"-Right"||b.anchors.push(this)}})},animate:function(b){if(this.options.displayed==0&&b!=0||b==1){this.overlay.show();this.options.displayed=1;this.Wrapper.css({display:"block"})}else{this.Wrapper.css({display:"none",top:-(this.options.BoxStyles.height+280)}).hide();
-this.overlay.hide();this.overlay.element.bind("hide",c.bind(this,function(){if(this.options.displayed){this.Image&&this.Image.remove();this.options.displayed=0}}))}},replaceBox:function(b){var a={x:c(window).width(),y:c(window).height()-28},d={x:c(window).scrollLeft(),y:c(window).scrollTop()},e=this.options.BoxStyles.width,k=this.options.BoxStyles.height;if(this.options.displayed==0){var i=0,g=0;g=d.x+(a.x-e)/2;i=this.options.emergefrom=="bottom"?d.y+a.y+80:d.y-k-80;this.Wrapper.css({display:"none",
-top:i,left:g});this.Contenedor.css({width:0});this.Contenido.css({height:0})}b=c.extend({},{width:this.lightbox.width,height:this.lightbox.height,resize:0},b);this.MoveBox&&this.MoveBox.stop();this.MoveBox=this.Wrapper.animate({left:d.x+(a.x-b.width)/2,top:d.y+(a.y-(b.height+(this.navigator?80:48)))/2},{duration:this.options.moveDuration,easing:this.options.moveEffect});if(b.resize){this.ResizeBox2&&this.ResizeBox2.stop();this.ResizeBox2=this.Contenido.animate({height:b.height},{duration:this.options.resizeDuration,
-easing:this.options.resizeEffect});this.ResizeBox&&this.ResizeBox.stop();this.ResizeBox=this.Contenedor.animate({width:b.width},{duration:this.options.resizeDuration,easing:this.options.resizeEffect,complete:function(){c(this).trigger("complete")}})}},getInfo:function(b,a){b=c(b);IEuta=c('<a id="'+this.options.name+"-"+a+'" title="'+b.attr("title")+'" rel="'+b.attr("rel")+'">&nbsp;</a>');IEuta.css({"background-image":"url("+this.options.dir+"/png/"+this.options.buttons+")"});IEuta.attr("href",b.attr("href"));
-return IEuta},display:function(b,a,d){return this.show(a,b,"",d)},show:function(b,a,d,e){this.showLoading();var k=a.match(/(.+)?/)[1]||a,i=/\.(jpe?g|png|gif|bmp)/gi,g=a.match(/\?(.+)/);if(g)g=g[1];var f=this.parseQuery(g);this.ResizeBox&&this.ResizeBox.unbind("complete");f=c.extend({},{width:0,height:0,modal:0,background:"",title:b},f||{});f.width=parseInt(f.width);f.height=parseInt(f.height);f.modal=parseInt(f.modal);this.overlay.options.hideOnClick=!f.modal;this.lightbox=c.extend({},f,{width:f.width+
-14});this.navigator=this.lightbox.title?true:false;if(e=="image"||k.match(i)){this.img=new Image;this.img.onload=c.bind(this,function(){this.img.onload=function(){};if(!f.width){var h=this.calculate(this.img.width,this.img.height);f.width=h.x>100?h.x:h.x*2;f.height=h.x>100?h.y:h.y*2;this.lightbox.width=f.width+14}this.lightbox.height=f.height-(this.navigator?21:35);this.replaceBox({resize:1});this.ResizeBox.bind("complete",c.bind(this,function(){this.showImage(this.img.src,f)}))});this.img.onerror=
-c.bind(this,function(){this.show("",this.options.imagesdir+"/png/404.png",this.options.find)});this.img.src=a}else{this.lightbox.height=f.height+(c.browser.opera?2:0);this.replaceBox({resize:1});if(a.indexOf("TB_inline")!=-1)this.ResizeBox.bind("complete",c.bind(this,function(){this.showContent(c("#"+f.inlineId).html(),this.lightbox)}));else if(a.indexOf("TB_iframe")!=-1){var n=a.split("TB_");this.ResizeBox.bind("complete",c.bind(this,function(){this.showIframe(n[0],this.lightbox)}))}else this.ResizeBox.bind("complete",
-c.bind(this,function(){c.ajax({url:a,type:"GET",cache:false,error:c.bind(this,function(){this.show("",this.options.imagesdir+"/png/404html.png",this.options.find)}),success:c.bind(this,this.handlerFunc)})}))}this.prev=this.next=false;if(d.length>this.options.find.length){this.navigator=true;var l=false,m=false,j=this;c.each(this.anchors,function(){if(c(this).attr("rel")==d&&!m)if(c(this).attr("href")==a)l=true;else if(l){j.next=j.getInfo(this,"Right");m=true}else j.prev=j.getInfo(this,"Left")})}this.addButtons();
-this.showNavBar(b);this.animate(1)},calculate:function(b,a){var d=c(window).width()-100,e=c(window).height()-100;if(b>d){a*=d/b;b=d;if(a>e){b*=e/a;a=e}}else if(a>e){b*=e/a;a=e;if(b>d){a*=d/b;b=d}}return{x:parseInt(b),y:parseInt(a)}},handlerFunc:function(b,a){this.showContent(a,this.lightbox)},addButtons:function(){this.prev&&this.prev.bind("click",c.bind(this,function(b,a){a.preventDefault();this.hook(this.prev)}));this.next&&this.next.bind("click",c.bind(this,function(b,a){a.preventDefault();this.hook(this.next)}))},
-showNavBar:function(){if(this.navigator){this.bb.addClass("SLB-bbnav");this.Nav.empty();this.innerbb.empty();this.innerbb.append(this.Nav);this.Descripcion.html(this.lightbox.title);this.Nav.append(this.prev);this.Nav.append(this.next);this.Nav.append(this.Descripcion)}else{this.bb.removeClass("SLB-bbnav");this.innerbb.empty()}},showImage:function(b,a){this.Background.empty().removeAttr("style").css({width:"auto",height:"auto"}).append('<img id="'+this.options.name+'-Image"/>');this.Image=c("#"+this.options.name+
-"-Image");this.Image.attr("src",b).css({width:a.width,height:a.height});this.Contenedor.css({background:"none"});this.Contenido.empty().css({"background-color":"transparent",width:"auto"})},showContent:function(b,a){this.Background.empty().css({width:a.width-14,height:a.height+35,"background-color":a.background||"#ffffff"});this.Contenido.empty().css({width:a.width-14,"background-color":a.background||"#ffffff"}).append('<div id="'+this.options.name+'-Image"/>');this.Image=c("#"+this.options.name+
-"-Image");this.Image.css({width:a.width-14,height:a.height,overflow:"auto",background:a.height||"#ffffff"}).append(b);this.Contenedor.css({background:"none"})},showIframe:function(b,a){this.Background.empty().css({width:a.width-14,height:a.height+35,"background-color":a.background||"#ffffff"});var d="if_"+(new Date).getTime()+"-Image";this.Contenido.empty().css({width:a.width-14,"background-color":a.background||"#ffffff"}).append('<iframe id="'+d+'" frameborder="0"></iframe>');this.Image=c("#"+d);
-this.Image.css({width:a.width-14,height:a.height,background:a.background||"#ffffff"}).attr("src",b);this.Contenedor.css({background:"none"})},showLoading:function(){this.Background.empty().removeAttr("style").css({width:"auto",height:"auto"});this.Contenido.empty().css({"background-color":"transparent",width:"auto"});this.Contenedor.css({background:"url("+this.options.imagesdir+"/spinner.gif) no-repeat 50% 50%"});this.Contenido.empty().css({"background-color":"#fff",width:"auto"});this.replaceBox(c.extend(this.options.BoxStyles,
-{resize:1}))},parseQuery:function(b){if(!b)return{};var a={};b=b.split(/[;&]/);for(var d=0;d<b.length;d++){var e=b[d].split("=");!e||e.length!=2||(a[unescape(e[0])]=unescape(e[1]).replace(/\+/g," "))}return a},shake:function(){var b=this.options.shake.distance,a=this.Wrapper.position();a=a.left;for(x=0;x<this.options.shake.loops;x++)this.Wrapper.animate({left:a+b},this.options.shake.duration,this.options.shake.transition).animate({left:a-b},this.options.shake.duration,this.options.shake.transition);
-this.Wrapper.animate({left:a+b},this.options.shake.duration,this.options.shake.transition).animate({left:a},this.options.shake.duration,this.options.shake.transition)}}})(jQuery);
+
+jQuery.bind = function(object, method){
+  var args = Array.prototype.slice.call(arguments, 2);  
+  return function() {
+    var args2 = [this].concat(args, $j.makeArray( arguments ));  
+    return method.apply(object, args2);  
+  };  
+};  
+
+(function($) {
+
+  SexyLightbox = {
+    getOptions: function() {
+      return {
+        name          : 'SLB',
+        zIndex        : 32000,
+        color         : 'black',
+        find          : 'sexylightbox',
+        dir           : 'sexyimages',
+        emergefrom    : 'top',
+        background    : 'bgSexy.png',
+        backgroundIE  : 'bgSexy.gif',
+        buttons       : 'buttons.png',
+        displayed     : 0,
+        showDuration  : 200,
+        closeDuration : 400,
+        moveDuration  : 1000,
+        moveEffect    : 'easeInOutBack',
+        resizeDuration: 1000,
+        resizeEffect  : 'easeInOutBack',
+        shake         : {
+                          distance   : 10,
+                          duration   : 100,
+                          transition : 'easeInOutBack',
+                          loops      : 2
+                        },
+        BoxStyles     : { 'width' : 486, 'height': 320 },
+        Skin          : {
+                          'white' : { 'hexcolor': '#FFFFFF', 'captionColor': '#000000', 'background-color': '#000000', 'opacity': 0.8 },
+                          'black' : { 'hexcolor': '#000000', 'captionColor': '#FFFFFF', 'background-color': '#000000', 'opacity': 0.8 },
+                          'blanco': { 'hexcolor': '#FFFFFF', 'captionColor': '#000000', 'background-color': '#000000', 'opacity': 0.8 },
+                          'negro' : { 'hexcolor': '#000000', 'captionColor': '#FFFFFF', 'background-color': '#000000', 'opacity': 0.8 }
+                        }
+      };
+    },
+
+    overlay: {
+      create: function(options) {
+        this.options = options;
+        this.element = $('<div id="'+new Date().getTime()+'"></div>');
+        this.element.css($.extend({}, {
+          'position'  : 'absolute',
+          'top'       : 0,
+          'left'      : 0,
+          'opacity'   : 0,
+          'display'   : 'none',
+          'z-index'   : this.options.zIndex
+        }, this.options.style));
+        
+        this.element.bind('click', $.bind(this, function(obj, event) {
+          if (this.options.hideOnClick) {
+              if (this.options.callback) {
+                this.options.callback();
+              } else {
+                this.hide();
+              }
+          }
+          event.preventDefault();
+        }));
+        
+        this.hidden = true;
+        this.inject();
+      },
+
+      inject: function() {
+        this.target = $(document.body);
+        this.target.append(this.element);
+
+        //if((Browser.Engine.trident4 || (Browser.Engine.gecko && !Browser.Engine.gecko19 && Browser.Platform.mac)))
+        if($.browser.msie && $.browser.version=="6.0")
+        // No tengo tiempo para agregar la detecci�n del OS que deber�a
+        // haber estado integrada en jQuery, pero que el est�pido de su creador no puso
+        // Me cago en John Resig
+        {
+          var zIndex = parseInt(this.element.css('zIndex'));
+          if (!zIndex)
+          {
+            zIndex = 1;
+            var pos = this.element.css('position');
+            if (pos == 'static' || !pos)
+            {
+              this.element.css({'position': 'relative'});
+            }
+            this.element.css({'zIndex': zIndex});
+          }
+          // Diossss por diosss, pongan funciones �tiles en jQuery,
+          // no todo es Selectores! la puta madre, lo que hay que hacer
+          // para detectar si una variable est� definida:
+          zIndex = (!!(this.options.zIndex || this.options.zIndex === 0) && zIndex > this.options.zIndex) ? this.options.zIndex : zIndex - 1;
+          if (zIndex < 0)
+          {
+            zIndex = 1;
+          }
+          this.shim = $('<iframe id="IF_'+new Date().getTime()+'" scrolling="no" frameborder=0 src=""></div>');
+          this.shim.css({
+            zIndex    : zIndex,
+            position  : 'absolute',
+            top       : 0,
+            left      : 0,
+            border    : 'none',
+            opacity   : 0
+          });
+          this.shim.insertAfter(this.element);
+        }
+
+      },
+
+      resize: function(x, y) {
+        this.element.css({ 'height': 0, 'width': 0 });
+        if (this.shim) this.shim.css({ 'height': 0, 'width': 0 });
+
+        var win = { x: $(document).width(), y: $(document).height() };
+        var chromebugfix = $.browser.safari ? (win.x - 25 < document.body.clientWidth ? document.body.clientWidth : win.x) : win.x;
+
+        this.element.css({
+          width  : x ? x : chromebugfix, //* chrome fix
+          height : y ? y : win.y
+        });
+
+        if (this.shim)
+        {
+          this.shim.css({ 'height': 0, 'width': 0 });
+          this.shim.css({
+            width  : x ? x : chromebugfix, //* chrome fix
+            height : y ? y : win.y
+          });
+        }
+        return this;
+      },
+
+      show: function() {
+        if (!this.hidden) return this;
+        if (this.transition) this.transition.stop();
+        this.target.bind('resize', $.bind(this, this.resize));
+        this.resize();
+        if (this.shim) this.shim.css({'display': 'block'});
+        this.hidden = false;
+
+
+        this.transition = this.element.fadeIn(this.options.showDuration, $.bind(this, function(){
+          this.element.trigger('show');
+        }));
+        
+        return this;
+      },
+
+      hide: function() {
+        if (this.hidden) return this;
+        if (this.transition) this.transition.stop();
+        this.target.unbind('resize');
+        if (this.shim) this.shim.css({'display': 'none'});
+        this.hidden = true;
+
+        this.transition = this.element.fadeOut(this.options.closeDuration, $.bind(this, function(){
+          this.element.trigger('hide');
+          this.element.css({ 'height': 0, 'width': 0 });
+        }));
+
+        return this;
+      }
+
+    },
+
+    backwardcompatibility: function(option) {
+      this.options.dir = option.imagesdir || option.path || option.folder || option.dir;
+      this.options.OverlayStyles = $.extend(this.options.Skin[this.options.color], this.options.OverlayStyles || {});
+    },
+
+    preloadimage: function(url) {
+      img     = new Image();
+      img.src = url;
+    },
+
+    initialize: function(options) {
+      this.options = $.extend(this.getOptions(), options);
+      this.backwardcompatibility(this.options);
+
+      var strBG = this.options.dir+'/'+((((window.XMLHttpRequest == undefined) && (ActiveXObject != undefined)))?this.options.backgroundIE:'png/'+this.options.background);
+      var name  = this.options.name;
+      
+      this.preloadimage(strBG);
+      this.preloadimage(this.options.dir+'/png/'+this.options.buttons);
+
+      this.overlay.create({
+        style       : this.options.Skin[this.options.color],
+        hideOnClick : true,
+        zIndex      : this.options.zIndex-1,
+        callback    : $.bind(this, this.close),
+        showDuration  : this.options.showDuration,
+        showEffect    : this.options.showEffect,
+        closeDuration : this.options.closeDuration,
+        closeEffect   : this.options.closeEffect
+      });
+
+      this.lightbox = {};
+
+			$('body').append('<div id="'+name+'-Wrapper"><div id="'+name+'-Background"></div><div id="'+name+'-Contenedor"><div id="'+name+'-Top" style="background-image: url('+strBG+')"><a id="'+name+'-CloseButton" href="#">&nbsp;</a><div id="'+name+'-TopLeft" style="background-image: url('+strBG+')"></div></div><div id="'+name+'-Contenido"></div><div id="'+name+'-Bottom" style="background-image: url('+strBG+')"><div id="'+name+'-BottomRight" style="background-image: url('+strBG+')"><div id="'+name+'-Navegador"><strong id="'+name+'-Caption"></strong></div></div></div></div></div>');
+      
+      this.Wrapper      = $('#'+name+'-Wrapper');
+      this.Background   = $('#'+name+'-Background');
+      this.Contenedor   = $('#'+name+'-Contenedor');
+      this.Top          = $('#'+name+'-Top');
+      this.CloseButton  = $('#'+name+'-CloseButton');
+      this.Contenido    = $('#'+name+'-Contenido');
+      this.bb           = $('#'+name+'-Bottom');
+      this.innerbb      = $('#'+name+'-BottomRight');
+      this.Nav          = $('#'+name+'-Navegador');
+      this.Descripcion  = $('#'+name+'-Caption');
+
+      this.Wrapper.css({
+        'z-index'   : this.options.zIndex,
+        'display'   : 'none'
+      }).hide();
+      
+      this.Background.css({
+        'z-index'   : this.options.zIndex + 1
+      });
+      
+      this.Contenedor.css({
+        'position'  : 'absolute',
+        'width'     : this.options.BoxStyles['width'],
+        'z-index'   : this.options.zIndex + 2
+      });
+      
+      this.Contenido.css({
+        'height'            : this.options.BoxStyles['height'],
+        'border-left-color' : this.options.Skin[this.options.color].hexcolor,
+        'border-right-color': this.options.Skin[this.options.color].hexcolor
+      });
+      
+      this.CloseButton.css({
+        'background-image'  : 'url('+this.options.dir+'/png/'+this.options.buttons+')'
+      });
+      
+      this.Nav.css({
+        'color'     : this.options.Skin[this.options.color].captionColor
+      });
+
+      this.Descripcion.css({
+        'color'     : this.options.Skin[this.options.color].captionColor
+      });
+
+
+          
+      /**
+       * AGREGAMOS LOS EVENTOS
+       ************************/
+
+      this.CloseButton.bind('click', $.bind(this, function(){
+        this.close();
+        return false;
+      }));
+      
+      $(document).bind('keydown', $.bind(this, function(obj, event){
+        if (this.options.displayed == 1) {
+          if (event.keyCode == 27){
+            this.close();
+          }
+
+          if (event.keyCode == 37){
+            if (this.prev) {
+              this.prev.trigger('click', event);
+            }
+          }
+
+          if (event.keyCode == 39){
+            if (this.next) {
+              this.next.trigger('click', event);
+            }
+          }
+        }
+      }));
+
+      $(window).bind('resize', $.bind(this, function() {
+        if(this.options.displayed == 1) {
+          this.replaceBox();
+          this.overlay.resize();
+        }
+      }));
+
+      $(window).bind('scroll', $.bind(this, function() {
+        if(this.options.displayed == 1) {
+          this.replaceBox();
+        }          
+      }));
+
+      this.refresh();
+
+    },
+    
+    hook: function(enlace) {
+      enlace = $(enlace);
+      enlace.blur();
+      this.show((enlace.attr("title") || enlace.attr("name") || enlace.attr("alt") || ""), enlace.attr("href"), (enlace.attr('rel') || false));
+    },
+    
+    close: function() {
+      this.animate(0);
+    },
+    
+    refresh: function() {
+      var self = this;
+      this.anchors = [];
+
+      $("a, area").each(function() {
+        if ($(this).attr('rel') && new RegExp("^"+self.options.find).test($(this).attr('rel'))){
+          $(this).click(function(event) {
+            event.preventDefault();
+            self.hook(this);
+          });
+
+          if (!($(this).attr('id')==self.options.name+"-Left" || $(this).attr('id')==self.options.name+"-Right")) {
+            self.anchors.push(this);
+          }
+        }
+      });
+    },
+    
+    animate: function(option) {
+      if(this.options.displayed == 0 && option != 0 || option == 1)
+      {
+        this.overlay.show();
+        this.options.displayed = 1;
+        this.Wrapper.css({'display': 'block'});
+      }
+      else //Cerrar el Lightbox
+      {
+        this.Wrapper.css({
+          'display' : 'none',
+          'top'     : -(this.options.BoxStyles['height']+280)
+        }).hide();
+
+        this.overlay.hide();
+        this.overlay.element.bind('hide', $.bind(this, function(){
+          if (this.options.displayed) {
+            if (this.Image) this.Image.remove();
+            this.options.displayed = 0;
+          }
+        }));
+      }
+    },
+    
+    /*
+    Function: replaceBox
+    @description  Cambiar de tama�o y posicionar el lightbox en el centro de la pantalla
+    */
+    replaceBox: function(data) {
+      var size   = { x: $(window).width(), y: $(window).height() - 28 };
+      var scroll = { x: $(window).scrollLeft(), y: $(window).scrollTop() };
+      var width  = this.options.BoxStyles['width'];
+      var height = this.options.BoxStyles['height'];
+
+      if (this.options.displayed == 0)
+      {
+        var x = 0;
+        var y = 0;
+        
+        // vertically center
+        y = scroll.x + ((size.x - width) / 2);
+
+        if (this.options.emergefrom == "bottom")
+        {
+          x = (scroll.y + size.y + 80);
+        }
+        else // top
+        {
+          x = (scroll.y - height) - 80;
+        }
+      
+        this.Wrapper.css({
+          'display' : 'none',
+          'top'     : x,
+          'left'    : y
+        });
+        this.Contenedor.css({
+          'width'   : 0
+        });
+        this.Contenido.css({
+          'height'  : 0
+        });
+      }
+
+      data = $.extend({}, {
+        'width'  : this.lightbox.width,
+        'height' : this.lightbox.height,
+        'resize' : 0
+      }, data);
+
+      if (this.MoveBox) this.MoveBox.stop();
+
+      this.MoveBox = this.Wrapper.animate({
+        'left': (scroll.x + ((size.x - data.width) / 2)),
+        'top' : (scroll.y + (size.y - (data.height + (this.navigator ? 80 : 48))) / 2)
+      }, {
+        duration  : this.options.moveDuration,
+        easing    : this.options.moveEffect
+      });
+
+      if (data.resize) {
+        if (this.ResizeBox2) this.ResizeBox2.stop();
+        this.ResizeBox2 = this.Contenido.animate({
+          height    : data.height
+        }, {
+          duration  : this.options.resizeDuration,
+          easing    : this.options.resizeEffect
+        });
+
+        if (this.ResizeBox) this.ResizeBox.stop();
+
+        this.ResizeBox = this.Contenedor.animate({
+          width     : data.width
+        }, {
+          duration  : this.options.resizeDuration,
+          easing    : this.options.resizeEffect,
+          complete  : function(){
+            $(this).trigger('complete');
+          }
+        });
+      }
+
+    },
+    
+    getInfo: function (image, id) {
+      image=$(image);
+      IEuta = $('<a id="'+this.options.name+'-'+id+'" title="'+image.attr('title')+'" rel="'+image.attr('rel')+'">&nbsp;</a>');
+      IEuta.css({ 'background-image' : 'url('+this.options.dir+'/png/'+this.options.buttons+')' });
+      IEuta.attr('href', image.attr('href')); //IE fix
+      return IEuta;
+    },
+    
+    display: function(url, title, force) {
+      return this.show(title, url, '', force);
+    },
+    
+    show: function(caption, url, rel, force) {
+      this.showLoading();
+
+      var baseURL     = url.match(/(.+)?/)[1] || url;
+      var imageURL    = /\.(jpe?g|png|gif|bmp)/gi;
+      var queryString = url.match(/\?(.+)/);
+      if (queryString) queryString = queryString[1];
+      var params      = this.parseQuery( queryString );
+
+      if (this.ResizeBox) this.ResizeBox.unbind('complete'); //fix for jQuery
+
+      params = $.extend({}, {
+        'width'     : 0,
+        'height'    : 0,
+        'modal'     : 0,
+        'background': '',
+        'title'     : caption
+      }, params || {});
+
+      params['width']   = parseInt(params['width']);
+      params['height']  = parseInt(params['height']);
+      params['modal']   = parseInt(params['modal']);
+      this.overlay.options.hideOnClick = !params['modal'];
+      this.lightbox  = $.extend({}, params, { 'width' : params['width'] + 14 });
+      this.navigator = this.lightbox.title ? true : false;
+
+      if ( force=='image' || baseURL.match(imageURL) )
+      {
+          this.img = new Image();
+          this.img.onload = $.bind(this, function(){
+              this.img.onload=function(){};
+              if (!params['width'])
+              {
+                var objsize = this.calculate(this.img.width, this.img.height);
+                params['width']   = objsize.x > 100 ? objsize.x : (objsize.x * 2);
+                params['height']  = objsize.x > 100 ? objsize.y : (objsize.y * 2);
+                this.lightbox.width = params['width'] + 14;
+              }
+
+              this.lightbox.height = params['height'] - (this.navigator ? 21 : 35);
+              
+              this.replaceBox({ 'resize' : 1 });
+              
+              // Mostrar la imagen, solo cuando la animacion de resizado se ha completado
+              this.ResizeBox.bind('complete', $.bind(this, function(){
+                this.showImage(this.img.src, params);
+              }));
+          });
+
+          this.img.onerror = $.bind(this, function() {
+            this.show('', this.options.imagesdir+'/png/404.png', this.options.find);
+          });
+
+          this.img.src = url;
+          
+      } else { //code to show html pages
+
+          this.lightbox.height = params['height']+($.browser.opera?2:0);
+          this.replaceBox({'resize' : 1});
+        
+          if (url.indexOf('TB_inline') != -1) //INLINE ID
+          {
+            this.ResizeBox.bind('complete', $.bind(this, function(){
+              this.showContent($('#'+params['inlineId']).html(), this.lightbox);
+            }));
+          }
+          else if(url.indexOf('TB_iframe') != -1) //IFRAME
+          {
+            var urlNoQuery = url.split('TB_');
+            this.ResizeBox.bind('complete', $.bind(this, function(){
+              this.showIframe(urlNoQuery[0], this.lightbox);
+            }));
+          }
+          else //AJAX
+          {
+            this.ResizeBox.bind('complete', $.bind(this, function(){
+              $.ajax({
+                url: url,
+                type: "GET",
+                cache: false,
+                error: $.bind(this, function(){this.show('', this.options.imagesdir+'/png/404html.png', this.options.find)}),
+                success: $.bind(this, this.handlerFunc)
+              });
+            }));
+          }
+
+      }
+      
+
+      this.next = false;
+      this.prev = false;
+       //Si la imagen pertenece a un grupo
+      if (rel.length > this.options.find.length)
+      {
+          this.navigator = true;
+          var foundSelf  = false;
+          var exit       = false;
+          var self       = this;
+
+          $.each(this.anchors, function(index){
+            if ($(this).attr('rel') == rel && !exit) {
+              if ($(this).attr('href') == url) {
+                  foundSelf = true;
+              } else {
+                  if (foundSelf) {
+                      self.next = self.getInfo(this, "Right");
+                       //stop searching
+                      exit = true;
+                  } else {
+                      self.prev = self.getInfo(this, "Left");
+                  }
+              }
+            }
+          });
+      }
+
+      this.addButtons();
+      this.showNavBar(caption);
+      this.animate(1);
+    },// end function
+
+    calculate: function(x, y) {
+      // Resizing large images
+      var maxx = $(window).width() - 100;
+      var maxy = $(window).height() - 100;
+
+      if (x > maxx)
+      {
+        y = y * (maxx / x);
+        x = maxx;
+        if (y > maxy)
+        {
+          x = x * (maxy / y);
+          y = maxy;
+        }
+      }
+      else if (y > maxy)
+      {
+        x = x * (maxy / y);
+        y = maxy;
+        if (x > maxx)
+        {
+          y = y * (maxx / x);
+          x = maxx;
+        }
+      }
+      // End Resizing
+      return {x: parseInt(x), y: parseInt(y)};
+    },
+
+    handlerFunc: function(obj, html) {
+      this.showContent(html, this.lightbox);
+    },
+
+    addButtons: function(){
+      if(this.prev) this.prev.bind('click', $.bind(this, function(obj, event) {event.preventDefault();this.hook(this.prev);}));
+      if(this.next) this.next.bind('click', $.bind(this, function(obj, event) {event.preventDefault();this.hook(this.next);}));
+    },
+
+    showNavBar: function() {
+      if (this.navigator)
+      {
+        this.bb.addClass("SLB-bbnav");
+        this.Nav.empty();
+        this.innerbb.empty();
+        this.innerbb.append(this.Nav);
+        this.Descripcion.html(this.lightbox.title);
+        this.Nav.append(this.prev);
+        this.Nav.append(this.next);
+        this.Nav.append(this.Descripcion);
+      }
+      else
+      {
+        this.bb.removeClass("SLB-bbnav");
+        this.innerbb.empty();
+      }
+    },
+
+    showImage: function(image, size) {
+      this.Background.empty().removeAttr('style').css({'width':'auto', 'height':'auto'}).append('<img id="'+this.options.name+'-Image"/>');
+      this.Image = $('#'+this.options.name+'-Image');
+      this.Image.attr('src', image).css({
+        'width'  : size['width'],
+        'height' : size['height']
+      });
+    
+      this.Contenedor.css({
+        'background' : 'none'
+      });
+
+      this.Contenido.empty().css({
+          'background-color': 'transparent',
+          'width'           : 'auto'
+      });
+    },
+
+    showContent: function(html, size) {
+      this.Background.empty().css({
+        'width'            : size['width']-14,
+        'height'           : size['height']+35,
+        'background-color' : size['background'] || '#ffffff'
+      });
+      
+      this.Contenido.empty().css({
+        'width'             : size['width']-14,
+        'background-color'  : size['background'] || '#ffffff'
+      }).append('<div id="'+this.options.name+'-Image"/>');
+
+      this.Image = $('#'+this.options.name+'-Image');
+      this.Image.css({
+        'width'       : size['width']-14,
+        'height'      : size['height'],
+        'overflow'    : 'auto',
+        'background'  : size['height'] || '#ffffff'
+      }).append(html);
+
+      this.Contenedor.css({
+        'background': 'none'
+      });
+    },
+
+    showIframe: function(src, size, bg) {
+      this.Background.empty().css({
+        'width'           : size['width']-14,
+        'height'          : size['height']+35,
+        'background-color': size['background'] || '#ffffff'
+      });
+
+      var id = "if_"+new Date().getTime()+"-Image";
+
+      this.Contenido.empty().css({
+        'width'             : size['width']-14,
+        'background-color'  : size['background'] || '#ffffff'
+      }).append('<iframe id="'+id+'" frameborder="0"></iframe>');
+      
+      this.Image = $('#'+id);
+      this.Image.css({
+          'width'       : size['width']-14,
+          'height'      : size['height'],
+          'background'  : size['background'] || '#ffffff'
+      }).attr('src', src);
+
+      this.Contenedor.css({
+        'background' : 'none'
+      });
+    },
+
+    showLoading: function() {
+      this.Background.empty().removeAttr('style').css({'width':'auto', 'height':'auto'});
+      this.Contenido.empty().css({
+        'background-color'  : 'transparent',
+        'width'             : 'auto'
+      });
+
+      this.Contenedor.css({
+        'background' : 'url('+this.options.imagesdir+'/spinner.gif) no-repeat 50% 50%'
+      });
+
+      this.Contenido.empty().css({
+          'background-color': '#fff',
+          'width'           : 'auto'
+      });
+
+      this.replaceBox($.extend(this.options.BoxStyles, {'resize' : 1}));
+    },
+  
+    parseQuery: function (query) {
+      if( !query )
+        return {};
+      var params = {};
+
+      var pairs = query.split(/[;&]/);
+      for ( var i = 0; i < pairs.length; i++ ) {
+        var pair = pairs[i].split('=');
+        if ( !pair || pair.length != 2 )
+          continue;
+        params[unescape(pair[0])] = unescape(pair[1]).replace(/\+/g, ' ');
+       }
+       return params;
+    },
+
+    shake: function() {
+      var d=this.options.shake.distance;
+      var l=this.Wrapper.position();
+      l=l.left;
+      for(x=0;x<this.options.shake.loops;x++) {
+       this.Wrapper.animate({left: l+d}, this.options.shake.duration, this.options.shake.transition)
+       .animate({left: l-d}, this.options.shake.duration, this.options.shake.transition);
+      }
+       this.Wrapper.animate({"left": l+d}, this.options.shake.duration, this.options.shake.transition)
+       .animate({"left": l}, this.options.shake.duration, this.options.shake.transition);
+    }
+    
+  }
+})(jQuery); 

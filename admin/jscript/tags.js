@@ -1,4 +1,176 @@
-(function(a){a.jTagging={version:"1.0.0",defaults:{normalStyle:{padding:"2px 1px 0 1px",textDecoration:"none",color:"#6665cb",backgroundColor:""},selectedStyle:{padding:"2px 1px 0 1px",textDecoration:"none",color:"#fff",backgroundColor:"#6665cb"},normalHoverStyle:{padding:"2px 1px 0 1px",textDecoration:"none",color:"#fff",backgroundColor:"#6665cb"}},arrayRemove:function(b,d){b=b||[];for(var c in b){b[c]=a.trim(b[c]);if(b[c]==d||b[c]=="")b.splice(c,1)}},setClass:function(b,d,c){a(b).css(d);a(b).hover(function(){a(b).css(c)},
-function(){a(b).css(d)})}};a.fn.jTagging=function(b,d,c,h,e){d=d||",";c=c||a.jTagging.defaults.normalStyle;h=h||a.jTagging.defaults.selectedStyle;e=e||a.jTagging.defaults.normalHoverStyle;b=[b];return this.each(function(){var l=this.nodeName.toLowerCase(),n=this.type.toLowerCase();if(l!="input"||n!="text"&&l!="textarea")throw'Element must be "input:text" or "textarea"';var g=this;a.each(["keydown","keyup"],function(o,i){a(g).bind(i,function(){a.each(b,function(p,j){a.each(j,function(k,f){a("a",f).each(function(){var m=
-a(g).val().split(d);a.jTagging.arrayRemove(m);a(m).index(a(this).text())>=0?a.jTagging.setClass(this,h,e):a.jTagging.setClass(this,c,e)})})})})});a.each(b,function(o,i){a.each(i,function(p,j){a("a",j).each(function(){a(this).removeClass();a(this).attr("href","#");a(this).click(function(){var f=a(g).val().split(d);a.jTagging.arrayRemove(f);if(a(f).index(a(this).text())>=0){a.jTagging.arrayRemove(f,a(this).text());a(g).val(f.join(d));a.jTagging.setClass(this,c,e)}else{f.push(a(this).text());a(g).val(f.join(d));
-a.jTagging.setClass(this,h,e)}this.blur();return false});var k=a(g).val().split(d);a.jTagging.arrayRemove(k);a(k).index(a(this).text())>=0?a.jTagging.setClass(this,h,e):a.jTagging.setClass(this,c,e)})})})})}})(jQuery);
+/*
+ * jQuery jTagging plugin
+ * Version 1.0.0  (10/01/2007)
+ *
+ * Copyright (c) 2007 Alcohol.Wang
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ * http://www.alcoholwang.cn/jquery/jTagging.htm
+*/
+
+(
+	function($j)
+	{
+		$j.jTagging =
+		{
+			version : "1.0.0",
+			defaults : 
+			{
+				normalStyle : { padding : "2px 1px 0 1px", textDecoration : "none", color : "#6665cb", backgroundColor : "" },
+				selectedStyle : { padding : "2px 1px 0 1px", textDecoration : "none", color : "#fff", backgroundColor : "#6665cb"},
+				normalHoverStyle : { padding : "2px 1px 0 1px", textDecoration : "none", color : "#fff", backgroundColor : "#6665cb"}
+			}, 
+			arrayRemove : function(array, value)
+			{
+				array = array || [];
+				for(var o in array)
+				{
+					array[o] = $j.trim(array[o]);
+					if (array[o] == value || array[o] == "")
+					{
+						array.splice(o, 1);
+					}
+				}
+			},
+			setClass : function(el, nc, hc)
+			{
+				$j(el).css(nc);
+				$j(el).hover
+				(
+					function()
+					{
+						$j(el).css(hc);
+					}
+					,
+					function()
+					{
+						$j(el).css(nc);
+					}
+				);
+			}
+		};
+	
+		$j.fn.jTagging = function(tags, seperator,normalStyle, selectedStyle, normalHoverStyle)
+		{
+			seperator = seperator || ",";
+			normalStyle =normalStyle || $j.jTagging.defaults.normalStyle;
+			selectedStyle =selectedStyle || $j.jTagging.defaults.selectedStyle;
+			normalHoverStyle = normalHoverStyle || $j.jTagging.defaults.normalHoverStyle;
+			tags = [tags];
+		    return this.each
+			(
+				function()
+				{
+					var name = this.nodeName.toLowerCase();
+					var type = this.type.toLowerCase();
+					if  (name != "input" || type != "text"  && name != "textarea")
+					{
+						throw "Element must be \"input:text\" or \"textarea\"";
+					}
+					
+					var input = this;
+					
+					$j.each
+					(
+						["keydown", "keyup"]
+						,
+						function(i, n)
+						{
+							$j(input).bind
+							(
+								n
+								,
+								function()
+								{
+									$j.each
+									(
+										tags, function(i, n)
+										{
+											$j.each
+											(
+												n, function (j, o)
+												{
+													 $j("a", o).each
+													 (
+														function(k)
+														{
+															var value = $j(input).val().split(seperator);
+															$j.jTagging.arrayRemove(value);
+															if ($j(value).index($j(this).text()) >= 0)
+															{
+																$j.jTagging.setClass(this, selectedStyle, normalHoverStyle);
+															}
+															else
+															{
+																$j.jTagging.setClass(this, normalStyle, normalHoverStyle);
+															}
+														}
+													 );
+												}
+											);
+										}
+									);
+								}
+							);
+						}
+					);
+					
+					$j.each
+					(
+						tags, function(i, n)
+						{
+							$j.each
+							(
+								n, function (j, o)
+								{
+									 $j("a", o).each
+									 (
+										function(k)
+										{
+											$j(this).removeClass();
+											$j(this).attr("href", "#");
+											$j(this).click
+											(
+												function()
+												{
+													var value = $j(input).val().split(seperator);
+													$j.jTagging.arrayRemove(value);
+													if ($j(value).index($j(this).text()) >= 0)
+													{
+														$j.jTagging.arrayRemove(value, $j(this).text());
+														$j(input).val(value.join(seperator));
+														$j.jTagging.setClass(this, normalStyle, normalHoverStyle);
+													}
+													else
+													{
+														value.push($j(this).text());
+														$j(input).val(value.join(seperator));
+														$j.jTagging.setClass(this, selectedStyle, normalHoverStyle);
+													}
+													this.blur();
+													return false;
+												}
+											);
+
+											var value = $j(input).val().split(seperator);
+											$j.jTagging.arrayRemove(value);
+											if ($j(value).index($j(this).text()) >= 0)
+											{
+												$j.jTagging.setClass(this, selectedStyle, normalHoverStyle);
+											}
+											else
+											{
+												$j.jTagging.setClass(this,normalStyle, normalHoverStyle);
+											}
+										}
+									);
+								}
+							);
+						}
+					);
+				}
+			);
+		}
+	}
+)
+(jQuery);

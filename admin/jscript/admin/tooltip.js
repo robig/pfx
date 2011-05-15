@@ -1,18 +1,343 @@
-/*
+/**
+ * @license 
+ * jQuery Tools 1.2.5 Tooltip - UI essentials
+ * 
+ * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
+ * 
+ * http://flowplayer.org/tools/tooltip/
+ *
+ * Since: November 2008
+ * Date:    Wed Sep 22 06:02:10 2010 +0000 
+ */
+(function($) { 	
+	// static constructs
+	$.tools = $.tools || {version: '1.2.5'};
+	
+	$.tools.tooltip = {
+		
+		conf: { 
+			
+			// default effect variables
+			effect: 'toggle',			
+			fadeOutSpeed: "fast",
+			predelay: 0,
+			delay: 30,
+			opacity: 1,			
+			tip: 0,
+			
+			// 'top', 'bottom', 'right', 'left', 'center'
+			position: ['top', 'center'], 
+			offset: [0, 0],
+			relative: false,
+			cancelDefault: true,
+			
+			// type to event mapping 
+			events: {
+				def: 			"mouseenter,mouseleave",
+				input: 		"focus,blur",
+				widget:		"focus mouseenter,blur mouseleave",
+				tooltip:		"mouseenter,mouseleave"
+			},
+			
+			// 1.2
+			layout: '<div/>',
+			tipClass: 'tooltip'
+		},
+		
+		addEffect: function(name, loadFn, hideFn) {
+			effects[name] = [loadFn, hideFn];	
+		} 
+	};
+	
+	
+	var effects = { 
+		toggle: [ 
+			function(done) { 
+				var conf = this.getConf(), tip = this.getTip(), o = conf.opacity;
+				if (o < 1) { tip.css({opacity: o}); }
+				tip.show();
+				done.call();
+			},
+			
+			function(done) { 
+				this.getTip().hide();
+				done.call();
+			} 
+		],
+		
+		fade: [
+			function(done) { 
+				var conf = this.getConf();
+				this.getTip().fadeTo(conf.fadeInSpeed, conf.opacity, done); 
+			},  
+			function(done) { 
+				this.getTip().fadeOut(this.getConf().fadeOutSpeed, done); 
+			} 
+		]		
+	};   
 
- jQuery Tools 1.2.5 Tooltip - UI essentials
+		
+	/* calculate tip position relative to the trigger */  	
+	function getPosition(trigger, tip, conf) {	
 
- NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
+		
+		// get origin top/left position 
+		var top = conf.relative ? trigger.position().top : trigger.offset().top, 
+			 left = conf.relative ? trigger.position().left : trigger.offset().left,
+			 pos = conf.position[0];
 
- http://flowplayer.org/tools/tooltip/
+		top  -= tip.outerHeight() - conf.offset[0];
+		left += trigger.outerWidth() + conf.offset[1];
+		
+		// iPad position fix
+		if (/iPad/i.test(navigator.userAgent)) {
+			top -= $(window).scrollTop();
+		}
+		
+		// adjust Y		
+		var height = tip.outerHeight() + trigger.outerHeight();
+		if (pos == 'center') 	{ top += height / 2; }
+		if (pos == 'bottom') 	{ top += height; }
+		
+		
+		// adjust X
+		pos = conf.position[1]; 	
+		var width = tip.outerWidth() + trigger.outerWidth();
+		if (pos == 'center') 	{ left -= width / 2; }
+		if (pos == 'left')   	{ left -= width; }	 
+		
+		return {top: top, left: left};
+	}		
 
- Since: November 2008
- Date:    Wed Sep 22 06:02:10 2010 +0000
-*/
-(function(f){function p(a,b,c){var h=c.relative?a.position().top:a.offset().top,d=c.relative?a.position().left:a.offset().left,i=c.position[0];h-=b.outerHeight()-c.offset[0];d+=a.outerWidth()+c.offset[1];if(/iPad/i.test(navigator.userAgent))h-=f(window).scrollTop();var j=b.outerHeight()+a.outerHeight();if(i=="center")h+=j/2;if(i=="bottom")h+=j;i=c.position[1];a=b.outerWidth()+a.outerWidth();if(i=="center")d-=a/2;if(i=="left")d-=a;return{top:h,left:d}}function u(a,b){var c=this,h=a.add(c),d,i=0,j=
-0,k=a.attr("title"),q=a.attr("data-tooltip"),r=o[b.effect],m,s=a.is(":input"),v=s&&a.is(":checkbox, :radio, select, :button, :submit"),t=a.attr("type"),l=b.events[t]||b.events[s?v?"widget":"input":"def"];if(!r)throw'Nonexistent effect "'+b.effect+'"';l=l.split(/,\s*/);if(l.length!=2)throw"Tooltip: bad events configuration for "+t;a.bind(l[0],function(e){if(k&&b.cancelDefault){a.removeAttr("title");a.data("title",k)}clearTimeout(i);if(b.predelay)j=setTimeout(function(){c.show(e)},b.predelay);else c.show(e)}).bind(l[1],
-function(e){clearTimeout(j);if(b.delay)i=setTimeout(function(){c.hide(e)},b.delay);else c.hide(e);k&&b.cancelDefault&&a.attr("title",k)});f.extend(c,{show:function(e){if(!d){if(q)d=f(q);else if(b.tip)d=f(b.tip).eq(0);else if(k)d=f(b.layout).addClass(b.tipClass).appendTo(document.body).hide().append(k);else{d=a.next();d.length||(d=a.parent().next())}if(!d.length)throw"Cannot find tooltip for "+a;}if(c.isShown())return c;d.stop(true,true);var g=p(a,d,b);b.tip&&d.html(a.data("title"));e=e||f.Event();
-e.type="onBeforeShow";h.trigger(e,[g]);if(e.isDefaultPrevented())return c;g=p(a,d,b);d.css({position:"absolute",top:g.top,left:g.left});m=true;r[0].call(c,function(){e.type="onShow";m="full";h.trigger(e)});g=b.events.tooltip.split(/,\s*/);if(!d.data("__set")){d.bind(g[0],function(){clearTimeout(i);clearTimeout(j)});g[1]&&!a.is("input:not(:checkbox, :radio), textarea")&&d.bind(g[1],function(n){n.relatedTarget!=a[0]&&a.trigger(l[1].split(" ")[0])});d.data("__set",true)}return c},hide:function(e){if(!d||
-!c.isShown())return c;e=e||f.Event();e.type="onBeforeHide";h.trigger(e);if(!e.isDefaultPrevented()){m=false;o[b.effect][1].call(c,function(){e.type="onHide";h.trigger(e)});return c}},isShown:function(e){return e?m=="full":m},getConf:function(){return b},getTip:function(){return d},getTrigger:function(){return a}});f.each("onHide,onBeforeShow,onShow,onBeforeHide".split(","),function(e,g){f.isFunction(b[g])&&f(c).bind(g,b[g]);c[g]=function(n){n&&f(c).bind(g,n);return c}})}f.tools=f.tools||{version:"1.2.5"};
-f.tools.tooltip={conf:{effect:"toggle",fadeOutSpeed:"fast",predelay:0,delay:30,opacity:1,tip:0,position:["top","center"],offset:[0,0],relative:false,cancelDefault:true,events:{def:"mouseenter,mouseleave",input:"focus,blur",widget:"focus mouseenter,blur mouseleave",tooltip:"mouseenter,mouseleave"},layout:"<div/>",tipClass:"tooltip"},addEffect:function(a,b,c){o[a]=[b,c]}};var o={toggle:[function(a){var b=this.getConf(),c=this.getTip();b=b.opacity;b<1&&c.css({opacity:b});c.show();a.call()},function(a){this.getTip().hide();
-a.call()}],fade:[function(a){var b=this.getConf();this.getTip().fadeTo(b.fadeInSpeed,b.opacity,a)},function(a){this.getTip().fadeOut(this.getConf().fadeOutSpeed,a)}]};f.fn.tooltip=function(a){var b=this.data("tooltip");if(b)return b;a=f.extend(true,{},f.tools.tooltip.conf,a);if(typeof a.position=="string")a.position=a.position.split(/,?\s/);this.each(function(){b=new u(f(this),a);f(this).data("tooltip",b)});return a.api?b:this}})(jQuery);
+	
+	
+	function Tooltip(trigger, conf) {
+
+		var self = this, 
+			 fire = trigger.add(self),
+			 tip,
+			 timer = 0,
+			 pretimer = 0, 
+			 title = trigger.attr("title"),
+			 tipAttr = trigger.attr("data-tooltip"),
+			 effect = effects[conf.effect],
+			 shown,
+				 
+			 // get show/hide configuration
+			 isInput = trigger.is(":input"), 
+			 isWidget = isInput && trigger.is(":checkbox, :radio, select, :button, :submit"),			
+			 type = trigger.attr("type"),
+			 evt = conf.events[type] || conf.events[isInput ? (isWidget ? 'widget' : 'input') : 'def']; 
+		
+		
+		// check that configuration is sane
+		if (!effect) { throw "Nonexistent effect \"" + conf.effect + "\""; }					
+		
+		evt = evt.split(/,\s*/); 
+		if (evt.length != 2) { throw "Tooltip: bad events configuration for " + type; } 
+		
+		
+		// trigger --> show  
+		trigger.bind(evt[0], function(e) {
+		// remove default title
+		if (title && conf.cancelDefault) { 
+			trigger.removeAttr("title");
+			trigger.data("title", title);
+		}		
+			clearTimeout(timer);
+			if (conf.predelay) {
+				pretimer = setTimeout(function() { self.show(e); }, conf.predelay);	
+				
+			} else {
+				self.show(e);	
+			}
+			
+		// trigger --> hide
+		}).bind(evt[1], function(e)  {
+			clearTimeout(pretimer);
+			if (conf.delay)  {
+				timer = setTimeout(function() { self.hide(e); }, conf.delay);	
+				
+			} else {
+				self.hide(e);		
+			}
+			if (title && conf.cancelDefault) { 
+			trigger.attr("title", title);
+		}
+		}); 
+
+		
+		$.extend(self, {
+				
+			show: function(e) {  
+
+				// tip not initialized yet
+				if (!tip) {
+					
+					// data-tooltip 
+					if (tipAttr) {
+						tip = $(tipAttr);
+
+					// single tip element for all
+					} else if (conf.tip) { 
+						tip = $(conf.tip).eq(0);
+						
+					// autogenerated tooltip
+					} else if (title) { 
+						tip = $(conf.layout).addClass(conf.tipClass).appendTo(document.body)
+							.hide().append(title);
+
+					// manual tooltip
+					} else {	
+						tip = trigger.next();  
+						if (!tip.length) { tip = trigger.parent().next(); } 	 
+					}
+					
+					if (!tip.length) { throw "Cannot find tooltip for " + trigger;	}
+				} 
+			 	
+			 	if (self.isShown()) { return self; }  
+				
+			 	// stop previous animation
+			 	tip.stop(true, true); 			 	
+			 	
+				// get position
+				var pos = getPosition(trigger, tip, conf);			
+		
+				// restore title for single tooltip element
+				if (conf.tip) {
+					tip.html(trigger.data("title"));
+				}
+
+				// onBeforeShow
+				e = e || $.Event();
+				e.type = "onBeforeShow";
+				fire.trigger(e, [pos]);				
+				if (e.isDefaultPrevented()) { return self; }
+		
+				
+				// onBeforeShow may have altered the configuration
+				pos = getPosition(trigger, tip, conf);
+				
+				// set position
+				tip.css({position:'absolute', top: pos.top, left: pos.left});					
+				
+				shown = true;
+				
+				// invoke effect 
+				effect[0].call(self, function() {
+					e.type = "onShow";
+					shown = 'full';
+					fire.trigger(e);		 
+				});					
+
+	 	
+				// tooltip events       
+				var event = conf.events.tooltip.split(/,\s*/);
+
+				if (!tip.data("__set")) {
+					
+					tip.bind(event[0], function() { 
+						clearTimeout(timer);
+						clearTimeout(pretimer);
+					});
+					
+					if (event[1] && !trigger.is("input:not(:checkbox, :radio), textarea")) { 					
+						tip.bind(event[1], function(e) {
+	
+							// being moved to the trigger element
+							if (e.relatedTarget != trigger[0]) {
+								trigger.trigger(evt[1].split(" ")[0]);
+							}
+						}); 
+					} 
+					
+					tip.data("__set", true);
+				}
+				
+				return self;
+			},
+			
+			hide: function(e) {
+
+				if (!tip || !self.isShown()) { return self; }
+			
+				// onBeforeHide
+				e = e || $.Event();
+				e.type = "onBeforeHide";
+				fire.trigger(e);				
+				if (e.isDefaultPrevented()) { return; }
+	
+				shown = false;
+				
+				effects[conf.effect][1].call(self, function() {
+					e.type = "onHide";
+					fire.trigger(e);		 
+				});
+				
+				return self;
+			},
+			
+			isShown: function(fully) {
+				return fully ? shown == 'full' : shown;	
+			},
+				
+			getConf: function() {
+				return conf;	
+			},
+				
+			getTip: function() {
+				return tip;	
+			},
+			
+			getTrigger: function() {
+				return trigger;	
+			}		
+
+		});		
+
+		// callbacks	
+		$.each("onHide,onBeforeShow,onShow,onBeforeHide".split(","), function(i, name) {
+				
+			// configuration
+			if ($.isFunction(conf[name])) { 
+				$(self).bind(name, conf[name]); 
+			}
+
+			// API
+			self[name] = function(fn) {
+				if (fn) { $(self).bind(name, fn); }
+				return self;
+			};
+		});
+		
+	}
+		
+	
+	// jQuery plugin implementation
+	$.fn.tooltip = function(conf) {
+		
+		// return existing instance
+		var api = this.data("tooltip");
+		if (api) { return api; }
+
+		conf = $.extend(true, {}, $.tools.tooltip.conf, conf);
+		
+		// position can also be given as string
+		if (typeof conf.position == 'string') {
+			conf.position = conf.position.split(/,?\s/);	
+		}
+		
+		// install tooltip for each entry in jQuery object
+		this.each(function() {
+			api = new Tooltip($(this), conf); 
+			$(this).data("tooltip", api); 
+		});
+		
+		return conf.api ? api: this;		 
+	};
+		
+}) (jQuery);
+
+		
+

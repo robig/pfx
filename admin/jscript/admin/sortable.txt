@@ -1,0 +1,6 @@
+
+sortable.js is the combination of the following files from jQuery interface :
+
+idrag.js
+idrop.js
+iutil.js (Main interface library.)

@@ -1,1 +1,57 @@
-#carousel-wrapper{overflow:hidden;height:14em;width:100%;text-align:center;padding-bottom:1em}#carousel-wrap{width:54%;overflow:hidden;position:relative;left:2%;margin:auto}#mycarousel{list-style-type:none}#mycarousel li.page{padding-left:4px;padding-right:4px}#mycarousel li h4.cskin-dynamic{background-color:transparent;background-image:url(images/png/dynamic.png);background-position:center top;background-repeat:no-repeat;border:0}a.link-dynamic:hover,#pages .dynamic .page_tools a:hover,.outnav .dynamic .page_tools a:hover,.disabled .dynamic .page_tools a:hover{color:#204A87!important;text-decoration:none}#mycarousel li h4.cskin-plugin{background-color:transparent;background-image:url(images/png/plugin.png);background-position:center top;background-repeat:no-repeat;border:0}a.link-plugin:hover,.plugin .page .page_tools a:hover,.outnav .plugin .page_tools a:hover,.disabled .plugin .page_tools a:hover{color:#5C3566!important;text-decoration:none}#mycarousel li h4.cskin-static{background-color:transparent;background-image:url(images/png/static.png);background-position:center top;background-repeat:no-repeat;border:0}a.link-static:hover,#pages .static .page_tools a:hover,.outnav .static .page_tools a:hover,.disabled .static .page_tools a:hover{color:#8F5902!important;text-decoration:none}#mycarousel li h4.cskin-module{background-color:transparent;background-image:url(images/png/module.png);background-position:center top;background-repeat:no-repeat;border:0}a.link-module:hover,#pages .module .page_tools a:hover,.outnav .module .page_tools a:hover,.disabled .module .page_tools a:hover{color:#4E9A06!important;text-decoration:none}a.link-dynamic,a.link-module,a.link-static,a.link-plugin{color:#2E3436;position:relative;top:7em}#mycarousel li.current a.link-dynamic{color:#204A87}#mycarousel li.current a.link-module{color:#4E9A06}#mycarousel li.current a.link-static{color:#8F5902}#mycarousel li.current a.link-plugin{color:#5C3566}.next{width:32px;height:32px;cursor:pointer;background:transparent url(images/png/next-horizontal.png) no-repeat -96px 0;border:0;color:transparent;float:right;position:relative;top:64px;right:64px}.prev{width:32px;height:32px;cursor:pointer;background:transparent url(images/png/prev-horizontal.png) no-repeat 0 0;border:0;color:transparent;float:left;position:relative;top:64px;left:64px}#mycarousel li h4.cskin-dynamic:hover,#mycarousel li h4.cskin-plugin:hover,#mycarousel li h4.cskin-static:hover,#mycarousel li h4.cskin-module:hover,#mycarousel li.current h4.cskin-dynamic,#mycarousel li.current h4.cskin-plugin,#mycarousel li.current h4.cskin-static,#mycarousel li.current h4.cskin-module{background-position:center bottom;cursor:pointer}.next:hover,.prev:active{background-position:-64px 0}.next:active,.prev:hover{background-position:-32px 0}
+#carousel-wrapper{overflow:hidden;height:14em;width:100%;text-align:center;padding-bottom:1em}
+#carousel-wrap{width:54%;margin:auto;overflow:hidden;position:relative;left:2%}
+#mycarousel{list-style-type:none}
+#mycarousel li.page{padding-left:4px;padding-right:4px}
+#mycarousel li h4.cskin-dynamic{background-color:transparent;background-image:url(images/png/dynamic.png);background-position:center top;background-repeat:no-repeat;border:0}
+a.link-dynamic:hover,#pages .dynamic .page_tools a:hover,.outnav .dynamic .page_tools a:hover,.disabled .dynamic .page_tools a:hover{color:#204A87!important;text-decoration:none}
+#mycarousel li h4.cskin-plugin{background-color:transparent;background-image:url(images/png/plugin.png);background-position:center top;background-repeat:no-repeat;border:0}
+a.link-plugin:hover,.plugin .page .page_tools a:hover,.outnav .plugin .page_tools a:hover,.disabled .plugin .page_tools a:hover{color:#5C3566!important;text-decoration:none}
+#mycarousel li h4.cskin-static{background-color:transparent;background-image:url(images/png/static.png);background-position:center top;background-repeat:no-repeat;border:0}
+a.link-static:hover,#pages .static .page_tools a:hover,.outnav .static .page_tools a:hover,.disabled .static .page_tools a:hover{color:#8F5902!important;text-decoration:none}
+#mycarousel li h4.cskin-module{background-color:transparent;background-image:url(images/png/module.png);background-position:center top;background-repeat:no-repeat;border:0}
+a.link-module:hover,#pages .module .page_tools a:hover,.outnav .module .page_tools a:hover,.disabled .module .page_tools a:hover{color:#4E9A06!important;text-decoration:none}
+a.link-dynamic,a.link-module,a.link-static,a.link-plugin{color:#2E3436;position:relative;top:7em}
+#mycarousel li h4.cskin-dynamic:hover,#mycarousel li h4.cskin-plugin:hover,#mycarousel li h4.cskin-static:hover,#mycarousel li h4.cskin-module:hover{background-position:center bottom;cursor:pointer}
+#mycarousel li.current h4.cskin-dynamic,#mycarousel li.current h4.cskin-plugin,#mycarousel li.current h4.cskin-static,#mycarousel li.current h4.cskin-module{background-position:center bottom;cursor:pointer}
+#mycarousel li.current a.link-dynamic{color:#204A87}
+#mycarousel li.current a.link-module{color:#4E9A06}
+#mycarousel li.current a.link-static{color:#8F5902}
+#mycarousel li.current a.link-plugin{color:#5C3566}
+/**
+ *  Horizontal Buttons
+ */
+.next {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background: transparent url(images/png/next-horizontal.png) no-repeat -96px 0;
+    border:0;
+    color:transparent;float:right;position:relative;top:64px;right:64px
+}
+
+.next:hover {
+    background-position: -64px 0;
+}
+
+
+.next:active {
+    background-position: -32px 0;
+}
+
+
+.prev {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background: transparent url(images/png/prev-horizontal.png) no-repeat 0 0;
+    border:0;
+    color:transparent;float:left;position:relative;top:64px;left:64px
+}
+
+.prev:hover {
+    background-position: -32px 0;
+}
+
+.prev:active {
+    background-position: -64px 0;
+}

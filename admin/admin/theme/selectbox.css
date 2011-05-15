@@ -1,1 +1,68 @@
-select{background-color:transparent}div.selectbox-wrapper{font-weight:700;position:absolute;min-width:180px;background-color:#fff;border:1px solid #D3D7CF;font-size:.8em;text-align:left;max-height:200px;overflow:auto;z-index:100;margin:-10px 0 0;padding:0}div#privs_container,div.long-select div.selectbox-wrapper{min-width:280px}div.selectbox-wrapper ul{list-style-type:none;margin:0;padding:0}div.selectbox-wrapper ul li.selected{background-color:#555753;color:#fff}div.selectbox-wrapper ul li.current{background-color:#C00;color:#fff}div.selectbox-wrapper ul li{list-style-type:none;display:block;cursor:pointer;margin:0;padding:.6em}label{display:block}.selectbox /* look & feel of select box*/{padding-top:5px;background-image:url(./images/png/bg_select.png);background-position:center right;background-repeat:repeat-x;border:1px solid #D3D7CF;background-color:#fff;padding-left:4px;margin-right:4px;font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;width:168px;display:block;text-align:left;cursor:pointer;float:left;height:23px}input#dateformat_input,input#default_input,input#privs_input{width:294px}#contact_container{margin-top:3em;width:166px}#contact_container ul li{font-weight:400}
+select{background-color:transparent}
+div.selectbox-wrapper {
+font-weight:bold;
+position:absolute;
+min-width:180px;
+background-color:#fff;
+border:1px solid #D3D7CF;
+font-size:.8em;
+text-align:left;
+max-height:200px;
+overflow:auto;
+margin:-10px 0 0;
+padding:0;
+z-index:100
+}
+div#privs_container,div.long-select div.selectbox-wrapper{min-width:280px}
+div.selectbox-wrapper ul {
+list-style-type:none;
+margin:0;
+padding:0;
+}
+
+div.selectbox-wrapper ul li.selected {
+background-color:#555753;
+color:#fff;
+}
+
+div.selectbox-wrapper ul li.current {
+background-color:#CC0000;
+color:#fff;
+}
+
+div.selectbox-wrapper ul li {
+list-style-type:none;
+display:block;
+cursor:pointer;
+margin:0;
+padding:.6em;
+}
+
+label {
+display:block;
+}
+
+.selectbox /* look & feel of select box*/ {
+padding-top:5px;background-image:url(./images/png/bg_select.png);
+background-position:center right;background-repeat:repeat-x;
+border:1px solid #D3D7CF;background-color:#fff;
+padding-left:4px;
+margin-right:4px;
+font-family:"Lucida Grande","Lucida Sans Unicode",geneva,veranda,verdana,sans-serif;
+width:168px;
+display:block;
+text-align:left;
+cursor:pointer;
+float: left;height:23px
+}
+
+input#dateformat_input,input#default_input,input#privs_input{width:294px}
+
+#contact_container {
+margin-top:3em;
+width:166px;
+}
+
+#contact_container ul li {
+font-weight:400;
+}

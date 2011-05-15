@@ -1,1 +1,209 @@
-jQuery.fn.extend({selectbox:function(j){return this.each(function(){new jQuery.SelectBox(this,j)})}});if(!window.console)var console={log:function(){}};jQuery.SelectBox=function(j,p){function l(d){var b=jQuery("li",c);if(b){e+=d;if(e<0)e=0;else if(e>=b.size())e=b.size()-1;b.removeClass(a.hoverClass);jQuery(b[e]).addClass(a.hoverClass)}}var a=p||{};a.inputClass=a.inputClass||"selectbox";a.containerClass=a.containerClass||"selectbox-wrapper";a.hoverClass=a.hoverClass||"current";a.currentClass=a.selectedClass||"selected";a.debug=a.debug||false;var m=j.id,e=-1,n=false,f=0,k=jQuery(j),c=function(d){var b=document.createElement("div");c=jQuery(b);c.attr("id",m+"_container");c.addClass(d.containerClass);return c}(a),g=function(d){var b=document.createElement("input");b=jQuery(b);b.attr("id",m+"_input");b.attr("type","text");b.addClass(d.inputClass);b.attr("autocomplete","off");b.attr("readonly","readonly");b.attr("tabIndex",k.attr("tabindex"));return b}(a);k.hide().before(g).before(c);c.append(function(d){var b=document.createElement("ul");k.children("option").each(function(){var i=document.createElement("li");i.setAttribute("id",d+"_"+jQuery(this).val());i.innerHTML=jQuery(this).html();if(jQuery(this).is(":selected")){g.val(jQuery(this).html());jQuery(i).addClass(a.currentClass)}b.appendChild(i);jQuery(i).mouseover(function(h){f=1;a.debug&&console.log("over on : "+this.id);jQuery(h.target,c).addClass(a.hoverClass)}).mouseout(function(h){f=-1;a.debug&&console.log("out on : "+this.id);jQuery(h.target,c).removeClass(a.hoverClass)}).click(function(){jQuery("li."+a.hoverClass,c).get(0);a.debug&&console.log("click on :"+this.id);jQuery("li."+a.currentClass).removeClass(a.currentClass);jQuery(this).addClass(a.currentClass);var h=jQuery("li."+a.currentClass,c).get(0),o=(""+h.id).split("_");k.val(o[o.length-1]);g.val(jQuery(h).html());f=0;c.hide()})});return b}(g.attr("id"))).hide();g.css("width");g.click(function(){n||c.toggle()}).focus(function(){if(c.not(":visible")){n=true;c.show()}}).keydown(function(d){switch(d.keyCode){case 38:d.preventDefault();l(-1);break;case 40:d.preventDefault();l(1);break;case 13:d.preventDefault();jQuery("li."+a.hoverClass).trigger("click");break;case 27:f=0;c.hide()}}).blur(function(){if(c.is(":visible")&&f>0)a.debug&&console.log("container visible and has focus");else{f=0;c.hide()}})};
+/*
+ * jQuery selectbox plugin
+ *
+ * Copyright (c) 2007 Sadri Sahraoui (brainfault.com)
+ * Licensed under the GPL license and MIT:
+ *   http://www.opensource.org/licenses/GPL-license.php
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * The code is inspired from Autocomplete plugin (http://www.dyve.net/jquery/?autocomplete)
+ *
+ * Revision: $Id$
+ * Version: 0.5
+ * 
+ * Changelog :
+ *  Version 0.5 
+ *  - separate css style for current selected element and hover element which solve the highlight issue 
+ *  Version 0.4
+ *  - Fix width when the select is in a hidden div   @Pawel Maziarz
+ *  - Add a unique id for generated li to avoid conflict with other selects and empty values @Pawel Maziarz
+ */
+
+jQuery.fn.extend({
+	selectbox: function(options) {
+		return this.each(function() {
+			new jQuery.SelectBox(this, options);
+		});
+	}
+});
+
+
+/* pawel maziarz: work around for ie logging */
+if (!window.console) {
+	var console = {
+		log: function(msg) { 
+	 }
+	}
+}
+/* */
+
+jQuery.SelectBox = function(selectobj, options) {
+	
+	var opt = options || {};
+	opt.inputClass = opt.inputClass || "selectbox";
+	opt.containerClass = opt.containerClass || "selectbox-wrapper";
+	opt.hoverClass = opt.hoverClass || "current";
+	opt.currentClass = opt.selectedClass || "selected"
+	opt.debug = opt.debug || false;
+	
+	var elm_id = selectobj.id;
+	var active = -1;
+	var inFocus = false;
+	var hasfocus = 0;
+	//jquery object for select element
+	var $select = jQuery(selectobj);
+	// jquery container object
+	var $container = setupContainer(opt);
+	//jquery input object 
+	var $input = setupInput(opt);
+	// hide select and append newly created elements
+	$select.hide().before($input).before($container);
+	
+	
+	init();
+	
+	$input
+	.click(function(){
+    if (!inFocus) {
+		  $container.toggle();
+		}
+	})
+	.focus(function(){
+	   if ($container.not(':visible')) {
+	       inFocus = true;
+	       $container.show();
+	   }
+	})
+	.keydown(function(event) {	   
+		switch(event.keyCode) {
+			case 38: // up
+				event.preventDefault();
+				moveSelect(-1);
+				break;
+			case 40: // down
+				event.preventDefault();
+				moveSelect(1);
+				break;
+			//case 9:  // tab 
+			case 13: // return
+				event.preventDefault(); // seems not working in mac !
+				jQuery('li.'+opt.hoverClass).trigger('click');
+				break;
+			case 27: //escape
+			  hideMe();
+			  break;
+		}
+	})
+	.blur(function() {
+		if ($container.is(':visible') && hasfocus > 0 ) {
+			if(opt.debug) console.log('container visible and has focus')
+		} else {
+			hideMe();	
+		}
+	});
+
+
+	function hideMe() { 
+		hasfocus = 0;
+		$container.hide(); 
+	}
+	
+	function init() {
+		$container.append(getSelectOptions($input.attr('id'))).hide();
+		var width = $input.css('width');
+    }
+	
+	function setupContainer(options) {
+		var container = document.createElement("div");
+		$container = jQuery(container);
+		$container.attr('id', elm_id+'_container');
+		$container.addClass(options.containerClass);
+		
+		return $container;
+	}
+	
+	function setupInput(options) {
+		var input = document.createElement("input");
+		var $input = jQuery(input);
+		$input.attr("id", elm_id+"_input");
+		$input.attr("type", "text");
+		$input.addClass(options.inputClass);
+		$input.attr("autocomplete", "off");
+		$input.attr("readonly", "readonly");
+		$input.attr("tabIndex", $select.attr("tabindex")); // "I" capital is important for ie
+		
+		return $input;	
+	}
+	
+	function moveSelect(step) {
+		var lis = jQuery("li", $container);
+		if (!lis) return;
+
+		active += step;
+
+		if (active < 0) {
+			active = 0;
+		} else if (active >= lis.size()) {
+			active = lis.size() - 1;
+		}
+
+		lis.removeClass(opt.hoverClass);
+
+		jQuery(lis[active]).addClass(opt.hoverClass);
+	}
+	
+	function setCurrent() {	
+		var li = jQuery("li."+opt.currentClass, $container).get(0);
+		var ar = (''+li.id).split('_');
+		var el = ar[ar.length-1];
+		$select.val(el);
+		$input.val(jQuery(li).html());
+		return true;
+	}
+	
+	// select value
+	function getCurrentSelected() {
+		return $select.val();
+	}
+	
+	// input value
+	function getCurrentValue() {
+		return $input.val();
+	}
+	
+	function getSelectOptions(parentid) {
+		var select_options = new Array();
+		var ul = document.createElement('ul');
+		$select.children('option').each(function() {
+			var li = document.createElement('li');
+			li.setAttribute('id', parentid + '_' + jQuery(this).val());
+			li.innerHTML = jQuery(this).html();
+			if (jQuery(this).is(':selected')) {
+				$input.val(jQuery(this).html());
+				jQuery(li).addClass(opt.currentClass);
+			}
+			ul.appendChild(li);
+			jQuery(li)
+			.mouseover(function(event) {
+				hasfocus = 1;
+				if (opt.debug) console.log('over on : '+this.id);
+				jQuery(event.target, $container).addClass(opt.hoverClass);
+			})
+			.mouseout(function(event) {
+				hasfocus = -1;
+				if (opt.debug) console.log('out on : '+this.id);
+				jQuery(event.target, $container).removeClass(opt.hoverClass);
+			})
+			.click(function(event) {
+			  var fl = jQuery('li.'+opt.hoverClass, $container).get(0);
+				if (opt.debug) console.log('click on :'+this.id);
+				jQuery('li.'+opt.currentClass).removeClass(opt.currentClass); 
+				jQuery(this).addClass(opt.currentClass);
+				setCurrent();
+				hideMe();
+			});
+		});
+		return ul;
+	}
+	
+};

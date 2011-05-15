@@ -1,3 +1,68 @@
-var StopIteration={toString:function(){return"StopIteration"}},Editor={},indentUnit=2;
-(function(){function j(a){for(var b="",d=0;d<indentUnit;d++)b+=" ";a=a.replace(/\t/g,b).replace(/\u00a0/g," ").replace(/\r\n?/g,"\n");var e=0,c=[];a=a.split("\n");for(b=0;b<a.length;b++){b!=0&&c.push("\n");c.push(a[b])}return{next:function(){if(e<c.length)return c[e++];else throw StopIteration;}}}window.highlightText=function(a,b,d){d=(d||Editor.Parser).make(stringStream(j(a)));a=[];if(b.nodeType==1){var e=b;b=function(h){for(var f=0;f<h.length;f++)e.appendChild(h[f]);e.appendChild(document.createElement("BR"))}}try{for(;;){var c=
-d.next();if(c.value=="\n"){b(a);a=[]}else{var g=document.createElement("SPAN");g.className=c.style;g.appendChild(document.createTextNode(c.value));a.push(g)}}}catch(i){if(i!=StopIteration)throw i;}a.length&&b(a)}})();
+// Minimal framing needed to use CodeMirror-style parsers to highlight
+// code. Load this along with tokenize.js, stringstream.js, and your
+// parser. Then call highlightText, passing a string as the first
+// argument, and as the second argument either a callback function
+// that will be called with an array of SPAN nodes for every line in
+// the code, or a DOM node to which to append these spans, and
+// optionally (not needed if you only loaded one parser) a parser
+// object.
+
+// Stuff from util.js that the parsers are using.
+var StopIteration = {toString: function() {return "StopIteration"}};
+
+var Editor = {};
+var indentUnit = 2;
+
+(function(){
+  function normaliseString(string) {
+    var tab = "";
+    for (var i = 0; i < indentUnit; i++) tab += " ";
+
+    string = string.replace(/\t/g, tab).replace(/\u00a0/g, " ").replace(/\r\n?/g, "\n");
+    var pos = 0, parts = [], lines = string.split("\n");
+    for (var line = 0; line < lines.length; line++) {
+      if (line != 0) parts.push("\n");
+      parts.push(lines[line]);
+    }
+
+    return {
+      next: function() {
+        if (pos < parts.length) return parts[pos++];
+        else throw StopIteration;
+      }
+    };
+  }
+
+  window.highlightText = function(string, callback, parser) {
+    parser = (parser || Editor.Parser).make(stringStream(normaliseString(string)));
+    var line = [];
+    if (callback.nodeType == 1) {
+      var node = callback;
+      callback = function(line) {
+        for (var i = 0; i < line.length; i++)
+          node.appendChild(line[i]);
+        node.appendChild(document.createElement("BR"));
+      };
+    }
+
+    try {
+      while (true) {
+        var token = parser.next();
+        if (token.value == "\n") {
+          callback(line);
+          line = [];
+        }
+        else {
+          var span = document.createElement("SPAN");
+          span.className = token.style;
+          span.appendChild(document.createTextNode(token.value));
+          line.push(span);
+        }
+      }
+    }
+    catch (e) {
+      if (e != StopIteration) throw e;
+    }
+    if (line.length) callback(line);
+  }
+})();

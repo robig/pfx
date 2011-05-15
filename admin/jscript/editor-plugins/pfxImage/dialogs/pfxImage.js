@@ -1,17 +1,646 @@
-﻿(function(){var k=function(c,f){function l(){var b=arguments,a=this.getContentElement("advanced","txtdlgGenStyle");a&&a.commit.apply(a,b);this.foreach(function(d){d.commit&&d.id!="txtdlgGenStyle"&&d.commit.apply(d,b)})}var i=/^\s*(\d+)((px)|\%)?\s*$/i,h=function(){var b=this.originalElement;b.setCustomData("isReady","true");b.removeListener("load",h);b.removeListener("error",g);b.removeListener("abort",g);if(this.firstLoad)this.firstLoad=false},g=function(){var b=this.originalElement;b.removeListener("load",
-h);b.removeListener("error",g);b.removeListener("abort",g)};return{title:f=="pfxImage"?c.lang.image.title:c.lang.image.titleButton,minWidth:420,minHeight:310,onShow:function(){this.linkEditMode=this.pfxImageEditMode=this.linkElement=this.pfxImageElement=false;this.firstLoad=this.lockRatio=true;this.addLink=false;var b=this.getParentEditor(),a=this.getParentEditor().getSelection().getSelectedElement(),d=a&&a.getAscendant("a");this.originalElement=b.document.createElement("img");this.originalElement.setAttribute("alt",
-"");this.originalElement.setCustomData("isReady","false");if(d){this.linkElement=d;this.linkEditMode=true;var e=d.getChildren();if(e.count()==1){var j=e.getItem(0).getName();if(j=="img"||j=="input"){this.pfxImageElement=e.getItem(0);if(this.pfxImageElement.getName()=="img")this.pfxImageEditMode="img";else if(this.pfxImageElement.getName()=="input")this.pfxImageEditMode="input"}}f=="pfxImage"&&this.setupContent(2,d)}if(a&&a.getName()=="img"&&!a.getAttribute("_cke_realelement")||a&&a.getName()=="input"&&
-a.getAttribute("type")=="pfxImage"){this.pfxImageEditMode=a.getName();this.pfxImageElement=a}if(this.pfxImageEditMode){this.cleanpfxImageElement=this.pfxImageElement;this.pfxImageElement=this.cleanpfxImageElement.clone(true,true);this.setupContent(1,this.pfxImageElement)}else this.pfxImageElement=b.document.createElement("img")},onOk:function(){if(this.pfxImageEditMode){var b=this.pfxImageEditMode;if(f=="pfxImage"&&b=="input"&&confirm(c.lang.image.button2Img)){this.pfxImageElement=c.document.createElement("img");
-this.pfxImageElement.setAttribute("alt","");c.insertElement(this.pfxImageElement)}else if(f!="pfxImage"&&b=="img"&&confirm(c.lang.image.img2Button)){this.pfxImageElement=c.document.createElement("input");this.pfxImageElement.setAttributes({type:"pfxImage",alt:""});c.insertElement(this.pfxImageElement)}else{this.pfxImageElement=this.cleanpfxImageElement;delete this.cleanpfxImageElement}}else{if(f=="pfxImage")this.pfxImageElement=c.document.createElement("img");else{this.pfxImageElement=c.document.createElement("input");
-this.pfxImageElement.setAttribute("type","pfxImage")}this.pfxImageElement.setAttribute("alt","")}if(!this.linkEditMode)this.linkElement=c.document.createElement("a");this.commitContent(1,this.pfxImageElement);this.commitContent(2,this.linkElement);this.pfxImageElement.getAttribute("style")||this.pfxImageElement.removeAttribute("style");if(this.pfxImageEditMode)if(!this.linkEditMode&&this.addLink){c.insertElement(this.linkElement);this.pfxImageElement.appendTo(this.linkElement)}else{if(this.linkEditMode&&
-!this.addLink){c.getSelection().selectElement(this.linkElement);c.insertElement(this.pfxImageElement)}}else if(this.addLink)if(this.linkEditMode)c.insertElement(this.pfxImageElement);else{c.insertElement(this.linkElement);this.linkElement.append(this.pfxImageElement,false)}else c.insertElement(this.pfxImageElement)},onLoad:function(){f!="pfxImage"&&this.hidePage("Link");this._.element.getDocument();this.commitContent=l},onHide:function(){if(this.originalElement){this.originalElement.removeListener("load",
-h);this.originalElement.removeListener("error",g);this.originalElement.removeListener("abort",g);this.originalElement.remove();this.originalElement=false}delete this.pfxImageElement},contents:[{id:"info",label:c.lang.image.infoTab,accessKey:"I",elements:[{type:"vbox",padding:0,children:[{type:"hbox",align:"right",children:[{id:"txtUrl",type:"text",label:c.lang.common.url,required:true,onChange:function(){var b=this.getDialog();if(this.getValue().length>0){b=this.getDialog();b.originalElement.setCustomData("isReady",
-"false")}},setup:function(b,a){if(b==1){this.setValue(a.getAttribute("_cke_saved_src")||a.getAttribute("src"));this.setInitValue();this.focus()}},commit:function(b,a){if(b==1&&(this.getValue()||this.isChanged())){a.setAttribute("_cke_saved_src",decodeURI(this.getValue()));a.setAttribute("src",decodeURI(this.getValue()))}else if(b==8){a.setAttribute("src","");a.removeAttribute("src")}},validate:CKEDITOR.dialog.validate.notEmpty(c.lang.image.urlMissing)}]}]},{type:"button",id:"browse",align:"center",
-label:c.lang.common.browseServer,hidden:true,filebrowser:"info:txtUrl"},{id:"txtAlt",type:"text",label:c.lang.image.alt,accessKey:"T","default":"Image",setup:function(b,a){b==1&&this.setValue(a.getAttribute("alt"))},commit:function(b,a){if(b==1){if(this.getValue()||this.isChanged())a.setAttribute("alt",this.getValue())}else b==8&&a.removeAttribute("alt")}}]},{id:"Link",label:c.lang.link.title,padding:0,elements:[{id:"txtUrl",type:"text",label:c.lang.common.url,style:"width: 100%","default":"",setup:function(b,
-a){if(b==2){var d=a.getAttribute("_cke_saved_href");d||(d=a.getAttribute("href"));this.setValue(d)}},commit:function(b,a){if(b==2)if(this.getValue()||this.isChanged()){a.setAttribute("_cke_saved_href",decodeURI(this.getValue()));a.setAttribute("href","javascript:void(0)/*"+CKEDITOR.tools.getNextNumber()+"*/");if(this.getValue()||!c.config.pfxImage_removeLinkByEmptyURL)this.getDialog().addLink=true}}},{type:"button",id:"browse",filebrowser:{action:"Browse",target:"Link:txtUrl",url:undefined!==c.config.filebrowserImageBrowseLinkUrl?
-c.config.filebrowserImageBrowseLinkUrl:c.config.filebrowserBrowseUrl||c.config.filebrowserImageBrowseUrl},hidden:true,label:c.lang.common.browseServer},{id:"cmbTarget",type:"select",label:c.lang.common.target,"default":"",items:[[c.lang.common.notSet,""],[c.lang.common.targetNew,"_blank"],[c.lang.common.targetTop,"_top"],[c.lang.common.targetSelf,"_self"],[c.lang.common.targetParent,"_parent"]],setup:function(b,a){b==2&&this.setValue(a.getAttribute("target"))},commit:function(b,a){if(b==2)if(this.getValue()||
-this.isChanged())a.setAttribute("target",this.getValue())}}]},{id:"Upload",hidden:true,filebrowser:"uploadButton",label:c.lang.image.upload,elements:[{type:"file",id:"upload",label:c.lang.image.btnUpload,style:"height:40px",size:38},{type:"fileButton",id:"uploadButton",filebrowser:"info:txtUrl",label:c.lang.image.btnUpload,"for":["Upload","upload"]}]},{id:"advanced",label:c.lang.common.advancedTab,elements:[{type:"hbox",children:[{type:"text",id:"linkId",label:c.lang.common.id,setup:function(b,a){b==
-1&&this.setValue(a.getAttribute("id"))},commit:function(b,a){if(b==1)if(this.getValue()||this.isChanged())a.setAttribute("id",this.getValue())}},{type:"text",id:"txtLangCode",label:c.lang.common.langCode,"default":"",setup:function(b,a){b==1&&this.setValue(a.getAttribute("lang"))},commit:function(b,a){if(b==1)if(this.getValue()||this.isChanged())a.setAttribute("lang",this.getValue())}}]},{type:"text",id:"txtGenLongDescr",label:c.lang.common.longDescr,setup:function(b,a){b==1&&this.setValue(a.getAttribute("longDesc"))},
-commit:function(b,a){if(b==1)if(this.getValue()||this.isChanged())a.setAttribute("longDesc",this.getValue())}},{type:"hbox",widths:["50%","50%"],children:[{type:"text",id:"txtGenClass",label:c.lang.common.cssClass,"default":editorImageClass,setup:function(b,a){b==1&&this.setValue(a.getAttribute("class"))},commit:function(b,a){if(b==1)if(this.getValue()||this.isChanged())a.setAttribute("class",this.getValue())}},{type:"text",id:"txtGenTitle",label:c.lang.common.advisoryTitle,"default":"",setup:function(b,
-a){b==1&&this.setValue(a.getAttribute("title"))},commit:function(b,a){if(b==1){if(this.getValue()||this.isChanged())a.setAttribute("title",this.getValue())}else b==8&&a.removeAttribute("title")}}]},{type:"text",id:"txtdlgGenStyle",label:c.lang.common.cssStyle,"default":"",setup:function(b,a){if(b==1){var d=a.getAttribute("style");if(!d&&a.$.style.cssText)d=a.$.style.cssText;this.setValue(d);var e=a.$.style.height;d=a.$.style.width;e=(e?e:"").match(i);d=(d?d:"").match(i);this.attributesInStyle={height:!!e,
-width:!!d}}},commit:function(b,a){if(b==1&&(this.getValue()||this.isChanged()))a.setAttribute("style",this.getValue())}}]}]}};CKEDITOR.dialog.add("pfxImage",function(c){return k(c,"pfxImage")});CKEDITOR.dialog.add("pfxImagebutton",function(c){return k(c,"pfxImagebutton")})})();
+﻿/*
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+(function()
+{
+	var pfxImageDialog = function( editor, dialogType )
+	{
+		// Load pfxImage preview.
+		var IMAGE = 1,
+			LINK = 2,
+			CLEANUP = 8,
+			regexGetSize = /^\s*(\d+)((px)|\%)?\s*$/i,
+			regexGetSizeOrEmpty = /(^\s*(\d+)((px)|\%)?\s*$)|^$/i,
+			pxLengthRegex = /^\d+px$/;
+
+		// Custom commit dialog logic, where we're intended to give inline style
+		// field (txtdlgGenStyle) higher priority to avoid overwriting styles contribute
+		// by other fields.
+		function commitContent()
+		{
+			var args = arguments;
+			var inlineStyleField = this.getContentElement( 'advanced', 'txtdlgGenStyle' );
+			inlineStyleField && inlineStyleField.commit.apply( inlineStyleField, args );
+
+			this.foreach( function( widget )
+			{
+				if ( widget.commit &&  widget.id != 'txtdlgGenStyle' )
+					widget.commit.apply( widget, args );
+			});
+		}
+
+		// Avoid recursions.
+		var incommit;
+
+		// Synchronous field values to other impacted fields is required, e.g. border
+		// size change should alter inline-style text as well.
+		function commitInternally( targetFields )
+		{
+			if ( incommit )
+				return;
+
+			incommit = 1;
+
+			var dialog = this.getDialog(),
+				element = dialog.pfxImageElement;
+			if ( element )
+			{
+				// Commit this field and broadcast to target fields.
+				this.commit( IMAGE, element );
+
+				targetFields = [].concat( targetFields );
+				var length = targetFields.length,
+					field;
+
+				for ( var i = 0; i < length; i++ )
+				{
+					field = dialog.getContentElement.apply( dialog, targetFields[ i ].split( ':' ) );
+					// May cause recursion.
+					field && field.setup( IMAGE, element );
+				}
+			}
+
+			incommit = 0;
+		}
+
+		var onImgLoadEvent = function()
+		{
+			// pfxImage is ready.
+			var original = this.originalElement;
+			original.setCustomData( 'isReady', 'true' );
+			original.removeListener( 'load', onImgLoadEvent );
+			original.removeListener( 'error', onImgLoadErrorEvent );
+			original.removeListener( 'abort', onImgLoadErrorEvent );
+
+			if ( this.firstLoad )
+				this.firstLoad = false;
+		};
+
+		var onImgLoadErrorEvent = function()
+		{
+			// Error. pfxImage is not loaded.
+			var original = this.originalElement;
+			original.removeListener( 'load', onImgLoadEvent );
+			original.removeListener( 'error', onImgLoadErrorEvent );
+			original.removeListener( 'abort', onImgLoadErrorEvent );
+		};
+
+		return {
+			title : ( dialogType == 'pfxImage' ) ? editor.lang.image.title : editor.lang.image.titleButton,
+			minWidth : 420,
+			minHeight : 310,
+			onShow : function()
+			{
+				this.pfxImageElement = false;
+				this.linkElement = false;
+
+				// Default: create a new element.
+				this.pfxImageEditMode = false;
+				this.linkEditMode = false;
+
+				this.lockRatio = true;
+				this.firstLoad = true;
+				this.addLink = false;
+
+				var editor = this.getParentEditor(),
+					sel = this.getParentEditor().getSelection(),
+					element = sel.getSelectedElement(),
+					link = element && element.getAscendant( 'a' );
+
+				// Copy of the pfxImage
+				this.originalElement = editor.document.createElement( 'img' );
+				this.originalElement.setAttribute( 'alt', '' );
+				this.originalElement.setCustomData( 'isReady', 'false' );
+
+				if ( link )
+				{
+					this.linkElement = link;
+					this.linkEditMode = true;
+
+					// Look for pfxImage element.
+					var linkChildren = link.getChildren();
+					if ( linkChildren.count() == 1 )			// 1 child.
+					{
+						var childTagName = linkChildren.getItem( 0 ).getName();
+						if ( childTagName == 'img' || childTagName == 'input' )
+						{
+							this.pfxImageElement = linkChildren.getItem( 0 );
+							if ( this.pfxImageElement.getName() == 'img' )
+								this.pfxImageEditMode = 'img';
+							else if ( this.pfxImageElement.getName() == 'input' )
+								this.pfxImageEditMode = 'input';
+						}
+					}
+					// Fill out all fields.
+					if ( dialogType == 'pfxImage' )
+						this.setupContent( LINK, link );
+				}
+
+				if ( element && element.getName() == 'img' && !element.getAttribute( '_cke_realelement' )
+					|| element && element.getName() == 'input' && element.getAttribute( 'type' ) == 'pfxImage' )
+				{
+					this.pfxImageEditMode = element.getName();
+					this.pfxImageElement = element;
+				}
+
+				if ( this.pfxImageEditMode )
+				{
+					// Use the original element as a buffer from  since we don't want
+					// temporary changes to be committed, e.g. if the dialog is canceled.
+					this.cleanpfxImageElement = this.pfxImageElement;
+					this.pfxImageElement = this.cleanpfxImageElement.clone( true, true );
+
+					// Fill out all fields.
+					this.setupContent( IMAGE, this.pfxImageElement );
+				}
+				else
+					this.pfxImageElement =  editor.document.createElement( 'img' );
+
+			},
+			onOk : function()
+			{
+				// Edit existing pfxImage.
+				if ( this.pfxImageEditMode )
+				{
+					var imgTagName = this.pfxImageEditMode;
+
+					// pfxImage dialog and Input element.
+					if ( dialogType == 'pfxImage' && imgTagName == 'input' && confirm( editor.lang.image.button2Img ) )
+					{
+						// Replace INPUT-> IMG
+						imgTagName = 'img';
+						this.pfxImageElement = editor.document.createElement( 'img' );
+						this.pfxImageElement.setAttribute( 'alt', '' );
+						editor.insertElement( this.pfxImageElement );
+					}
+					// pfxImageButton dialog and pfxImage element.
+					else if ( dialogType != 'pfxImage' && imgTagName == 'img' && confirm( editor.lang.image.img2Button ))
+					{
+						// Replace IMG -> INPUT
+						imgTagName = 'input';
+						this.pfxImageElement = editor.document.createElement( 'input' );
+						this.pfxImageElement.setAttributes(
+							{
+								type : 'pfxImage',
+								alt : ''
+							}
+						);
+						editor.insertElement( this.pfxImageElement );
+					}
+					else
+					{
+						// Restore the original element before all commits.
+						this.pfxImageElement = this.cleanpfxImageElement;
+						delete this.cleanpfxImageElement;
+					}
+				}
+				else	// Create a new pfxImage.
+				{
+					// pfxImage dialog -> create IMG element.
+					if ( dialogType == 'pfxImage' )
+						this.pfxImageElement = editor.document.createElement( 'img' );
+					else
+					{
+						this.pfxImageElement = editor.document.createElement( 'input' );
+						this.pfxImageElement.setAttribute ( 'type' ,'pfxImage' );
+					}
+					this.pfxImageElement.setAttribute( 'alt', '' );
+				}
+
+				// Create a new link.
+				if ( !this.linkEditMode )
+					this.linkElement = editor.document.createElement( 'a' );
+
+				// Set attributes.
+				this.commitContent( IMAGE, this.pfxImageElement );
+				this.commitContent( LINK, this.linkElement );
+
+				// Remove empty style attribute.
+				if ( !this.pfxImageElement.getAttribute( 'style' ) )
+					this.pfxImageElement.removeAttribute( 'style' );
+
+				// Insert a new pfxImage.
+				if ( !this.pfxImageEditMode )
+				{
+					if ( this.addLink )
+					{
+						//Insert a new Link.
+						if ( !this.linkEditMode )
+						{
+							editor.insertElement(this.linkElement);
+							this.linkElement.append(this.pfxImageElement, false);
+						}
+						else	 //Link already exists, pfxImage not.
+							editor.insertElement(this.pfxImageElement );
+					}
+					else
+						editor.insertElement( this.pfxImageElement );
+				}
+				else		// pfxImage already exists.
+				{
+					//Add a new link element.
+					if ( !this.linkEditMode && this.addLink )
+					{
+						editor.insertElement( this.linkElement );
+						this.pfxImageElement.appendTo( this.linkElement );
+					}
+					//Remove Link, pfxImage exists.
+					else if ( this.linkEditMode && !this.addLink )
+					{
+						editor.getSelection().selectElement( this.linkElement );
+						editor.insertElement( this.pfxImageElement );
+					}
+				}
+			},
+			onLoad : function()
+			{
+				if ( dialogType != 'pfxImage' )
+					this.hidePage( 'Link' );		//Hide Link tab.
+				var doc = this._.element.getDocument();
+
+				this.commitContent = commitContent;
+			},
+			onHide : function()
+			{
+				if ( this.originalElement )
+				{
+					this.originalElement.removeListener( 'load', onImgLoadEvent );
+					this.originalElement.removeListener( 'error', onImgLoadErrorEvent );
+					this.originalElement.removeListener( 'abort', onImgLoadErrorEvent );
+					this.originalElement.remove();
+					this.originalElement = false;		// Dialog is closed.
+				}
+
+				delete this.pfxImageElement;
+			},
+			contents : [
+				{
+					id : 'info',
+					label : editor.lang.image.infoTab,
+					accessKey : 'I',
+					elements :
+					[
+						{
+							type : 'vbox',
+							padding : 0,
+							children :
+							[
+								{
+									type : 'hbox',
+									align : 'right',
+									children :
+									[
+										{
+											id : 'txtUrl',
+											type : 'text',
+											label : editor.lang.common.url,
+											required: true,
+											onChange : function()
+											{
+												var dialog = this.getDialog(),
+													newUrl = this.getValue();
+
+												//Update original pfxImage
+												if ( newUrl.length > 0 )	//Prevent from load before onShow
+												{
+													dialog = this.getDialog();
+													var original = dialog.originalElement;
+
+													original.setCustomData( 'isReady', 'false' );
+												}
+											},
+											setup : function( type, element )
+											{
+												if ( type == IMAGE )
+												{
+													var url = element.getAttribute( '_cke_saved_src' ) || element.getAttribute( 'src' );
+													var field = this;
+
+													field.setValue( url );		// And call this.onChange()
+													// Manually set the initial value.(#4191)
+													field.setInitValue();
+													field.focus();
+												}
+											},
+											commit : function( type, element )
+											{
+												if ( type == IMAGE && ( this.getValue() || this.isChanged() ) )
+												{
+													element.setAttribute( '_cke_saved_src', decodeURI( this.getValue() ) );
+													element.setAttribute( 'src', decodeURI( this.getValue() ) );
+												}
+												else if ( type == CLEANUP )
+												{
+													element.setAttribute( 'src', '' );	// If removeAttribute doesn't work.
+													element.removeAttribute( 'src' );
+												}
+											},
+											validate : CKEDITOR.dialog.validate.notEmpty( editor.lang.image.urlMissing )
+										}
+									]
+								}
+							]
+						},
+ 										{
+											type : 'button',
+											id : 'browse',
+											align : 'center',
+											label : editor.lang.common.browseServer,
+											hidden : true,
+											filebrowser : 'info:txtUrl'
+										},
+						{
+							id : 'txtAlt',
+							type : 'text',
+							label : editor.lang.image.alt,
+							accessKey : 'T',
+							'default' : 'Image',
+							setup : function( type, element )
+							{
+								if ( type == IMAGE )
+									this.setValue( element.getAttribute( 'alt' ) );
+							},
+							commit : function( type, element )
+							{
+								if ( type == IMAGE )
+								{
+									if ( this.getValue() || this.isChanged() )
+										element.setAttribute( 'alt', this.getValue() );
+								}
+								else if ( type == CLEANUP )
+								{
+									element.removeAttribute( 'alt' );
+								}
+							}
+						}
+					]
+				},
+				{
+					id : 'Link',
+					label : editor.lang.link.title,
+					padding : 0,
+					elements :
+					[
+						{
+							id : 'txtUrl',
+							type : 'text',
+							label : editor.lang.common.url,
+							style : 'width: 100%',
+							'default' : '',
+							setup : function( type, element )
+							{
+								if ( type == LINK )
+								{
+									var href = element.getAttribute( '_cke_saved_href' );
+									if ( !href )
+										href = element.getAttribute( 'href' );
+									this.setValue( href );
+								}
+							},
+							commit : function( type, element )
+							{
+								if ( type == LINK )
+								{
+									if ( this.getValue() || this.isChanged() )
+									{
+										element.setAttribute( '_cke_saved_href', decodeURI( this.getValue() ) );
+										element.setAttribute( 'href', 'javascript:void(0)/*' +
+											CKEDITOR.tools.getNextNumber() + '*/' );
+
+										if ( this.getValue() || !editor.config.pfxImage_removeLinkByEmptyURL )
+											this.getDialog().addLink = true;
+									}
+								}
+							}
+						},
+						{
+							type : 'button',
+							id : 'browse',
+							filebrowser :
+							{
+								action : 'Browse',
+								target: 'Link:txtUrl',
+								url: ( undefined !== editor.config.filebrowserImageBrowseLinkUrl ) ? editor.config.filebrowserImageBrowseLinkUrl : editor.config.filebrowserBrowseUrl || editor.config.filebrowserImageBrowseUrl
+							},
+							hidden : true,
+							label : editor.lang.common.browseServer
+						},
+						{
+							id : 'cmbTarget',
+							type : 'select',
+							label : editor.lang.common.target,
+							'default' : '',
+							items :
+							[
+								[ editor.lang.common.notSet , ''],
+								[ editor.lang.common.targetNew , '_blank'],
+								[ editor.lang.common.targetTop , '_top'],
+								[ editor.lang.common.targetSelf , '_self'],
+								[ editor.lang.common.targetParent , '_parent']
+							],
+							setup : function( type, element )
+							{
+								if ( type == LINK )
+									this.setValue( element.getAttribute( 'target' ) );
+							},
+							commit : function( type, element )
+							{
+								if ( type == LINK )
+								{
+									if ( this.getValue() || this.isChanged() )
+										element.setAttribute( 'target', this.getValue() );
+								}
+							}
+						}
+					]
+				},
+				{
+					id : 'Upload',
+					hidden : true,
+					filebrowser : 'uploadButton',
+					label : editor.lang.image.upload,
+					elements :
+					[
+						{
+							type : 'file',
+							id : 'upload',
+							label : editor.lang.image.btnUpload,
+							style: 'height:40px',
+							size : 38
+						},
+						{
+							type : 'fileButton',
+							id : 'uploadButton',
+							filebrowser : 'info:txtUrl',
+							label : editor.lang.image.btnUpload,
+							'for' : [ 'Upload', 'upload' ]
+						}
+					]
+				},
+				{
+					id : 'advanced',
+					label : editor.lang.common.advancedTab,
+					elements :
+					[
+						{
+							type : 'hbox',
+							children :
+							[
+								{
+									type : 'text',
+									id : 'linkId',
+									label : editor.lang.common.id,
+									setup : function( type, element )
+									{
+										if ( type == IMAGE )
+											this.setValue( element.getAttribute( 'id' ) );
+									},
+									commit : function( type, element )
+									{
+										if ( type == IMAGE )
+										{
+											if ( this.getValue() || this.isChanged() )
+												element.setAttribute( 'id', this.getValue() );
+										}
+									}
+								},
+								{
+									type : 'text',
+									id : 'txtLangCode',
+									label : editor.lang.common.langCode,
+									'default' : '',
+									setup : function( type, element )
+									{
+										if ( type == IMAGE )
+											this.setValue( element.getAttribute( 'lang' ) );
+									},
+									commit : function( type, element )
+									{
+										if ( type == IMAGE )
+										{
+											if ( this.getValue() || this.isChanged() )
+												element.setAttribute( 'lang', this.getValue() );
+										}
+									}
+								}
+							]
+						},
+						{
+							type : 'text',
+							id : 'txtGenLongDescr',
+							label : editor.lang.common.longDescr,
+							setup : function( type, element )
+							{
+								if ( type == IMAGE )
+									this.setValue( element.getAttribute( 'longDesc' ) );
+							},
+							commit : function( type, element )
+							{
+								if ( type == IMAGE )
+								{
+									if ( this.getValue() || this.isChanged() )
+										element.setAttribute( 'longDesc', this.getValue() );
+								}
+							}
+						},
+						{
+							type : 'hbox',
+							widths : [ '50%', '50%' ],
+							children :
+							[
+								{
+									type : 'text',
+									id : 'txtGenClass',
+									label : editor.lang.common.cssClass,
+									'default' : editorImageClass,
+									setup : function( type, element )
+									{
+										if ( type == IMAGE )
+											this.setValue( element.getAttribute( 'class' ) );
+									},
+									commit : function( type, element )
+									{
+										if ( type == IMAGE )
+										{
+											if ( this.getValue() || this.isChanged() )
+												element.setAttribute( 'class', this.getValue() );
+										}
+									}
+								},
+								{
+									type : 'text',
+									id : 'txtGenTitle',
+									label : editor.lang.common.advisoryTitle,
+									'default' : '',
+									setup : function( type, element )
+									{
+										if ( type == IMAGE )
+											this.setValue( element.getAttribute( 'title' ) );
+									},
+									commit : function( type, element )
+									{
+										if ( type == IMAGE )
+										{
+											if ( this.getValue() || this.isChanged() )
+												element.setAttribute( 'title', this.getValue() );
+										}
+										else if ( type == CLEANUP )
+										{
+											element.removeAttribute( 'title' );
+										}
+									}
+								}
+							]
+						},
+						{
+							type : 'text',
+							id : 'txtdlgGenStyle',
+							label : editor.lang.common.cssStyle,
+							'default' : '',
+							setup : function( type, element )
+							{
+								if ( type == IMAGE )
+								{
+									var genStyle = element.getAttribute( 'style' );
+									if ( !genStyle && element.$.style.cssText )
+										genStyle = element.$.style.cssText;
+									this.setValue( genStyle );
+
+									var height = element.$.style.height,
+										width = element.$.style.width,
+										aMatchH  = ( height ? height : '' ).match( regexGetSize ),
+										aMatchW  = ( width ? width : '').match( regexGetSize );
+
+									this.attributesInStyle =
+									{
+										height : !!aMatchH,
+										width : !!aMatchW
+									};
+								}
+							},
+							commit : function( type, element )
+							{
+								if ( type == IMAGE && ( this.getValue() || this.isChanged() ) )
+								{
+									element.setAttribute( 'style', this.getValue() );
+								}
+							}
+						}
+					]
+				}
+			]
+		};
+	};
+
+	CKEDITOR.dialog.add( 'pfxImage', function( editor )
+		{
+			return pfxImageDialog( editor, 'pfxImage' );
+		});
+
+	CKEDITOR.dialog.add( 'pfxImagebutton', function( editor )
+		{
+			return pfxImageDialog( editor, 'pfxImagebutton' );
+		});
+})();

@@ -1,7 +1,238 @@
-﻿CKEDITOR.plugins.add("pfxLink",{init:function(b){b.addCommand("pfxLink",new CKEDITOR.dialogCommand("pfxLink"));b.addCommand("anchor",new CKEDITOR.dialogCommand("anchor"));b.addCommand("unlink",new CKEDITOR.unlinkCommand);b.ui.addButton("pfxLink",{label:b.lang.link.toolbar,command:"pfxLink"});b.ui.addButton("Unlink",{label:b.lang.unlink,command:"unlink"});b.ui.addButton("Anchor",{label:b.lang.anchor.toolbar,command:"anchor"});CKEDITOR.dialog.add("pfxLink",this.path+"dialogs/pfxLink.js");CKEDITOR.dialog.add("anchor",
-this.path+"dialogs/anchor.js");b.addCss("img.cke_anchor{background-image: url("+CKEDITOR.getUrl(this.path+"images/anchor.gif")+");background-position: center center;background-repeat: no-repeat;border: 1px solid #a9a9a9;width: 18px !important;height: 18px !important;}\na.cke_anchor{background-image: url("+CKEDITOR.getUrl(this.path+"images/anchor.gif")+");background-position: 0 center;background-repeat: no-repeat;border: 1px solid #a9a9a9;padding-left: 18px;}");b.on("selectionChange",function(a){var c=
-b.getCommand("unlink");(a=a.data.path.lastElement&&a.data.path.lastElement.getAscendant("a",true))&&a.getName()=="a"&&a.getAttribute("href")?c.setState(CKEDITOR.TRISTATE_OFF):c.setState(CKEDITOR.TRISTATE_DISABLED)});b.on("doubleclick",function(a){var c=CKEDITOR.plugins.link.getSelectedLink(b)||a.data.element;if(c.is("a"))a.data.dialog=c.getAttribute("name")&&!c.getAttribute("href")?"anchor":"pfxLink";else if(c.is("img")&&c.getAttribute("_cke_real_element_type")=="anchor")a.data.dialog="anchor"});
-b.addMenuItems&&b.addMenuItems({anchor:{label:b.lang.anchor.menu,command:"anchor",group:"anchor"},link:{label:b.lang.link.menu,command:"pfxLink",group:"pfxLink",order:1},unlink:{label:b.lang.unlink,command:"unlink",group:"pfxLink",order:5}});b.contextMenu&&b.contextMenu.addListener(function(a){if(!a||a.isReadOnly())return null;a=a.is("img")&&a.getAttribute("_cke_real_element_type")=="anchor";if(!a){if(!(a=CKEDITOR.plugins.link.getSelectedLink(b)))return null;a=a.getAttribute("name")&&!a.getAttribute("href")}return a?
-{anchor:CKEDITOR.TRISTATE_OFF}:{link:CKEDITOR.TRISTATE_OFF,unlink:CKEDITOR.TRISTATE_OFF}})},afterInit:function(b){var a=b.dataProcessor;(a=a&&a.dataFilter)&&a.addRules({elements:{a:function(c){var d=c.attributes;if(d.name&&!d.href)return b.createFakeParserElement(c,"cke_anchor","anchor")}}})},requires:["fakeobjects"]});
-CKEDITOR.plugins.link={getSelectedLink:function(b){try{var a=b.getSelection();if(a.getType()==CKEDITOR.SELECTION_ELEMENT){var c=a.getSelectedElement();if(c.is("a"))return c}var d=a.getRanges(true)[0];d.shrink(CKEDITOR.SHRINK_TEXT);return d.getCommonAncestor().getAscendant("a",true)}catch(e){return null}}};CKEDITOR.unlinkCommand=function(){};
-CKEDITOR.unlinkCommand.prototype={exec:function(b){for(var a=b.getSelection(),c=a.createBookmarks(),d=a.getRanges(),e,f=0;f<d.length;f++){e=d[f].getCommonAncestor(true);(e=e.getAscendant("a",true))&&d[f].selectNodeContents(e)}a.selectRanges(d);b.document.$.execCommand("unlink",false,null);a.selectBookmarks(c)},startDisabled:true};CKEDITOR.tools.extend(CKEDITOR.config,{linkShowAdvancedTab:true,linkShowTargetTab:true});
+﻿/*
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+CKEDITOR.plugins.add( 'pfxLink',
+{
+	init : function( editor )
+	{
+		// Add the link and unlink buttons.
+		editor.addCommand( 'pfxLink', new CKEDITOR.dialogCommand( 'pfxLink' ) );
+		editor.addCommand( 'anchor', new CKEDITOR.dialogCommand( 'anchor' ) );
+		editor.addCommand( 'unlink', new CKEDITOR.unlinkCommand() );
+		editor.ui.addButton( 'pfxLink',
+			{
+				label : editor.lang.link.toolbar,
+				command : 'pfxLink'
+			} );
+		editor.ui.addButton( 'Unlink',
+			{
+				label : editor.lang.unlink,
+				command : 'unlink'
+			} );
+		editor.ui.addButton( 'Anchor',
+			{
+				label : editor.lang.anchor.toolbar,
+				command : 'anchor'
+			} );
+		CKEDITOR.dialog.add( 'pfxLink', this.path + 'dialogs/pfxLink.js' );
+		CKEDITOR.dialog.add( 'anchor', this.path + 'dialogs/anchor.js' );
+
+		// Add the CSS styles for anchor placeholders.
+		editor.addCss(
+			'img.cke_anchor' +
+			'{' +
+				'background-image: url(' + CKEDITOR.getUrl( this.path + 'images/anchor.gif' ) + ');' +
+				'background-position: center center;' +
+				'background-repeat: no-repeat;' +
+				'border: 1px solid #a9a9a9;' +
+				'width: 18px !important;' +
+				'height: 18px !important;' +
+			'}\n' +
+			'a.cke_anchor' +
+			'{' +
+				'background-image: url(' + CKEDITOR.getUrl( this.path + 'images/anchor.gif' ) + ');' +
+				'background-position: 0 center;' +
+				'background-repeat: no-repeat;' +
+				'border: 1px solid #a9a9a9;' +
+				'padding-left: 18px;' +
+			'}'
+		   	);
+
+		// Register selection change handler for the unlink button.
+		 editor.on( 'selectionChange', function( evt )
+			{
+				/*
+				 * Despite our initial hope, document.queryCommandEnabled() does not work
+				 * for this in Firefox. So we must detect the state by element paths.
+				 */
+				var command = editor.getCommand( 'unlink' ),
+					element = evt.data.path.lastElement && evt.data.path.lastElement.getAscendant( 'a', true );
+				if ( element && element.getName() == 'a' && element.getAttribute( 'href' ) )
+					command.setState( CKEDITOR.TRISTATE_OFF );
+				else
+					command.setState( CKEDITOR.TRISTATE_DISABLED );
+			} );
+
+		editor.on( 'doubleclick', function( evt )
+			{
+				var element = CKEDITOR.plugins.link.getSelectedLink( editor ) || evt.data.element;
+
+				if ( element.is( 'a' ) )
+					evt.data.dialog =  ( element.getAttribute( 'name' ) && !element.getAttribute( 'href' ) ) ? 'anchor' : 'pfxLink';
+				else if ( element.is( 'img' ) && element.getAttribute( '_cke_real_element_type' ) == 'anchor' )
+					evt.data.dialog = 'anchor';
+			});
+
+		// If the "menu" plugin is loaded, register the menu items.
+		if ( editor.addMenuItems )
+		{
+			editor.addMenuItems(
+				{
+					anchor :
+					{
+						label : editor.lang.anchor.menu,
+						command : 'anchor',
+						group : 'anchor'
+					},
+
+					link :
+					{
+						label : editor.lang.link.menu,
+						command : 'pfxLink',
+						group : 'pfxLink',
+						order : 1
+					},
+
+					unlink :
+					{
+						label : editor.lang.unlink,
+						command : 'unlink',
+						group : 'pfxLink',
+						order : 5
+					}
+				});
+		}
+
+		// If the "contextmenu" plugin is loaded, register the listeners.
+		if ( editor.contextMenu )
+		{
+			editor.contextMenu.addListener( function( element, selection )
+				{
+					if ( !element || element.isReadOnly() )
+						return null;
+
+					var isAnchor = ( element.is( 'img' ) && element.getAttribute( '_cke_real_element_type' ) == 'anchor' );
+
+					if ( !isAnchor )
+					{
+						if ( !( element = CKEDITOR.plugins.link.getSelectedLink( editor ) ) )
+							return null;
+
+						isAnchor = ( element.getAttribute( 'name' ) && !element.getAttribute( 'href' ) );
+					}
+
+					return isAnchor ?
+							{ anchor : CKEDITOR.TRISTATE_OFF } :
+							{ link : CKEDITOR.TRISTATE_OFF, unlink : CKEDITOR.TRISTATE_OFF };
+				});
+		}
+	},
+
+	afterInit : function( editor )
+	{
+		// Register a filter to displaying placeholders after mode change.
+
+		var dataProcessor = editor.dataProcessor,
+			dataFilter = dataProcessor && dataProcessor.dataFilter;
+
+		if ( dataFilter )
+		{
+			dataFilter.addRules(
+				{
+					elements :
+					{
+						a : function( element )
+						{
+							var attributes = element.attributes;
+							if ( attributes.name && !attributes.href )
+								return editor.createFakeParserElement( element, 'cke_anchor', 'anchor' );
+						}
+					}
+				});
+		}
+	},
+
+	requires : [ 'fakeobjects' ]
+} );
+
+CKEDITOR.plugins.link =
+{
+	/**
+	 *  Get the surrounding link element of current selection.
+	 * @param editor
+	 * @example CKEDITOR.plugins.link.getSelectedLink( editor );
+	 * @since 3.2.1
+	 * The following selection will all return the link element.
+	 *	 <pre>
+	 *  <a href="#">li^nk</a>
+	 *  <a href="#">[link]</a>
+	 *  text[<a href="#">link]</a>
+	 *  <a href="#">li[nk</a>]
+	 *  [<b><a href="#">li]nk</a></b>]
+	 *  [<a href="#"><b>li]nk</b></a>
+	 * </pre>
+	 */
+	getSelectedLink : function( editor )
+	{
+		try
+		{
+			var selection = editor.getSelection();
+			if ( selection.getType() == CKEDITOR.SELECTION_ELEMENT )
+			{
+				var selectedElement = selection.getSelectedElement();
+				if ( selectedElement.is( 'a' ) )
+					return selectedElement;
+			}
+
+			var range = selection.getRanges( true )[ 0 ];
+			range.shrink( CKEDITOR.SHRINK_TEXT );
+			var root = range.getCommonAncestor();
+			return root.getAscendant( 'a', true );
+		}
+		catch( e ) { return null; }
+	}
+};
+
+CKEDITOR.unlinkCommand = function(){};
+CKEDITOR.unlinkCommand.prototype =
+{
+	/** @ignore */
+	exec : function( editor )
+	{
+		/*
+		 * execCommand( 'unlink', ... ) in Firefox leaves behind <span> tags at where
+		 * the <a> was, so again we have to remove the link ourselves. (See #430)
+		 *
+		 * TODO: Use the style system when it's complete. Let's use execCommand()
+		 * as a stopgap solution for now.
+		 */
+		var selection = editor.getSelection(),
+			bookmarks = selection.createBookmarks(),
+			ranges = selection.getRanges(),
+			rangeRoot,
+			element;
+
+		for ( var i = 0 ; i < ranges.length ; i++ )
+		{
+			rangeRoot = ranges[i].getCommonAncestor( true );
+			element = rangeRoot.getAscendant( 'a', true );
+			if ( !element )
+				continue;
+			ranges[i].selectNodeContents( element );
+		}
+
+		selection.selectRanges( ranges );
+		editor.document.$.execCommand( 'unlink', false, null );
+		selection.selectBookmarks( bookmarks );
+	},
+
+	startDisabled : true
+};
+
+CKEDITOR.tools.extend( CKEDITOR.config,
+{
+	linkShowAdvancedTab : true,
+	linkShowTargetTab : true
+} );

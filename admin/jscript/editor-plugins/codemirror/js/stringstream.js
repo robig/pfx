@@ -1,3 +1,145 @@
-var stringStream=function(i){function j(){for(;c==b.length;){e+=b;b="";c=0;try{b=i.next()}catch(a){if(a!=StopIteration)throw a;else return false}}return true}var b="",c=0,e="";return{peek:function(){if(!j())return null;return b.charAt(c)},next:function(){if(!j())if(e.length>0)throw"End of stringstream reached without emptying buffer ('"+e+"').";else throw StopIteration;return b.charAt(c++)},get:function(){var a=e;e="";if(c>0){a+=b.slice(0,c);b=b.slice(c);c=0}return a},push:function(a){b=b.slice(0,
-c)+a+b.slice(c)},lookAhead:function(a,d,f,n){function g(k){return n?k.toLowerCase():k}a=g(a);var h=false,l=e,o=c;for(f&&this.nextWhileMatches(/[\s\u00a0]/);;){f=c+a.length;var m=b.length-c;if(f<=b.length){h=a==g(b.slice(c,f));c=f;break}else if(a.slice(0,m)==g(b.slice(c))){e+=b;b="";try{b=i.next()}catch(p){break}c=0;a=a.slice(m)}else break}if(!(h&&d)){b=e.slice(l.length)+b;c=o;e=l}return h},more:function(){return this.peek()!==null},applies:function(a){var d=this.peek();return d!==null&&a(d)},nextWhile:function(a){for(var d;(d=
-this.peek())!==null&&a(d);)this.next()},matches:function(a){var d=this.peek();return d!==null&&a.test(d)},nextWhileMatches:function(a){for(var d;(d=this.peek())!==null&&a.test(d);)this.next()},equals:function(a){return a===this.peek()},endOfLine:function(){var a=this.peek();return a==null||a=="\n"}}};
+/* String streams are the things fed to parsers (which can feed them
+ * to a tokenizer if they want). They provide peek and next methods
+ * for looking at the current character (next 'consumes' this
+ * character, peek does not), and a get method for retrieving all the
+ * text that was consumed since the last time get was called.
+ *
+ * An easy mistake to make is to let a StopIteration exception finish
+ * the token stream while there are still characters pending in the
+ * string stream (hitting the end of the buffer while parsing a
+ * token). To make it easier to detect such errors, the stringstreams
+ * throw an exception when this happens.
+ */
+
+// Make a stringstream stream out of an iterator that returns strings.
+// This is applied to the result of traverseDOM (see codemirror.js),
+// and the resulting stream is fed to the parser.
+var stringStream = function(source){
+  // String that's currently being iterated over.
+  var current = "";
+  // Position in that string.
+  var pos = 0;
+  // Accumulator for strings that have been iterated over but not
+  // get()-ed yet.
+  var accum = "";
+  // Make sure there are more characters ready, or throw
+  // StopIteration.
+  function ensureChars() {
+    while (pos == current.length) {
+      accum += current;
+      current = ""; // In case source.next() throws
+      pos = 0;
+      try {current = source.next();}
+      catch (e) {
+        if (e != StopIteration) throw e;
+        else return false;
+      }
+    }
+    return true;
+  }
+
+  return {
+    // peek: -> character
+    // Return the next character in the stream.
+    peek: function() {
+      if (!ensureChars()) return null;
+      return current.charAt(pos);
+    },
+    // next: -> character
+    // Get the next character, throw StopIteration if at end, check
+    // for unused content.
+    next: function() {
+      if (!ensureChars()) {
+        if (accum.length > 0)
+          throw "End of stringstream reached without emptying buffer ('" + accum + "').";
+        else
+          throw StopIteration;
+      }
+      return current.charAt(pos++);
+    },
+    // get(): -> string
+    // Return the characters iterated over since the last call to
+    // .get().
+    get: function() {
+      var temp = accum;
+      accum = "";
+      if (pos > 0){
+        temp += current.slice(0, pos);
+        current = current.slice(pos);
+        pos = 0;
+      }
+      return temp;
+    },
+    // Push a string back into the stream.
+    push: function(str) {
+      current = current.slice(0, pos) + str + current.slice(pos);
+    },
+    lookAhead: function(str, consume, skipSpaces, caseInsensitive) {
+      function cased(str) {return caseInsensitive ? str.toLowerCase() : str;}
+      str = cased(str);
+      var found = false;
+
+      var _accum = accum, _pos = pos;
+      if (skipSpaces) this.nextWhileMatches(/[\s\u00a0]/);
+
+      while (true) {
+        var end = pos + str.length, left = current.length - pos;
+        if (end <= current.length) {
+          found = str == cased(current.slice(pos, end));
+          pos = end;
+          break;
+        }
+        else if (str.slice(0, left) == cased(current.slice(pos))) {
+          accum += current; current = "";
+          try {current = source.next();}
+          catch (e) {break;}
+          pos = 0;
+          str = str.slice(left);
+        }
+        else {
+          break;
+        }
+      }
+
+      if (!(found && consume)) {
+        current = accum.slice(_accum.length) + current;
+        pos = _pos;
+        accum = _accum;
+      }
+
+      return found;
+    },
+
+    // Utils built on top of the above
+    // more: -> boolean
+    // Produce true if the stream isn't empty.
+    more: function() {
+      return this.peek() !== null;
+    },
+    applies: function(test) {
+      var next = this.peek();
+      return (next !== null && test(next));
+    },
+    nextWhile: function(test) {
+      var next;
+      while ((next = this.peek()) !== null && test(next))
+        this.next();
+    },
+    matches: function(re) {
+      var next = this.peek();
+      return (next !== null && re.test(next));
+    },
+    nextWhileMatches: function(re) {
+      var next;
+      while ((next = this.peek()) !== null && re.test(next))
+        this.next();
+    },
+    equals: function(ch) {
+      return ch === this.peek();
+    },
+    endOfLine: function() {
+      var next = this.peek();
+      return next == null || next == "\n";
+    }
+  };
+};

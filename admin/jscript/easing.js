@@ -34,8 +34,34 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
 */
-jQuery.easing.jswing=jQuery.easing.swing;
-jQuery.extend(jQuery.easing,{def:"easeOutQuad",swing:function(f,a,b,c,d){return jQuery.easing[jQuery.easing.def](f,a,b,c,d)},easeInOutBack:function(f,a,b,c,d,e){if(e==undefined)e=1.70158;if((a/=d/2)<1)return c/2*a*a*(((e*=1.525)+1)*a-e)+b;return c/2*((a-=2)*a*(((e*=1.525)+1)*a+e)+2)+b},easeInQuad:function(f,a,b,c,d){return c*(a/=d)*a+b},easeOutQuad:function(f,a,b,c,d){return-c*(a/=d)*(a-2)+b},easeInOutQuad:function(f,a,b,c,d){if((a/=d/2)<1)return c/2*a*a+b;return-c/2*(--a*(a-2)-1)+b}});
+
+// t: current time, b: begInnIng value, c: change In value, d: duration
+jQuery.easing['jswing'] = jQuery.easing['swing'];
+
+jQuery.extend( jQuery.easing,
+{
+	def: 'easeOutQuad',
+	swing: function (x, t, b, c, d) {
+		//alert(jQuery.easing.default);
+		return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
+	},
+	easeInOutBack: function (x, t, b, c, d, s) {
+		if (s == undefined) s = 1.70158; 
+		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+	},
+	easeInQuad: function (x, t, b, c, d) {
+		return c*(t/=d)*t + b;
+	},
+	easeOutQuad: function (x, t, b, c, d) {
+		return -c *(t/=d)*(t-2) + b;
+	},
+	easeInOutQuad: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return c/2*t*t + b;
+		return -c/2 * ((--t)*(t-2) - 1) + b;
+	}
+});
+
 /*
  *
  * TERMS OF USE - EASING EQUATIONS

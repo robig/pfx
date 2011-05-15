@@ -64,9 +64,29 @@ if ( ($pfx_refering['host'] == $_SERVER['HTTP_HOST']) ) {
 	$_REQUEST = NULL;
 ?>
     //<![CDATA[
+function bb2_addLoadEvent(func) {
+	var oldonload = window.onload;
+	if (typeof window.onload != 'function') {
+		window.onload = func;
+	} else {
+		window.onload = function() {
+			oldonload();
+			func();
+		}
+	}
+}
 
-function bb2_addLoadEvent(a){var b=window.onload;window.onload=typeof window.onload!="function"?a:function(){b();a()}}bb2_addLoadEvent(function(){for(i=0;i<document.forms.length;i++)if(document.forms[i].method=="post"){var a=document.createElement("input");a.setAttribute("type","hidden");a.name="<?php echo htmlspecialchars_decode( urldecode($pfx_cookie_name) ); ?>";a.value="<?php echo htmlspecialchars_decode( urldecode($pfx_cookie_value) ); ?>";document.forms[i].appendChild(a)}});
-
+bb2_addLoadEvent(function() {
+	for ( i = 0; i < document.forms.length; i++ ) {
+		if (document.forms[i].method == 'post') {
+			var myElement = document.createElement('input');
+			myElement.setAttribute('type', 'hidden');
+			myElement.name = '<?php echo htmlspecialchars_decode( urldecode($pfx_cookie_name) ); ?>';
+			myElement.value = '<?php echo htmlspecialchars_decode( urldecode($pfx_cookie_value) ); ?>';
+			document.forms[i].appendChild(myElement);
+		}
+	}
+});
     //]]>
 <?php
 } else {

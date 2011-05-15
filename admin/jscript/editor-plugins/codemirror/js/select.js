@@ -1,18 +1,676 @@
-var select={};
-(function(){function p(a,c){for(;a&&a.parentNode!=c;)a=a.parentNode;return a}function t(a,c){for(;!a.previousSibling&&a.parentNode!=c;)a=a.parentNode;return p(a.previousSibling,c)}select.ie_selection=document.selection&&document.selection.createRangeCollection;select.scrollToNode=function(a,c){if(a){for(var b=a,e=document.body,d=document.documentElement,f=!b.nextSibling||!b.nextSibling.nextSibling||!b.nextSibling.nextSibling.nextSibling,g=0;b&&!b.offsetTop;){g++;b=b.previousSibling}if(g==0)f=false;
-if(!(webkit&&b&&b.offsetTop==5&&b.offsetLeft==5)){g=g*(b?b.offsetHeight:0);var j=0,h=a?a.offsetWidth:0;for(b=b;b&&b.offsetParent;){g+=b.offsetTop;isBR(b)||(j+=b.offsetLeft);b=b.offsetParent}b=e.scrollLeft||d.scrollLeft||0;e=e.scrollTop||d.scrollTop||0;var k=false,l=window.innerWidth||d.clientWidth||0;if(c||h<l){if(c){var n=select.offsetInNode(a),m=nodeText(a).length;if(m)j+=h*(n/m)}h=j-b;if(h<0||h>l){b=j;k=true}}j=g-e;if(j<0||f||j>(window.innerHeight||d.clientHeight||0)-50){e=f?1E6:g;k=true}k&&window.scrollTo(b,
-e)}}};select.scrollToCursor=function(a){select.scrollToNode(select.selectionTopNode(a,true)||a.firstChild,true)};var i=null;select.snapshotChanged=function(){if(i)i.changed=true};select.snapshotReplaceNode=function(a,c,b,e){function d(f){if(a==f.node){i.changed=true;if(b&&f.offset>b)f.offset-=b;else{f.node=c;f.offset+=e||0}}}if(i){d(i.start);d(i.end)}};select.snapshotMove=function(a,c,b,e,d){function f(g){if(a==g.node&&(!d||g.offset==0)){i.changed=true;g.node=c;g.offset=e?Math.max(0,g.offset+b):b}}
-if(i){f(i.start);f(i.end)}};if(select.ie_selection){var u=function(a){function c(h){for(var k=null;!k&&h;){k=h.nextSibling;h=h.parentNode}return b(k)}function b(h){for(;h&&h.firstChild;)h=h.firstChild;return{node:h,offset:0}}var e=document.selection.createRange();e.collapse(a);a=e.parentElement();if(!isAncestor(document.body,a))return null;if(!a.firstChild)return b(a);var d=e.duplicate();d.moveToElementText(a);d.collapse(true);for(var f=a.firstChild;f;f=f.nextSibling){if(f.nodeType==3){var g=f.nodeValue.length;
-d.move("character",g)}else{d.moveToElementText(f);d.collapse(false)}var j=e.compareEndPoints("StartToStart",d);if(j==0)return c(f);if(j!=1){if(f.nodeType!=3)return b(f);d.setEndPoint("StartToEnd",e);return{node:f,offset:g-d.text.length}}}return c(a)};select.markSelection=function(){i=null;if(document.selection){var a=u(true),c=u(false);if(a&&c)i={start:a,end:c,changed:false}}};select.selectMarked=function(){function a(e){var d=document.body.createTextRange(),f=e.node;if(f)if(f.nodeType==3){d.moveToElementText(f.parentNode);
-for(e=e.offset;f.previousSibling;){f=f.previousSibling;e+=(f.innerText||"").length}d.move("character",e)}else{d.moveToElementText(f);d.collapse(true)}else{d.moveToElementText(document.body);d.collapse(false)}return d}if(i&&i.changed){var c=a(i.start),b=a(i.end);c.setEndPoint("StartToEnd",b);c.select()}};select.offsetInNode=function(a){var c=document.selection;if(!c)return 0;c=c.createRange();var b=c.duplicate();try{b.moveToElementText(a)}catch(e){return 0}c.setEndPoint("StartToStart",b);return c.text.length};
-select.selectionTopNode=function(a,c){function b(l,n){if(n.nodeType==3){for(var m=0,o=n.previousSibling;o&&o.nodeType==3;){m+=o.nodeValue.length;o=o.previousSibling}if(o){try{l.moveToElementText(o)}catch(x){return false}l.collapse(false)}else l.moveToElementText(n.parentNode);m&&l.move("character",m)}else try{l.moveToElementText(n)}catch(y){return false}return true}var e=document.selection;if(!e)return false;var d=e.createRange(),f=d.duplicate();d.collapse(c);var g=d.parentElement();if(g&&isAncestor(a,
-g)){f.moveToElementText(g);if(d.compareEndPoints("StartToStart",f)==1)return p(g,a)}c=0;for(g=a.childNodes.length-1;c<g;){var j=Math.ceil((g+c)/2),h=a.childNodes[j];if(!h)return false;if(!b(f,h))return false;if(d.compareEndPoints("StartToStart",f)==1)c=j;else g=j-1}if(c==0){e=e.createRange();d=e.duplicate();try{d.moveToElementText(a)}catch(k){return null}if(e.compareEndPoints("StartToStart",d)==0)return null}return a.childNodes[c]||null};select.focusAfterNode=function(a,c){var b=document.body.createTextRange();
-b.moveToElementText(a||c);b.collapse(!a);b.select()};select.somethingSelected=function(){var a=document.selection;return a&&a.createRange().text!=""};var v=function(a){var c=document.selection;if(c){c=c.createRange();c.pasteHTML(a);c.collapse(false);c.select()}};select.insertNewlineAtCursor=function(){v("<br>")};select.insertTabAtCursor=function(){v("\u00a0\u00a0\u00a0\u00a0")};select.cursorPos=function(a,c){var b=document.selection;if(!b)return null;for(var e=select.selectionTopNode(a,c);e&&!isBR(e);)e=
-e.previousSibling;b=b.createRange();var d=b.duplicate();b.collapse(c);if(e){d.moveToElementText(e);d.collapse(false)}else{try{d.moveToElementText(a)}catch(f){return null}d.collapse(true)}b.setEndPoint("StartToStart",d);return{node:e,offset:b.text.length}};select.setCursorPos=function(a,c,b){function e(f){var g=document.body.createTextRange();if(f.node){g.moveToElementText(f.node);g.collapse(false)}else{g.moveToElementText(a);g.collapse(true)}g.move("character",f.offset);return g}var d=e(c);b&&b!=
-c&&d.setEndPoint("EndToEnd",e(b));d.select()};select.getBookmark=function(a){var c=select.cursorPos(a,true);a=select.cursorPos(a,false);if(c&&a)return{from:c,to:a}};select.setBookmark=function(a,c){c&&select.setCursorPos(a,c.from,c.to)}}else{var s=function(a,c){for(;a.nodeType!=3&&!isBR(a);){var b=a.childNodes[c]||a.nextSibling;for(c=0;!b&&a.parentNode;){a=a.parentNode;b=a.nextSibling}a=b;if(!b)break}return{node:a,offset:c}};select.markSelection=function(){var a=window.getSelection();if(!a||a.rangeCount==
-0)return i=null;a=a.getRangeAt(0);i={start:s(a.startContainer,a.startOffset),end:s(a.endContainer,a.endOffset),changed:false}};select.selectMarked=function(){function a(){if(b.start.node==b.end.node&&b.start.offset==b.end.offset){var d=window.getSelection();if(!d||d.rangeCount==0)return true;d=d.getRangeAt(0);d=s(d.startContainer,d.startOffset);return b.start.node!=d.node||b.start.offset!=d.offset}}function c(d,f){if(d.node)d.offset==0?e["set"+f+"Before"](d.node):e["set"+f](d.node,d.offset);else e.setStartAfter(document.body.lastChild||
-document.body)}var b=i;if(b&&(b.changed||webkit&&a())){var e=document.createRange();c(b.end,"End");c(b.start,"Start");r(e)}};var r=function(a){var c=window.getSelection();if(c){c.removeAllRanges();c.addRange(a)}},q=function(){var a=window.getSelection();return!a||a.rangeCount==0?false:a.getRangeAt(0)};select.selectionTopNode=function(a,c){var b=q();if(!b)return false;var e=c?b.startContainer:b.endContainer,d=c?b.startOffset:b.endOffset;window.opera&&!c&&b.endContainer==a&&b.endOffset==b.startOffset+
-1&&a.childNodes[b.startOffset]&&isBR(a.childNodes[b.startOffset])&&d--;return e.nodeType==3?d>0?p(e,a):t(e,a):e.nodeName.toUpperCase()=="HTML"?d==1?null:a.lastChild:e==a?d==0?null:e.childNodes[d-1]:d==e.childNodes.length?p(e,a):d==0?t(e,a):p(e.childNodes[d-1],a)};select.focusAfterNode=function(a,c){var b=document.createRange();b.setStartBefore(c.firstChild||c);if(a&&!a.firstChild)b.setEndAfter(a);else a?b.setEnd(a,a.childNodes.length):b.setEndBefore(c.firstChild||c);b.collapse(false);r(b)};select.somethingSelected=
-function(){var a=q();return a&&!a.collapsed};select.offsetInNode=function(a){var c=q();if(!c)return 0;c=c.cloneRange();c.setStartBefore(a);return c.toString().length};var w=function(a){var c=q();if(c){c.deleteContents();c.insertNode(a);webkitLastLineHack(document.body);if(window.opera&&isBR(a)&&isSpan(a.parentNode)){c=a.nextSibling;var b=a.parentNode,e=b.parentNode;e.insertBefore(a,b.nextSibling);for(b="";c&&c.nodeType==3;c=c.nextSibling){b+=c.nodeValue;removeElement(c)}e.insertBefore(makePartSpan(b,
-document),a.nextSibling)}c=document.createRange();c.selectNode(a);c.collapse(false);r(c)}};select.insertNewlineAtCursor=function(){w(document.createElement("BR"))};select.insertTabAtCursor=function(){w(document.createTextNode("\u00a0\u00a0\u00a0\u00a0"))};select.cursorPos=function(a,c){var b=q();if(b){for(var e=select.selectionTopNode(a,c);e&&!isBR(e);)e=e.previousSibling;b=b.cloneRange();b.collapse(c);e?b.setStartAfter(e):b.setStartBefore(a);b=b.toString();return{node:e,offset:b.length}}};select.setCursorPos=
-function(a,c,b){function e(f,g,j){function h(m){m.nodeType==3?k.push(m):forEach(m.childNodes,h)}if(g==0&&f&&!f.nextSibling){d["set"+j+"After"](f);return true}if(f=f?f.nextSibling:a.firstChild){if(g==0){d["set"+j+"Before"](f);return true}for(var k=[];;){for(;f&&!k.length;){h(f);f=f.nextSibling}var l=k.shift();if(!l)return false;var n=l.nodeValue.length;if(n>=g){d["set"+j](l,g);return true}g-=n}}}var d=document.createRange();b=b||c;e(b.node,b.offset,"End")&&e(c.node,c.offset,"Start")&&r(d)}}})();
+/* Functionality for finding, storing, and restoring selections
+ *
+ * This does not provide a generic API, just the minimal functionality
+ * required by the CodeMirror system.
+ */
+
+// Namespace object.
+var select = {};
+
+(function() {
+  select.ie_selection = document.selection && document.selection.createRangeCollection;
+
+  // Find the 'top-level' (defined as 'a direct child of the node
+  // passed as the top argument') node that the given node is
+  // contained in. Return null if the given node is not inside the top
+  // node.
+  function topLevelNodeAt(node, top) {
+    while (node && node.parentNode != top)
+      node = node.parentNode;
+    return node;
+  }
+
+  // Find the top-level node that contains the node before this one.
+  function topLevelNodeBefore(node, top) {
+    while (!node.previousSibling && node.parentNode != top)
+      node = node.parentNode;
+    return topLevelNodeAt(node.previousSibling, top);
+  }
+
+  var fourSpaces = "\u00a0\u00a0\u00a0\u00a0";
+
+  select.scrollToNode = function(node, cursor) {
+    if (!node) return;
+    var element = node, body = document.body,
+        html = document.documentElement,
+        atEnd = !element.nextSibling || !element.nextSibling.nextSibling
+                || !element.nextSibling.nextSibling.nextSibling;
+    // In Opera (and recent Webkit versions), BR elements *always*
+    // have a offsetTop property of zero.
+    var compensateHack = 0;
+    while (element && !element.offsetTop) {
+      compensateHack++;
+      element = element.previousSibling;
+    }
+    // atEnd is another kludge for these browsers -- if the cursor is
+    // at the end of the document, and the node doesn't have an
+    // offset, just scroll to the end.
+    if (compensateHack == 0) atEnd = false;
+
+    // WebKit has a bad habit of (sometimes) happily returning bogus
+    // offsets when the document has just been changed. This seems to
+    // always be 5/5, so we don't use those.
+    if (webkit && element && element.offsetTop == 5 && element.offsetLeft == 5)
+      return;
+
+    var y = compensateHack * (element ? element.offsetHeight : 0), x = 0,
+        width = (node ? node.offsetWidth : 0), pos = element;
+    while (pos && pos.offsetParent) {
+      y += pos.offsetTop;
+      // Don't count X offset for <br> nodes
+      if (!isBR(pos))
+        x += pos.offsetLeft;
+      pos = pos.offsetParent;
+    }
+
+    var scroll_x = body.scrollLeft || html.scrollLeft || 0,
+        scroll_y = body.scrollTop || html.scrollTop || 0,
+        scroll = false, screen_width = window.innerWidth || html.clientWidth || 0;
+
+    if (cursor || width < screen_width) {
+      if (cursor) {
+        var off = select.offsetInNode(node), size = nodeText(node).length;
+        if (size) x += width * (off / size);
+      }
+      var screen_x = x - scroll_x;
+      if (screen_x < 0 || screen_x > screen_width) {
+        scroll_x = x;
+        scroll = true;
+      }
+    }
+    var screen_y = y - scroll_y;
+    if (screen_y < 0 || atEnd || screen_y > (window.innerHeight || html.clientHeight || 0) - 50) {
+      scroll_y = atEnd ? 1e6 : y;
+      scroll = true;
+    }
+    if (scroll) window.scrollTo(scroll_x, scroll_y);
+  };
+
+  select.scrollToCursor = function(container) {
+    select.scrollToNode(select.selectionTopNode(container, true) || container.firstChild, true);
+  };
+
+  // Used to prevent restoring a selection when we do not need to.
+  var currentSelection = null;
+
+  select.snapshotChanged = function() {
+    if (currentSelection) currentSelection.changed = true;
+  };
+
+  // This is called by the code in editor.js whenever it is replacing
+  // a text node. The function sees whether the given oldNode is part
+  // of the current selection, and updates this selection if it is.
+  // Because nodes are often only partially replaced, the length of
+  // the part that gets replaced has to be taken into account -- the
+  // selection might stay in the oldNode if the newNode is smaller
+  // than the selection's offset. The offset argument is needed in
+  // case the selection does move to the new object, and the given
+  // length is not the whole length of the new node (part of it might
+  // have been used to replace another node).
+  select.snapshotReplaceNode = function(from, to, length, offset) {
+    if (!currentSelection) return;
+
+    function replace(point) {
+      if (from == point.node) {
+        currentSelection.changed = true;
+        if (length && point.offset > length) {
+          point.offset -= length;
+        }
+        else {
+          point.node = to;
+          point.offset += (offset || 0);
+        }
+      }
+    }
+    replace(currentSelection.start);
+    replace(currentSelection.end);
+  };
+
+  select.snapshotMove = function(from, to, distance, relative, ifAtStart) {
+    if (!currentSelection) return;
+
+    function move(point) {
+      if (from == point.node && (!ifAtStart || point.offset == 0)) {
+        currentSelection.changed = true;
+        point.node = to;
+        if (relative) point.offset = Math.max(0, point.offset + distance);
+        else point.offset = distance;
+      }
+    }
+    move(currentSelection.start);
+    move(currentSelection.end);
+  };
+
+  // Most functions are defined in two ways, one for the IE selection
+  // model, one for the W3C one.
+  if (select.ie_selection) {
+    function selectionNode(start) {
+      var range = document.selection.createRange();
+      range.collapse(start);
+
+      function nodeAfter(node) {
+        var found = null;
+        while (!found && node) {
+          found = node.nextSibling;
+          node = node.parentNode;
+        }
+        return nodeAtStartOf(found);
+      }
+
+      function nodeAtStartOf(node) {
+        while (node && node.firstChild) node = node.firstChild;
+        return {node: node, offset: 0};
+      }
+
+      var containing = range.parentElement();
+      if (!isAncestor(document.body, containing)) return null;
+      if (!containing.firstChild) return nodeAtStartOf(containing);
+
+      var working = range.duplicate();
+      working.moveToElementText(containing);
+      working.collapse(true);
+      for (var cur = containing.firstChild; cur; cur = cur.nextSibling) {
+        if (cur.nodeType == 3) {
+          var size = cur.nodeValue.length;
+          working.move("character", size);
+        }
+        else {
+          working.moveToElementText(cur);
+          working.collapse(false);
+        }
+
+        var dir = range.compareEndPoints("StartToStart", working);
+        if (dir == 0) return nodeAfter(cur);
+        if (dir == 1) continue;
+        if (cur.nodeType != 3) return nodeAtStartOf(cur);
+
+        working.setEndPoint("StartToEnd", range);
+        return {node: cur, offset: size - working.text.length};
+      }
+      return nodeAfter(containing);
+    }
+
+    select.markSelection = function() {
+      currentSelection = null;
+      var sel = document.selection;
+      if (!sel) return;
+      var start = selectionNode(true),
+          end = selectionNode(false);
+      if (!start || !end) return;
+      currentSelection = {start: start, end: end, changed: false};
+    };
+
+    select.selectMarked = function() {
+      if (!currentSelection || !currentSelection.changed) return;
+
+      function makeRange(point) {
+        var range = document.body.createTextRange(),
+            node = point.node;
+        if (!node) {
+          range.moveToElementText(document.body);
+          range.collapse(false);
+        }
+        else if (node.nodeType == 3) {
+          range.moveToElementText(node.parentNode);
+          var offset = point.offset;
+          while (node.previousSibling) {
+            node = node.previousSibling;
+            offset += (node.innerText || "").length;
+          }
+          range.move("character", offset);
+        }
+        else {
+          range.moveToElementText(node);
+          range.collapse(true);
+        }
+        return range;
+      }
+
+      var start = makeRange(currentSelection.start), end = makeRange(currentSelection.end);
+      start.setEndPoint("StartToEnd", end);
+      start.select();
+    };
+
+    select.offsetInNode = function(node) {
+      var sel = document.selection;
+      if (!sel) return 0;
+      var range = sel.createRange(), range2 = range.duplicate();
+      try {range2.moveToElementText(node);} catch(e){return 0;}
+      range.setEndPoint("StartToStart", range2);
+      return range.text.length;
+    };
+
+    // Get the top-level node that one end of the cursor is inside or
+    // after. Note that this returns false for 'no cursor', and null
+    // for 'start of document'.
+    select.selectionTopNode = function(container, start) {
+      var selection = document.selection;
+      if (!selection) return false;
+
+      var range = selection.createRange(), range2 = range.duplicate();
+      range.collapse(start);
+      var around = range.parentElement();
+      if (around && isAncestor(container, around)) {
+        // Only use this node if the selection is not at its start.
+        range2.moveToElementText(around);
+        if (range.compareEndPoints("StartToStart", range2) == 1)
+          return topLevelNodeAt(around, container);
+      }
+
+      // Move the start of a range to the start of a node,
+      // compensating for the fact that you can't call
+      // moveToElementText with text nodes.
+      function moveToNodeStart(range, node) {
+        if (node.nodeType == 3) {
+          var count = 0, cur = node.previousSibling;
+          while (cur && cur.nodeType == 3) {
+            count += cur.nodeValue.length;
+            cur = cur.previousSibling;
+          }
+          if (cur) {
+            try{range.moveToElementText(cur);}
+            catch(e){return false;}
+            range.collapse(false);
+          }
+          else range.moveToElementText(node.parentNode);
+          if (count) range.move("character", count);
+        }
+        else {
+          try{range.moveToElementText(node);}
+          catch(e){return false;}
+        }
+        return true;
+      }
+
+      // Do a binary search through the container object, comparing
+      // the start of each node to the selection
+      var start = 0, end = container.childNodes.length - 1;
+      while (start < end) {
+        var middle = Math.ceil((end + start) / 2), node = container.childNodes[middle];
+        if (!node) return false; // Don't ask. IE6 manages this sometimes.
+        if (!moveToNodeStart(range2, node)) return false;
+        if (range.compareEndPoints("StartToStart", range2) == 1)
+          start = middle;
+        else
+          end = middle - 1;
+      }
+      
+      if (start == 0) {
+        var test1 = selection.createRange(), test2 = test1.duplicate();
+        try {
+          test2.moveToElementText(container);
+        } catch(exception) {
+          return null;
+        }
+        if (test1.compareEndPoints("StartToStart", test2) == 0)
+          return null;
+      }
+      return container.childNodes[start] || null;
+    };
+
+    // Place the cursor after this.start. This is only useful when
+    // manually moving the cursor instead of restoring it to its old
+    // position.
+    select.focusAfterNode = function(node, container) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(node || container);
+      range.collapse(!node);
+      range.select();
+    };
+
+    select.somethingSelected = function() {
+      var sel = document.selection;
+      return sel && (sel.createRange().text != "");
+    };
+
+    function insertAtCursor(html) {
+      var selection = document.selection;
+      if (selection) {
+        var range = selection.createRange();
+        range.pasteHTML(html);
+        range.collapse(false);
+        range.select();
+      }
+    }
+
+    // Used to normalize the effect of the enter key, since browsers
+    // do widely different things when pressing enter in designMode.
+    select.insertNewlineAtCursor = function() {
+      insertAtCursor("<br>");
+    };
+
+    select.insertTabAtCursor = function() {
+      insertAtCursor(fourSpaces);
+    };
+
+    // Get the BR node at the start of the line on which the cursor
+    // currently is, and the offset into the line. Returns null as
+    // node if cursor is on first line.
+    select.cursorPos = function(container, start) {
+      var selection = document.selection;
+      if (!selection) return null;
+
+      var topNode = select.selectionTopNode(container, start);
+      while (topNode && !isBR(topNode))
+        topNode = topNode.previousSibling;
+
+      var range = selection.createRange(), range2 = range.duplicate();
+      range.collapse(start);
+      if (topNode) {
+        range2.moveToElementText(topNode);
+        range2.collapse(false);
+      }
+      else {
+        // When nothing is selected, we can get all kinds of funky errors here.
+        try { range2.moveToElementText(container); }
+        catch (e) { return null; }
+        range2.collapse(true);
+      }
+      range.setEndPoint("StartToStart", range2);
+
+      return {node: topNode, offset: range.text.length};
+    };
+
+    select.setCursorPos = function(container, from, to) {
+      function rangeAt(pos) {
+        var range = document.body.createTextRange();
+        if (!pos.node) {
+          range.moveToElementText(container);
+          range.collapse(true);
+        }
+        else {
+          range.moveToElementText(pos.node);
+          range.collapse(false);
+        }
+        range.move("character", pos.offset);
+        return range;
+      }
+
+      var range = rangeAt(from);
+      if (to && to != from)
+        range.setEndPoint("EndToEnd", rangeAt(to));
+      range.select();
+    }
+
+    // Some hacks for storing and re-storing the selection when the editor loses and regains focus.
+    select.getBookmark = function (container) {
+      var from = select.cursorPos(container, true), to = select.cursorPos(container, false);
+      if (from && to) return {from: from, to: to};
+    };
+
+    // Restore a stored selection.
+    select.setBookmark = function(container, mark) {
+      if (!mark) return;
+      select.setCursorPos(container, mark.from, mark.to);
+    };
+  }
+  // W3C model
+  else {
+    // Find the node right at the cursor, not one of its
+    // ancestors with a suitable offset. This goes down the DOM tree
+    // until a 'leaf' is reached (or is it *up* the DOM tree?).
+    function innerNode(node, offset) {
+      while (node.nodeType != 3 && !isBR(node)) {
+        var newNode = node.childNodes[offset] || node.nextSibling;
+        offset = 0;
+        while (!newNode && node.parentNode) {
+          node = node.parentNode;
+          newNode = node.nextSibling;
+        }
+        node = newNode;
+        if (!newNode) break;
+      }
+      return {node: node, offset: offset};
+    }
+
+    // Store start and end nodes, and offsets within these, and refer
+    // back to the selection object from those nodes, so that this
+    // object can be updated when the nodes are replaced before the
+    // selection is restored.
+    select.markSelection = function () {
+      var selection = window.getSelection();
+      if (!selection || selection.rangeCount == 0)
+        return (currentSelection = null);
+      var range = selection.getRangeAt(0);
+
+      currentSelection = {
+        start: innerNode(range.startContainer, range.startOffset),
+        end: innerNode(range.endContainer, range.endOffset),
+        changed: false
+      };
+    };
+
+    select.selectMarked = function () {
+      var cs = currentSelection;
+      // on webkit-based browsers, it is apparently possible that the
+      // selection gets reset even when a node that is not one of the
+      // endpoints get messed with. the most common situation where
+      // this occurs is when a selection is deleted or overwitten. we
+      // check for that here.
+      function focusIssue() {
+        if (cs.start.node == cs.end.node && cs.start.offset == cs.end.offset) {
+          var selection = window.getSelection();
+          if (!selection || selection.rangeCount == 0) return true;
+          var range = selection.getRangeAt(0), point = innerNode(range.startContainer, range.startOffset);
+          return cs.start.node != point.node || cs.start.offset != point.offset;
+        }
+      }
+      if (!cs || !(cs.changed || (webkit && focusIssue()))) return;
+      var range = document.createRange();
+
+      function setPoint(point, which) {
+        if (point.node) {
+          // Some magic to generalize the setting of the start and end
+          // of a range.
+          if (point.offset == 0)
+            range["set" + which + "Before"](point.node);
+          else
+            range["set" + which](point.node, point.offset);
+        }
+        else {
+          range.setStartAfter(document.body.lastChild || document.body);
+        }
+      }
+
+      setPoint(cs.end, "End");
+      setPoint(cs.start, "Start");
+      selectRange(range);
+    };
+
+    // Helper for selecting a range object.
+    function selectRange(range) {
+      var selection = window.getSelection();
+      if (!selection) return;
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    function selectionRange() {
+      var selection = window.getSelection();
+      if (!selection || selection.rangeCount == 0)
+        return false;
+      else
+        return selection.getRangeAt(0);
+    }
+
+    // Finding the top-level node at the cursor in the W3C is, as you
+    // can see, quite an involved process.
+    select.selectionTopNode = function(container, start) {
+      var range = selectionRange();
+      if (!range) return false;
+
+      var node = start ? range.startContainer : range.endContainer;
+      var offset = start ? range.startOffset : range.endOffset;
+      // Work around (yet another) bug in Opera's selection model.
+      if (window.opera && !start && range.endContainer == container && range.endOffset == range.startOffset + 1 &&
+          container.childNodes[range.startOffset] && isBR(container.childNodes[range.startOffset]))
+        offset--;
+
+      // For text nodes, we look at the node itself if the cursor is
+      // inside, or at the node before it if the cursor is at the
+      // start.
+      if (node.nodeType == 3){
+        if (offset > 0)
+          return topLevelNodeAt(node, container);
+        else
+          return topLevelNodeBefore(node, container);
+      }
+      // Occasionally, browsers will return the HTML node as
+      // selection. If the offset is 0, we take the start of the frame
+      // ('after null'), otherwise, we take the last node.
+      else if (node.nodeName.toUpperCase() == "HTML") {
+        return (offset == 1 ? null : container.lastChild);
+      }
+      // If the given node is our 'container', we just look up the
+      // correct node by using the offset.
+      else if (node == container) {
+        return (offset == 0) ? null : node.childNodes[offset - 1];
+      }
+      // In any other case, we have a regular node. If the cursor is
+      // at the end of the node, we use the node itself, if it is at
+      // the start, we use the node before it, and in any other
+      // case, we look up the child before the cursor and use that.
+      else {
+        if (offset == node.childNodes.length)
+          return topLevelNodeAt(node, container);
+        else if (offset == 0)
+          return topLevelNodeBefore(node, container);
+        else
+          return topLevelNodeAt(node.childNodes[offset - 1], container);
+      }
+    };
+
+    select.focusAfterNode = function(node, container) {
+      var range = document.createRange();
+      range.setStartBefore(container.firstChild || container);
+      // In Opera, setting the end of a range at the end of a line
+      // (before a BR) will cause the cursor to appear on the next
+      // line, so we set the end inside of the start node when
+      // possible.
+      if (node && !node.firstChild)
+        range.setEndAfter(node);
+      else if (node)
+        range.setEnd(node, node.childNodes.length);
+      else
+        range.setEndBefore(container.firstChild || container);
+      range.collapse(false);
+      selectRange(range);
+    };
+
+    select.somethingSelected = function() {
+      var range = selectionRange();
+      return range && !range.collapsed;
+    };
+
+    select.offsetInNode = function(node) {
+      var range = selectionRange();
+      if (!range) return 0;
+      range = range.cloneRange();
+      range.setStartBefore(node);
+      return range.toString().length;
+    };
+
+    function insertNodeAtCursor(node) {
+      var range = selectionRange();
+      if (!range) return;
+
+      range.deleteContents();
+      range.insertNode(node);
+      webkitLastLineHack(document.body);
+
+      // work around weirdness where Opera will magically insert a new
+      // BR node when a BR node inside a span is moved around. makes
+      // sure the BR ends up outside of spans.
+      if (window.opera && isBR(node) && isSpan(node.parentNode)) {
+        var next = node.nextSibling, p = node.parentNode, outer = p.parentNode;
+        outer.insertBefore(node, p.nextSibling);
+        var textAfter = "";
+        for (; next && next.nodeType == 3; next = next.nextSibling) {
+          textAfter += next.nodeValue;
+          removeElement(next);
+        }
+        outer.insertBefore(makePartSpan(textAfter, document), node.nextSibling);
+      }
+      range = document.createRange();
+      range.selectNode(node);
+      range.collapse(false);
+      selectRange(range);
+    }
+
+    select.insertNewlineAtCursor = function() {
+      insertNodeAtCursor(document.createElement("BR"));
+    };
+
+    select.insertTabAtCursor = function() {
+      insertNodeAtCursor(document.createTextNode(fourSpaces));
+    };
+
+    select.cursorPos = function(container, start) {
+      var range = selectionRange();
+      if (!range) return;
+
+      var topNode = select.selectionTopNode(container, start);
+      while (topNode && !isBR(topNode))
+        topNode = topNode.previousSibling;
+
+      range = range.cloneRange();
+      range.collapse(start);
+      if (topNode)
+        range.setStartAfter(topNode);
+      else
+        range.setStartBefore(container);
+
+      var text = range.toString();
+      return {node: topNode, offset: text.length};
+    };
+
+    select.setCursorPos = function(container, from, to) {
+      var range = document.createRange();
+
+      function setPoint(node, offset, side) {
+        if (offset == 0 && node && !node.nextSibling) {
+          range["set" + side + "After"](node);
+          return true;
+        }
+
+        if (!node)
+          node = container.firstChild;
+        else
+          node = node.nextSibling;
+
+        if (!node) return;
+
+        if (offset == 0) {
+          range["set" + side + "Before"](node);
+          return true;
+        }
+
+        var backlog = []
+        function decompose(node) {
+          if (node.nodeType == 3)
+            backlog.push(node);
+          else
+            forEach(node.childNodes, decompose);
+        }
+        while (true) {
+          while (node && !backlog.length) {
+            decompose(node);
+            node = node.nextSibling;
+          }
+          var cur = backlog.shift();
+          if (!cur) return false;
+
+          var length = cur.nodeValue.length;
+          if (length >= offset) {
+            range["set" + side](cur, offset);
+            return true;
+          }
+          offset -= length;
+        }
+      }
+
+      to = to || from;
+      if (setPoint(to.node, to.offset, "End") && setPoint(from.node, from.offset, "Start"))
+        selectRange(range);
+    };
+  }
+})();

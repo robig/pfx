@@ -62,7 +62,12 @@ class DB {
 			$this->link = mysql_connect($this->host, $this->user, $this->pass, TRUE);
 			if ($this->link) {
 				/* Connect to the database */
-				mysql_select_db($this->db) or die( db_down() );
+				$ok=mysql_select_db($this->db);
+				if(!$ok) {
+					echo mysql_error().$this->pass;
+					trigger_error(mysql_error().$this->pass);
+					die( db_down() );
+				}
 				$_GLOBALS['connected'] = TRUE;
 				/* Set the character set for database connection */
 				mysql_set_charset('PFX_DB_CHARSET', $this->link);

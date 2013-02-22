@@ -36,6 +36,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
+ini_set('error_log', "/home/robig/web/testing/pfx/log/error_log");
+error_reporting(E_ALL|E_STRICT);
 /* Prevent any kind of predefinition of DIRECT_ACCESS or pfx_DEBUG */
 if ((defined('DIRECT_ACCESS')) or (defined('PFX_DEBUG'))) {
 	require_once 'admin/lib/lib_misc.php';

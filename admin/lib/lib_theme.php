@@ -186,7 +186,20 @@ function theme_javascript($pfx_s, $pfx_rel_path) {
 	    <script type="text/javascript" src="<?php echo $pfx_rel_path; ?>admin/jscript/pfx.js" charset="UTF-8"></script>
 	    <script type="text/javascript" src="<?php echo $pfx_rel_path; ?>admin/jscript/selectbox.js" charset="UTF-8"></script>
 	    <script type="text/javascript" src="<?php echo $pfx_rel_path; ?>admin/jscript/liveEdit.js" charset="UTF-8"></script>
-	<?php }
+	<?php
+		# load theme javascripts: 
+		if(is_dir($pfx_rel_path."admin/themes/".PREFS_SITE_THEME."/js")){
+			if($handle=opendir($pfx_rel_path."admin/themes/".PREFS_SITE_THEME."/js")){
+				while (false !== ($file = readdir($handle))) { ?>
+		<script type="text/javascript" src="<?php echo $pfx_rel_path."admin/themes/".PREFS_SITE_THEME."/js".$file;?>" charset="UTF-8"></script>
+     			<?php 
+				}
+				closedir($handle);
+			}
+		
+    
+		}
+	}
 	return TRUE;
     } /* End don't load if 404 */
 
@@ -218,3 +231,4 @@ function bad_bot_link() {
 	    echo '<a class="hide" href="' . PREFS_SITE_URL .'bad.php" title="Do not click">Clicking on this link will get you banned</a>';
     }
 }
+?>

@@ -1,0 +1,221 @@
+/******************************************************* // 12B // *****************************************************/
+
+/* HTML / Body styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+html
+	{
+	background: #040404
+	}
+
+body
+	{
+	background: #F2EFEA;
+	font-size: 75%;
+	font-family: Tahoma, Verdana, sans-serif;
+	color: #333;
+	}
+
+#wrap
+	{
+	background:url(images/bg.jpg) top center repeat-x;	
+	}
+#pixie_body{
+	background:#F2EFEA;	
+}
+.block_header{
+	background:url(images/block_header.png) top center repeat-x;
+	height:25px;
+	padding:6px 0 1px 12px;
+}
+
+.block_header a {
+	color: #fff;
+}
+.block_body{
+	padding:15px 0px 0px 15px;
+	background:#FFF;
+	margin: 0 !important;
+}
+.block_footer{
+	background-attachment:#fff;
+	background: #fff url(images/block_footer.png) top center;
+	height:30px;
+
+}
+/* hide the skip to content link */
+
+#tools
+	{
+	position:absolute;
+	left:-9999px;
+	}
+	
+#header
+	{
+	position: relative;
+	height:187px;
+	float:left;
+	}
+
+#logo h1 { color:#FFF; font-size:70px; margin-bottom:10px; }	
+#logo h2 { color:#FFF; font-size:20px; margin-bottom:0; }	
+
+
+#logo{
+	left:20px;
+	position:relative;
+	top:37px;}
+	
+#content
+	{
+	padding:20px;
+	clear: both;
+	width: 670px;
+	float: left;
+	margin-bottom: 25px;
+	}
+	
+#content h3 { display:none; }
+
+#footer
+	{
+	clear: both;
+	background: #E3E3E3 url(images/bottom.png) repeat-x;
+	width: 100%;
+	height: 60px;
+	}
+
+.entry-title h4 {font-size:25px;}
+	
+#credits
+	{
+	width: 800px;
+	margin: 0 auto;
+	}
+	
+	
+#credits_list li
+	{
+	list-style: none;
+	position: relative;
+	top: 25px;
+	left: -40px;
+	display: inline;
+	margin-right: 20px;
+	font-size: 0.9em;
+	}
+	
+#credits_list li a
+	{
+		color:#FFF;
+	}
+.section{margin-bottom:15px;}
+
+
+/* Block styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#content_blocks
+	{
+	float: left;
+	width:250px;
+	}
+	
+.block
+	{
+	margin-bottom: 20px;
+	}
+
+.block h4
+	{
+	font-size: 1.4em;
+	color: #FFF;
+	margin-bottom: 15px;
+	}
+	
+.block p
+	{
+	width: 222px;
+	margin:0;
+	background:#FFF;
+	}
+	
+/* flickr block */
+
+#block_flickr	
+	{
+	overflow: hidden;
+	}
+
+.flickr_badge_image img
+	{
+	width: 62px;
+	height: 62px;
+	display: inline;
+	float: left;
+	margin: 0px 5px 5px 0px;
+	border: 3px solid #ccc;
+	}
+	
+.flickr_badge_image img:hover
+	{
+	border: 3px solid #6699cb;	
+	}
+	
+#block_flickr .block_body
+	{
+	background: none;
+	}
+
+/* General styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#site_title a:visited
+	{
+	color: #6699cb;
+	}
+
+#site_title
+	{
+	display:none;
+	font-size: 2.2em;
+	font-family: arial, sans-serif;
+	color: #314FA9 !important;
+	position: absolute;
+	left: 3px;
+	top: 45px;
+	margin-bottom: 0;
+	}
+	
+#site_title a:hover
+	{
+	color: #fff;
+	}
+
+/* Strapline */
+
+#site_strapline
+	{
+	display:none;
+	color: #ccc;
+	font-size: 1.2em;
+	position: absolute;
+	left: 3px;
+	top: 68px;
+	}
+	
+/* Placeholder */
+
+#placeholder
+	{
+	margin: 0 auto;
+	width: 960px;
+	}
+
+post entry-content { margin-top:10px;}
+
+/********************************************************** // End // ********************************************************/

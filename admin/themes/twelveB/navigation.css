@@ -1,0 +1,57 @@
+/******************************************************* // 12B // *****************************************************/
+
+/* Navigation */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#navigation
+	{
+	bottom:3px;
+	width: 100%;
+	display: block;
+	position: relative;
+	float: right;
+	}
+
+#navigation ul li
+	{
+	display: inline;
+	}
+
+#navigation li a
+	{
+	background:#1A1A1A;
+	float: left;
+	display: block;
+	height: 23px;
+	padding: 7px 25px 0 25px;
+	text-align: center;
+	color: #666;
+	text-decoration: none;
+	width: 12%;
+	margin-left:4px;
+	}
+	
+#navigation li a:hover
+	{
+	background: #F2EFEA !important;
+	height: 29px !important;
+	padding: 7px 25px 0 25px;
+	color:black;
+	}
+
+.nav_current_1
+	{
+	color: #000 !important;
+	background: #F2EFEA !important;
+	height: 29px !important;
+	padding: 7px 25px 0 25px !important;
+	font-weight:bold;
+	}
+	
+#navigation h3
+	{
+	display: none;
+	}
+
+/********************************************************** // End // ********************************************************/
